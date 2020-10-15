@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import store from './redux/state';
+import store from './redux/redux-store';
 
 
 
@@ -15,6 +15,10 @@ export let renderEntireTree = (storeState) => {
 );
 };
 renderEntireTree(store.getState()); //вже викликаємо
-store.subscribe(renderEntireTree);
+//redux не вертає state змінений, тож викликаємо анонімну функцію, яка отримає зміни і віддасть rerender
+store.subscribe(()=>{
+    let newState = store.getState();
+    renderEntireTree(newState);
+});
 
 serviceWorker.unregister();

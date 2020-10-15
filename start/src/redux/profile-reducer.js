@@ -5,7 +5,18 @@ const UPLOADPOSTSTATE = 'UPLOAD-POST-STATE';
 export let addPostActionCreator = () => ({ type: ADDPOSTSTATE });
 export let uploadPoststateActionCreator = (text) => ({ type: UPLOADPOSTSTATE, newText: text });
 
-let profileReducer = (state, action) => {
+
+let initialState = {
+    postsData: [
+        { id: 1, message: 'Hello', likes: 15 },
+        { id: 2, message: 'Bonjour', likes: 30 },
+        { id: 3, message: 'Привет', likes: 15000 },
+    ],
+    newPostText: ''
+
+};
+
+let profileReducer = (state = initialState, action) => {
     let addPoststate = () => {
 
         let newPost = {
