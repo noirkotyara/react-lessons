@@ -16,9 +16,9 @@ const App = (props) => {/*function App() */
    
     let PostsComp = () => <Profile 
         stateProfile={props.state.profilePage} dispatch={props.store.dispatch.bind(props.store)}/>;
-    let DialogsMessagesComp = () => <Dialogs 
-        stateMessages={props.state.messagesPage} dispatch={props.store.dispatch.bind(props.store)}/>;
-   
+    let DialogsMessagesComp = () => <Dialogs store={props.store} />;
+       
+        // stateMessages={props.state.messagesPage} dispatch={props.store.dispatch.bind(props.store)}
 
     return (
         <BrowserRouter>
@@ -30,7 +30,7 @@ const App = (props) => {/*function App() */
                 {/* render vs component */}
                 <Route path='/dialogs' render={DialogsMessagesComp}/>
                 <Route path='/profile' render={PostsComp}/>
-                <Route path='/news' component={News}/>
+                <Route path='/news' render={News}/>
                 <Route path='/music' component={Music}/>
                 <Route path='/settings' component={Settings}/>
              

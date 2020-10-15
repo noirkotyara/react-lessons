@@ -7,16 +7,19 @@ import Message from './Message/Message';
 
 const Dialogs = (props) => {
 
-    let dialogsGenerate = props.stateMessages.dialogsUsersData.map(d => <Dialog name={d.name} id={d.id} avatar={d.ava} />);
+let stateMessages = props.store.getState().messagesPage;
 
-    let messagesGenerate = props.stateMessages.messagesData.map(m => <Message message={m.message} />);
+
+    let dialogsGenerate = stateMessages.dialogsUsersData.map(d => <Dialog name={d.name} id={d.id} avatar={d.ava} />);
+
+    let messagesGenerate = stateMessages.messagesData.map(m => <Message message={m.message} />);
     // for messages sending  
     let messageLink = React.createRef();
     let sendMessage = () => {
 
-        if(props.stateMessages.newMessageText.length !== 0){
-        props.dispatch(addMessagestateActionCreator());
-        props.dispatch(uploadMessagestateActionCreator(''));}
+        if(stateMessages.newMessageText.length !== 0){
+            props.store.dispatch(addMessagestateActionCreator());
+            props.store.dispatch(uploadMessagestateActionCreator(''));}
 
     
     };
@@ -24,7 +27,7 @@ const Dialogs = (props) => {
 
     let onChangeMessage = () => {
         let text = messageLink.current.value;
-        props.dispatch(uploadMessagestateActionCreator(text));
+        props.store.dispatch(uploadMessagestateActionCreator(text));
     };
 
     return (
@@ -38,7 +41,7 @@ const Dialogs = (props) => {
 
             </div>
             <div>
-                <textarea className={cl.text} ref={messageLink} onChange={onChangeMessage} value={props.stateMessages.newMessageText} cols="30" rows="5" />
+                <textarea className={cl.text} ref={messageLink} onChange={onChangeMessage} value={stateMessages.newMessageText} cols="30" rows="5" />
                 <button onClick={sendMessage} className={cl.sendMessage}>send</button>
             </div>
 
