@@ -1,0 +1,19 @@
+.dialog {
+    border-bottom: 2px solid cyan;
+    padding: 20px 0 20px 0;
+}
+
+.dialog a {
+    text-decoration: none;
+}
+
+.active {
+    background-color: gold;
+}
+
+.avatar {
+    background-color: honeydew;
+    border-radius: 50px;
+    padding: 10px 0 10px 0;
+    margin-right: 5px;
+}
