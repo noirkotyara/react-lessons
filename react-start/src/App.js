@@ -9,23 +9,23 @@ import Profile from './components/Profile/Profile';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
+import DialogsContainer from './components/Dialogs/DialogsContainer';
 
 
 
 const App = (props) => {/*function App() */
    
-    let PostsComp = () => <Profile 
-        stateProfile={props.state.profilePage} dispatch={props.store.dispatch.bind(props.store)}/>;
-    let DialogsMessagesComp = () => <Dialogs store={props.store} />;
+    let PostsComp = () => <Profile store={props.store}/>;
+    let DialogsMessagesComp = () => <DialogsContainer store={props.store} />;
        
-        // stateMessages={props.state.messagesPage} dispatch={props.store.dispatch.bind(props.store)}
+    // profile attr------>  stateProfile={props.store.getState().profilePage} dispatch={props.store.dispatch.bind(props.store)}
 
     return (
         <BrowserRouter>
         <div className='app-wrapper'>
             <Header />
-            <Navbar stateFriends={props.state.sideBar}/>
-          
+            <Navbar store={props.store}/>
+            {/* stateFriends={props.state.sideBar} */}
             <div className='app-wrapper-content'>
                 {/* render vs component */}
                 <Route path='/dialogs' render={DialogsMessagesComp}/>
