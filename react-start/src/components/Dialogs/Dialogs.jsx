@@ -9,8 +9,8 @@ const Dialogs = (props) => {
 
     let dialogsGenerate = props.dialogsGenerate.map(d => <Dialog name={d.name} id={d.id} avatar={d.ava} />);
     let messagesGenerate = props.messagesGenerate.map(m => <Message message={m.message} />);
-    // for messages sending  
-    let messageLink = React.createRef();
+  
+    
     let onChangeMessage = (event) => {
         let text = event.target.value;
         props.onChange(text);
@@ -28,7 +28,7 @@ const Dialogs = (props) => {
 
             </div>
             <div>
-                <textarea className={cl.text} ref={messageLink} onChange={onChangeMessage} value={props.newMessageText} cols="30" rows="5" />
+                <textarea className={cl.text}  onChange={onChangeMessage} value={props.newMessageText} cols="30" rows="5" />
                 <button onClick={props.sendMessage} className={cl.sendMessage}>send</button>
             </div>
 

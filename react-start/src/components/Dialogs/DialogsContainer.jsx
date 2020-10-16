@@ -4,35 +4,34 @@ import Dialogs from './Dialogs';
 
 
 const DialogsContainer = (props) => {
-// stateMessages.dialogsUsersData   --> dialogsGenerate 
-    // stateMessages.messagesData  -->   messagesGenerate
-let stateMessages = props.store.getState().messagesPage;
-let dialogsGenerate = stateMessages.dialogsUsersData;
-let messagesGenerate = stateMessages.messagesData;
-    // for messages sending  
+   
+    let stateMessages = props.store.getState().messagesPage;
+    let dialogsGenerate = stateMessages.dialogsUsersData;
+    let messagesGenerate = stateMessages.messagesData;
   
+
     let sendMessage = () => {
 
-        if(stateMessages.newMessageText.length !== 0){
+        if (stateMessages.newMessageText.length !== 0) {
             props.store.dispatch(addMessagestateActionCreator());
-            props.store.dispatch(uploadMessagestateActionCreator(''));}
+            props.store.dispatch(uploadMessagestateActionCreator(''));
+        }
     };
 
 
     let onChangeMessage = (text) => {
-      
+
         props.store.dispatch(uploadMessagestateActionCreator(text));
     };
 
     return (
-      <Dialogs 
-      sendMessage={sendMessage}
-      onChange={onChangeMessage}
-      stateMessages={stateMessages}
-      newMessageText={stateMessages.newMessageText}
-      dialogsGenerate={dialogsGenerate}
-      messagesGenerate={messagesGenerate}
-      />
+        <Dialogs
+            sendMessage={sendMessage}
+            onChange={onChangeMessage}
+            newMessageText={stateMessages.newMessageText}
+            dialogsGenerate={dialogsGenerate}
+            messagesGenerate={messagesGenerate}
+        />
 
     );
 }

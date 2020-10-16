@@ -5,7 +5,7 @@ import cl from './Navbar.module.css';
 
 const Navbar = (props) => {
     let stateFriends = props.store.getState().sideBar;
-    // stateFriends={props.state.sideBar}
+
     let friendsListComp = stateFriends.friendsList.map (  fff => <Friends id={fff.id} name={fff.name}/>);
     return (
         <nav className={cl.nav}>

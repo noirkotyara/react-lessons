@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 //import logo from './logo.svg';
 import './App.css';
-import Dialogs from './components/Dialogs/Dialogs';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
 import Profile from './components/Profile/Profile';
@@ -13,11 +12,13 @@ import DialogsContainer from './components/Dialogs/DialogsContainer';
 
 
 
-const App = (props) => {/*function App() */
-   
+const App = (props) => {
+
+       
     let PostsComp = () => <Profile store={props.store}/>;
     let DialogsMessagesComp = () => <DialogsContainer store={props.store} />;
-       
+
+
     // profile attr------>  stateProfile={props.store.getState().profilePage} dispatch={props.store.dispatch.bind(props.store)}
 
     return (
