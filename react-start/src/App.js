@@ -9,6 +9,7 @@ import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
+import NavbarContainer from './components/Navbar/NavbarContainer';
 
 
 
@@ -25,7 +26,8 @@ const App = (props) => {
         <BrowserRouter>
         <div className='app-wrapper'>
             <Header />
-            <Navbar store={props.store}/>
+            <NavbarContainer/>
+            {/* <Navbar store={props.store}/> */}
             {/* stateFriends={props.state.sideBar} */}
             <div className='app-wrapper-content'>
                 {/* render vs component */}

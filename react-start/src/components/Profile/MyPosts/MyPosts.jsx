@@ -4,16 +4,12 @@ import Post from './Post/Post';
 
 const MyPosts = (props) => {
 
-    // props
-    // postsGenerate={postsGenerate}
-    //             onChange={onChange}
-    //             addPost={addPost}
-
     let postLink = React.createRef();
     let postsGenerate = props.postsGenerate.map(p => <Post message={p.message} likes={p.likes} />);
     
     let onChange = () =>{
-        props.onChange(postLink);
+        let text = postLink.current.value;
+        props.onChange(text);
     } 
 
     return (
