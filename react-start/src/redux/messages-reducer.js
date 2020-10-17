@@ -24,29 +24,33 @@ let initialState = {
 
 
 let messagesReducer = (state = initialState, action) => {
+    let copyState = {...state };
     let addMessagestate = () => {
+        if (copyState.newMessageText.length !== 0) {
+            let newMessage = {
+                id: 8,
+                message: copyState.newMessageText
+            };
+            copyState.messagesData = [...state.messagesData];
+            copyState.messagesData.push(newMessage);
 
-        let newMessage = {
-            id: 8,
-            message: state.newMessageText
-        };
-        state.messagesData.push(newMessage);
+        }
 
 
     }
 
     let uploadMessagestate = (newText) => {
-        state.newMessageText = newText;
+        copyState.newMessageText = newText;
     }
 
 
     switch (action.type) {
         case ADDMESSAGESTATE:
             addMessagestate();
-            return state;
+            return copyState;
         case UPLOADMESSAGESTATE:
             uploadMessagestate(action.newText);
-            return state;
+            return copyState;
 
         default:
             return state;

@@ -5,7 +5,7 @@ import Post from './Post/Post';
 const MyPosts = (props) => {
 
     let postLink = React.createRef();
-    let postsGenerate = props.postsGenerate.map(p => <Post message={p.message} likes={p.likes} />);
+    let postsGenerate = props.postsGenerate.map(p => <Post key={p.id} message={p.message} likes={p.likes} />);
     
     let onChange = () =>{
         let text = postLink.current.value;

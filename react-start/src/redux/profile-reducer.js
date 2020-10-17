@@ -17,29 +17,34 @@ let initialState = {
 };
 
 let profileReducer = (state = initialState, action) => {
+    let copyState = {...state }; //for you, my dear JS
     let addPoststate = () => {
+        if (copyState.newPostText.length !== 0) {
+            let newPost = {
+                id: 5,
+                message: copyState.newPostText,
+                likes: 0
+            };
 
-        let newPost = {
-            id: 5,
-            message: state.newPostText,
-            likes: 0
-        };
-        state.postsData.push(newPost);
+            copyState.postsData = [...state.postsData];
+            copyState.postsData.push(newPost);
+
+        }
 
     }
 
     let uploadPoststate = (newText) => {
 
-        state.newPostText = newText;
+        copyState.newPostText = newText;
 
     }
     switch (action.type) {
         case ADDPOSTSTATE:
             addPoststate();
-            return state;
+            return copyState;
         case UPLOADPOSTSTATE:
             uploadPoststate(action.newText);
-            return state;
+            return copyState;
 
 
         default:

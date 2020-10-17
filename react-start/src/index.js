@@ -7,7 +7,7 @@ import store from './redux/redux-store';
 import { Provider } from 'react-redux';
 
 
-export let renderEntireTree = () => {
+// export let renderEntireTree = () => {
     ReactDOM.render(<React.StrictMode>
         <Provider store={store}>
             <App />
@@ -15,12 +15,12 @@ export let renderEntireTree = () => {
     </React.StrictMode>,
         document.getElementById('root')
     );
-};
-renderEntireTree(store.getState()); //вже викликаємо
+// };
+// renderEntireTree(store.getState()); //вже викликаємо
 //redux не вертає state змінений, тож викликаємо анонімну функцію, яка отримає зміни і віддасть rerender
-store.subscribe(() => {
-    // let newState = store.getState();
-    renderEntireTree();
-});
+// store.subscribe(() => {    переходить у власність виконання connect from  'react-redux'
+//     // let newState = store.getState();
+//     renderEntireTree();
+// });
 
 serviceWorker.unregister();

@@ -5,7 +5,7 @@ import cl from './Navbar.module.css';
 
 const Navbar = (props) => {
   
-    let friendsListComp = props.friendsListComp.map (  fff => <Friends id={fff.id} name={fff.name}/>);
+    let friendsListComp = props.friendsListComp.map (  fff => <Friends key={fff.id} id={fff.id} name={fff.name}/>);
     return (
         <nav className={cl.nav}>
             <div className={cl.item}><NavLink to='/profile' activeClassName={cl.active}>

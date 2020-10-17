@@ -7,8 +7,8 @@ import Message from './Message/Message';
 const Dialogs = (props) => {
 
 
-    let dialogsGenerate = props.dialogsGenerate.map(d => <Dialog name={d.name} id={d.id} avatar={d.ava} />);
-    let messagesGenerate = props.messagesGenerate.map(m => <Message message={m.message} />);
+    let dialogsGenerate = props.dialogsGenerate.map(d => <Dialog key={d.id} name={d.name} id={d.id} avatar={d.ava} />);
+    let messagesGenerate = props.messagesGenerate.map(m => <Message key={m.id} message={m.message} />);
   
     
     let onChangeMessage = (event) => {
@@ -16,6 +16,7 @@ const Dialogs = (props) => {
         props.onChange(text);
       
     };
+    
 
     return (
         <div className={cl.dialogs}>
