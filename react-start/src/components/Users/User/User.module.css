@@ -1,0 +1,32 @@
+.userItem {
+    border: 2px solid black;
+    margin: 10px;
+    margin-bottom: 30px;
+    padding: 20px;
+}
+
+.avatar {
+    float: left;
+    background-color: aliceblue;
+    width: 80px;
+    height: 80px;
+    border-radius: 50px;
+    text-align: center;
+    padding: 5px;
+}
+
+.lastMessage {
+    background: chartreuse;
+}
+
+.name {
+    font-size: 30px;
+}
+
+.country {
+    float: right;
+}
+
+.city {
+    float: right;
+}
