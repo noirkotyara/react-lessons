@@ -7,12 +7,11 @@
 
 .avatar {
     float: left;
-    background-color: aliceblue;
     width: 80px;
     height: 80px;
-    border-radius: 50px;
+    /* border-radius: 50px; */
     text-align: center;
-    padding: 5px;
+    padding-right: 20px;
 }
 
 .lastMessage {

@@ -4,40 +4,19 @@ import User from './User/User';
 import cl from './Users.module.css';
 
 const Users = (props) => {
-
-    // if(props.usersGenerate.length === 0){
-    //     props.setUsers([
-    //         {
-    //             id: 1,
-    //             name: 'Rembo',
-    //             avatar: 'img-1',
-    //             country: 'Ukraine',
-    //             city: 'Kyiv',
-    //             lastMessage: 'Nahui Suk',
-    //             statusFollow: true
-    //         },
-    //         {
-    //             id: 2,
-    //             name: 'Zorro',
-    //             avatar: 'img-2',
-    //             country: 'Ukraine',
-    //             city: 'Kyiv',
-    //             lastMessage: 'Nahui Zenechku',
-    //             statusFollow: false
-    //         }
-    //     ]);
-    // }
-
-    if (props.usersGenerate.length === 0) {
+let getUsers = () => {
+ if (props.usersGenerate.length === 0) {
        axios.get('https://social-network.samuraijs.com/api/1.0/users')
         .then(response => {  props.setUsers(response.data.items) });
 }
+};
+   
 
     let usersGenerate = props.usersGenerate.map(user =>
         <User key={user.id}
             id={user.id}
             name={user.name}
-            photos={user.photos.small}
+            photos={user.photos}
             country='user.country'
             city='user.city'
             lastMessage='{user.lastMessage}'
@@ -48,7 +27,9 @@ const Users = (props) => {
 
     return (
         <>
+        
             <div className={cl.menuName}>Users.jsx</div>
+            <button className={cl.butGET} onClick={getUsers}>Get your frinds out here</button>
             <div className={cl.usersItem}>
                 {usersGenerate}
             </div>

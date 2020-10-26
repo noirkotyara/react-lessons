@@ -1,13 +1,13 @@
 import React from 'react';
 import cl from './User.module.css';
-
+import avaDefault from '../../../assets/images/zorro.jpg'
 const User = (props) => {
 
 
     return (
         <>
             <div className={cl.userItem}>
-                <div className={cl.photos}>{props.avatar}</div>
+                <img className={cl.avatar} src={props.photos.small != null ? props.photos.small : avaDefault}></img>
                 <div className={cl.country}>{props.country},</div>
 
                 <div className={cl.name}>{props.name}</div>
