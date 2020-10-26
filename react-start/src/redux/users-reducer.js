@@ -7,11 +7,7 @@ export let doUnfollow = (id) => ({ type: UNFOLLOW, id });
 export let setUsers = (usersData) => ({ type: DATA, usersData });
 
 let initialState = {
-    usersData: [
-
-    ]
-
-
+    usersData: []
 };
 
 let usersReducer = (state = initialState, action) => {

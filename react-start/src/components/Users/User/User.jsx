@@ -7,7 +7,7 @@ const User = (props) => {
     return (
         <>
             <div className={cl.userItem}>
-                <div className={cl.avatar}>{props.avatar}</div>
+                <div className={cl.photos}>{props.avatar}</div>
                 <div className={cl.country}>{props.country},</div>
 
                 <div className={cl.name}>{props.name}</div>
