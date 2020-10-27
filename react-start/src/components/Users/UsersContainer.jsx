@@ -1,11 +1,10 @@
-import React from 'react';
 import { connect } from 'react-redux';
 import { doFollow, doUnfollow, setUsers } from '../../redux/users-reducer';
 import Users from './Users';
 
 
 
-let mapStateToProps = (state) =>{
+let mapStateToProps = (state) => {
     return {
         usersGenerate: state.usersPage.usersData
     };
@@ -25,5 +24,5 @@ let mapDispatchToProps = (dispatch) => {
     };
 }
 
-const UsersContainer = connect(mapStateToProps,mapDispatchToProps)(Users); 
+const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users);
 export default UsersContainer;

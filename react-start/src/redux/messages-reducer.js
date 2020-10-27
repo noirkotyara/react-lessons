@@ -34,6 +34,7 @@ let messagesReducer = (state = initialState, action) => {
                     messagesData: [...state.messagesData, { id: 8, message: state.newMessageText }]
                 }
             }
+            break;
 
         case UPLOADMESSAGESTATE:
             return {

@@ -32,6 +32,7 @@ let profileReducer = (state = initialState, action) => {
                     postsData: [...state.postsData, newPost]
                 };
             }
+            break;
 
         case UPLOADPOSTSTATE:
             return {

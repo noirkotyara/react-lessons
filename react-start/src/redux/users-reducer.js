@@ -15,12 +15,11 @@ let usersReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case FOLLOW:
-
             return {
                 ...state,
                 usersData: state.usersData.map(u => {
                     if (u.id === action.id) {
-                        return {...u, statusFollow: true }
+                        return {...u, followed: true }
                     }
                     return u;
                 })
@@ -32,7 +31,7 @@ let usersReducer = (state = initialState, action) => {
                 ...state,
                 usersData: state.usersData.map(u => {
                     if (u.id === action.id) {
-                        return {...u, statusFollow: false }
+                        return {...u, followed: false }
                     }
                     return u;
                 })
