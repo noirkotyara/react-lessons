@@ -48,28 +48,13 @@ let mapStateToProps = (state) => {
     };
 }
 
-let mapDispatchToProps = (dispatch) => {
-    return {
-        doFollow: (id) => {
-            dispatch(doFollow(id))
-        },
-        doUnfollow: (id) => {
-            dispatch(doUnfollow(id))
-        },
-        setUsers: (usersData) => {
-            dispatch(setUsers(usersData))
-        },
-        setCurPage: (curPage) => {
-            dispatch(setCurPage(curPage))
-        },
-        setTotalCount: (totalCount) => {
-            dispatch(setTotalCount(totalCount))
-        },
-        toggleFetching: (isFetching) => {
-            dispatch(toggleFetching(isFetching))
-        }
-    };
-}
 
-const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersContainerClass);
+const UsersContainer = connect(mapStateToProps, {
+    doFollow,
+    doUnfollow,
+    setUsers,
+    setCurPage,
+    setTotalCount,
+    toggleFetching
+})(UsersContainerClass);
 export default UsersContainer;
