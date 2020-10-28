@@ -1,9 +1,10 @@
 const ADDPOSTSTATE = 'ADD-POST-STATE';
 const UPLOADPOSTSTATE = 'UPLOAD-POST-STATE';
-
+const SETPROF = 'SET-PROFILE'
 
 export let addPostActionCreator = () => ({ type: ADDPOSTSTATE });
 export let uploadPoststateActionCreator = (text) => ({ type: UPLOADPOSTSTATE, newText: text });
+export let setProfile = (profile) => ({ type: SETPROF, profile });
 
 
 let initialState = {
@@ -12,7 +13,9 @@ let initialState = {
         { id: 2, message: 'Bonjour', likes: 30 },
         { id: 3, message: 'Привет', likes: 15000 },
     ],
-    newPostText: ''
+    newPostText: '',
+    profile: null
+
 
 };
 
@@ -39,7 +42,11 @@ let profileReducer = (state = initialState, action) => {
                 ...state,
                 newPostText: action.newText
             };
-
+        case SETPROF:
+            return {
+                ...state,
+                profile: action.profile
+            }
 
         default:
             return state;

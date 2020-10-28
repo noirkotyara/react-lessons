@@ -1,11 +1,16 @@
 import React from 'react';
 import cl from './User.module.css';
 import avaDefault from '../../../assets/images/zorro.jpg'
+import { NavLink } from 'react-router-dom';
 const User = (props) => {
     return (
         <>
             <div className={cl.userItem}>
-                <img className={cl.avatar} src={props.user.photos.small != null ? props.user.photos.small : avaDefault} alt='ava'></img>
+                <NavLink to={'profile/' + props.user.id}><img className={cl.avatar} 
+                                src={props.user.photos.small != null ? props.user.photos.small : avaDefault} 
+                                alt='ava'></img>
+                </NavLink>
+                
                 <div className={cl.country}>props.country,</div>
 
                 <div className={cl.name}>{props.user.name}</div>

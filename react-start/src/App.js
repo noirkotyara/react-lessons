@@ -10,6 +10,7 @@ import Settings from './components/Settings/Settings';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import NavbarContainer from './components/Navbar/NavbarContainer';
 import UsersContainer from './components/Users/UsersContainer';
+import ProfileContainer from './components/Profile/ProfileContainer';
 
 
 
@@ -17,7 +18,7 @@ import UsersContainer from './components/Users/UsersContainer';
 const App = (props) => {
 
        
-    let PostsComp = () => <Profile store={props.store}/>;
+    let PostsComp = () => <ProfileContainer store={props.store}/>;
     let DialogsMessagesComp = () => <DialogsContainer store={props.store} />;
     let UsersComp = () => <UsersContainer store={props.store} />;
 

@@ -1,17 +1,22 @@
 import React from 'react';
-
 import cl from './ProfileInfo.module.css';
+import Preloader from '../common/Preloader';
+import sad from '../../assets/images/sad.png';
+import happy from '../../assets/images/happy.png';
 
-
-
-const ProfileInfo = () =>{
+const ProfileInfo = (props) =>{
+    if(!props.profileData){
+        return <Preloader/>
+    }
     return(
         <div className={cl.content}>
-                <div>
-                    <img className={cl.back} src="https://www.talkwalker.com/images/2020/blog-headers/image-analysis.png" alt='background'></img>
-                </div>
                 <div className={cl.description}>
-                    ava + description
+                    <img src={props.profileData.photos.small} alt=""/>
+                    <ul>
+    <li>{props.profileData.contacts.instagram}</li>
+    <li>{props.profileData.contacts.vk}</li>
+                    </ul>
+    <div>{props.profileData.lookingForAJob ? <img src={happy} style={{width:'50px', height:'50px'}} alt=""></img> : <img src={sad} alt=""></img>}</div>
                 </div>
                
             </div>

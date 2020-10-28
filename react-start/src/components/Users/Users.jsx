@@ -21,7 +21,7 @@ let Users = (props) => {
                 </div>
                 <div className={cl.usersItem}>
                     {props.whatWeHave.usersGenerate.map(user =>
-                        <User key={user.id * 2}
+                        <User key={user.id}
                             user={user}
                             doFollow={props.whatWeHave.doFollow}
                             doUnfollow={props.whatWeHave.doUnfollow}

@@ -4,17 +4,16 @@ import cl from './Profile.module.css';
 import ProfileInfo from './ProfileInfo';
 
 
-
-const Profile = (props) =>{
-    
-    return(
+const Profile = (props) => {
+    return (
         <div className={cl.content}>
-                <ProfileInfo />
-                <MyPostsContainer store={props.store} />
+             <div>
+                    <img className={cl.back} src="https://www.talkwalker.com/images/2020/blog-headers/image-analysis.png" alt='background'></img>
+                </div>
+            <ProfileInfo profileData={props.profile}/>
+            <MyPostsContainer store={props.store} />
         </div>
     );
 }
 
 export default Profile;
-//  mypostsContainer attr---->   profilePage={props.stateProfile} dispatch={props.dispatch}
-// profile attr------>  stateProfile={props.store.getState().profilePage} dispatch={props.store.dispatch.bind(props.store)}
