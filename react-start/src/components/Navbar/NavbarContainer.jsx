@@ -7,13 +7,9 @@ let mapStateToProps = (state) =>{
         friendsListComp:state.sideBar.friendsList
     }
 }
-let mapDispatchToProps = (dispatch) =>{
-    return{
-        
-    }
-}
 
-const NavbarContainer = connect(mapStateToProps,mapDispatchToProps)(Navbar);
+
+const NavbarContainer = connect(mapStateToProps,{})(Navbar);
 
 
 export default NavbarContainer;

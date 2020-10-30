@@ -6,3 +6,7 @@
     grid-area: h;
     background-color: coral;
 }
+
+.loginPhrase {
+    float: right;
+}
