@@ -2,6 +2,8 @@ import React from 'react';
 import cl from './User.module.css';
 import avaDefault from '../../../assets/images/zorro.jpg'
 import { NavLink } from 'react-router-dom';
+import * as axios from 'axios';
+
 const User = (props) => {
     return (
         <>
@@ -21,8 +23,43 @@ const User = (props) => {
 
     {
     props.user.followed ? 
-    <button onClick={() => props.doUnfollow(props.user.id)} className={cl.statusFollow}>UNFOLLOW</button>  
-    : <button onClick={() => props.doFollow(props.user.id)} className={cl.statusFollow}>FOLLOW</button> }
+    <button onClick={() => {
+        console.log('doUnfollow --> ' + props);
+               axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${props.user.id}`, {
+                   withCredentials: true,
+                   headers: {
+                       "API-KEY": "9c2e4d66-4ed0-4976-8ef0-e6d697c58441"
+                   }
+               } )
+                   .then(response => {
+                      if(response.data.resultCode === 0){
+                          props.doUnfollow(props.user.id);
+                      }
+                   
+                   });
+               
+               
+               }
+    
+    } className={cl.statusFollow}>UNFOLLOW</button>  
+    : <button onClick={() => {
+ console.log('dofollow --> ' + props);
+        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${props.user.id}`, {}, {
+            withCredentials: true,
+            headers: {
+                "API-KEY": "9c2e4d66-4ed0-4976-8ef0-e6d697c58441"
+            }
+        } )
+            .then(response => {
+               
+               if(response.data.resultCode === 0){
+                   props.doFollow(props.user.id);
+               }
+            
+            });
+        
+        
+        }} className={cl.statusFollow}>FOLLOW</button> }
     
 </div>
                 

@@ -6,7 +6,7 @@ import Header from './Header';
 
 class HeaderCl extends React.Component {
     componentDidMount() {
-        console.log(this.props);
+        // console.log(this.props);
         axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`,
             { withCredentials: true })
             .then(response => {
