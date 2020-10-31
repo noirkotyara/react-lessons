@@ -15,7 +15,7 @@ let Users = (props) => {
                 <div className={cl.pages}>
                     {pA.map(page => {
                         return (
-                            <span onClick={() => { props.changeCurPage(page) }} className={props.whatWeHave.currentPage === page && cl.pageSelected}>{page} </span>
+                            <span onClick={() => { props.changeCurPage(page) }} className={props.whatWeHave.currentPage === page && cl.pageSelected} key={page}>{page} </span>
                         );
                     })}
                 </div>
