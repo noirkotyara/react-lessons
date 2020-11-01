@@ -4,6 +4,7 @@ const DATA = 'SETUSERS';
 const CURPAGE = 'CURPAGE';
 const TOTALCOUNT = 'TOTALCOUNT';
 const TOGGLE_IS_FETCHING = 'TOGGLEIF';
+const FOL_IS_FETCHING = 'FOLISFETCH';
 
 export let doFollow = (id) => ({ type: FOLLOW, id });
 export let doUnfollow = (id) => ({ type: UNFOLLOW, id });
@@ -11,13 +12,15 @@ export let setUsers = (usersData) => ({ type: DATA, usersData });
 export let setCurPage = (currentPage) => ({ type: CURPAGE, currentPage });
 export let setTotalCount = (totalCount) => ({ type: TOTALCOUNT, totalCount });
 export let toggleFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching });
+export let toggleFollowing = (followingInProgress) => ({ type: FOL_IS_FETCHING, followingInProgress });
 
 let initialState = {
     usersData: [],
     currentPage: 1,
     pageSize: 90,
     totalCount: 10,
-    isFetching: false
+    isFetching: false,
+    followingInProgress: false
 };
 
 let usersReducer = (state = initialState, action) => {
@@ -67,6 +70,11 @@ let usersReducer = (state = initialState, action) => {
                 ...state,
                 isFetching: action.isFetching
             };
+        case FOL_IS_FETCHING:
+            return {
+                ...state,
+                followingInProgress: action.followingInProgress
+            }
         default:
             return state;
     }

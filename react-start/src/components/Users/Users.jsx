@@ -25,6 +25,9 @@ let Users = (props) => {
                             user={user}
                             doFollow={props.whatWeHave.doFollow}
                             doUnfollow={props.whatWeHave.doUnfollow}
+                            followingInProgress={props.whatWeHave.followingInProgress}
+                            toggleFollowing={props.whatWeHave.toggleFollowing}
+
                         />)}
                 </div>
             </>

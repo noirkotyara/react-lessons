@@ -2,10 +2,10 @@ import React from 'react';
 import cl from './User.module.css';
 import avaDefault from '../../../assets/images/zorro.jpg'
 import { NavLink } from 'react-router-dom';
-import * as axios from 'axios';
 import { usersAPI } from '../../../api/api';
 
 const User = (props) => {
+    
     return (
         <>
             <div className={cl.userItem}>
@@ -24,15 +24,19 @@ const User = (props) => {
 
                     {
                         props.user.followed 
-                            ? <button onClick={() => {
+                            ? <button disabled={props.followingInProgress} onClick={() => {
+                                props.toggleFollowing(true);
                                 usersAPI.unFollowDeleteRequest(props.user.id)
-                                    .then(data => { data.resultCode === 0 && props.doUnfollow(props.user.id); });
-
+                                    .then(data => { data.resultCode === 0 && props.doUnfollow(props.user.id); 
+                                        props.toggleFollowing(false);});
+                                    
                             }} className={cl.statusFollow}>UNFOLLOW</button>
-                            : <button onClick={() => {
+                            : <button disabled={props.followingInProgress} onClick={() => {
+                                props.toggleFollowing(true);
                                 usersAPI.followPostRequest(props.user.id)
-                                    .then(data => { data.resultCode === 0 && props.doFollow(props.user.id); });
-
+                                    .then(data => { data.resultCode === 0 && props.doFollow(props.user.id); 
+                                        props.toggleFollowing(false);});
+                                    
                             }} className={cl.statusFollow}>FOLLOW</button>}
 
                 </div>
