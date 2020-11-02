@@ -24,18 +24,18 @@ const User = (props) => {
 
                     {
                         props.user.followed 
-                            ? <button disabled={props.followingInProgress} onClick={() => {
-                                props.toggleFollowing(true);
+                            ? <button disabled={props.followingInProgress.some(id => id === props.user.id)} onClick={() => {
+                                props.toggleFollowing(true, props.user.id);
                                 usersAPI.unFollowDeleteRequest(props.user.id)
                                     .then(data => { data.resultCode === 0 && props.doUnfollow(props.user.id); 
-                                        props.toggleFollowing(false);});
+                                        props.toggleFollowing(false, props.user.id);});
                                     
                             }} className={cl.statusFollow}>UNFOLLOW</button>
-                            : <button disabled={props.followingInProgress} onClick={() => {
-                                props.toggleFollowing(true);
+                            : <button disabled={props.followingInProgress.some(id => id === props.user.id)} onClick={() => {
+                                props.toggleFollowing(true, props.user.id);
                                 usersAPI.followPostRequest(props.user.id)
                                     .then(data => { data.resultCode === 0 && props.doFollow(props.user.id); 
-                                        props.toggleFollowing(false);});
+                                        props.toggleFollowing(false, props.user.id);});
                                     
                             }} className={cl.statusFollow}>FOLLOW</button>}
 

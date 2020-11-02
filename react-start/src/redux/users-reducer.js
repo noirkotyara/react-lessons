@@ -12,7 +12,7 @@ export let setUsers = (usersData) => ({ type: DATA, usersData });
 export let setCurPage = (currentPage) => ({ type: CURPAGE, currentPage });
 export let setTotalCount = (totalCount) => ({ type: TOTALCOUNT, totalCount });
 export let toggleFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching });
-export let toggleFollowing = (followingInProgress) => ({ type: FOL_IS_FETCHING, followingInProgress });
+export let toggleFollowing = (followingTF, userId) => ({ type: FOL_IS_FETCHING, followingTF, userId });
 
 let initialState = {
     usersData: [],
@@ -20,7 +20,7 @@ let initialState = {
     pageSize: 90,
     totalCount: 10,
     isFetching: false,
-    followingInProgress: false
+    followingInProgress: []
 };
 
 let usersReducer = (state = initialState, action) => {
@@ -71,10 +71,17 @@ let usersReducer = (state = initialState, action) => {
                 isFetching: action.isFetching
             };
         case FOL_IS_FETCHING:
-            return {
-                ...state,
-                followingInProgress: action.followingInProgress
-            }
+
+            let state02 = {...state,
+                followingInProgress: [...state.followingInProgress]
+            };
+
+            action.followingTF ?
+                state02.followingInProgress.push(action.userId) :
+                state02.followingInProgress = state02.followingInProgress.filter(userId => userId !== action.userId);
+
+            return state02;
+
         default:
             return state;
     }
