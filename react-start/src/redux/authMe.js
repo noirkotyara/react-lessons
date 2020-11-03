@@ -1,3 +1,5 @@
+import { authAPI } from "../api/api";
+
 const SET_USER_DATA = 'SET-USER-DATA';
 const IS_AUTH_ME = 'IS-AUTH-ME';
 
@@ -28,6 +30,16 @@ let authMe = (state = initialState, action) => {
             }
         default:
             return state;
+    }
+}
+
+export const authMeSuccessThunk = () => {
+    return (dispatch) => {
+        authAPI.isAuthMe()
+            .then(data => {
+                dispatch(setUserData({...data.data }));
+                (data.resultCode === 0) && dispatch(setAuthMe(true));
+            });
     }
 }
 

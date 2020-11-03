@@ -1,3 +1,5 @@
+import { userProfile } from "../api/api";
+
 const ADDPOSTSTATE = 'ADD-POST-STATE';
 const UPLOADPOSTSTATE = 'UPLOAD-POST-STATE';
 const SETPROF = 'SET-PROFILE'
@@ -52,4 +54,15 @@ let profileReducer = (state = initialState, action) => {
             return state;
     }
 }
+
+export const setProfileThunk = (userID) => {
+    return (dispatch) => {
+        !userID && (userID = 2);
+        userProfile.showProfile(userID)
+            .then(data => {
+                dispatch(setProfile(data));
+            });
+    }
+}
+
 export default profileReducer;

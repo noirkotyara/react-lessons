@@ -1,21 +1,11 @@
-import * as axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
-import { authAPI } from '../../api/api';
-import { setAuthMe, setUserData } from '../../redux/authMe';
+import { authMeSuccessThunk } from '../../redux/authMe';
 import Header from './Header';
 
 class HeaderCl extends React.Component {
     componentDidMount() {
-        // console.log(this.props);
-        authAPI.isAuthMe()
-            .then(data => {
-                this.props.setUserData({ ...data.data });
-                (data.resultCode === 0) && this.props.setAuthMe(true)
-                // if(data.resultCode === 0){
-                //     this.props.setAuthMe(true);
-                // }
-            });
+        this.props.authMeSuccess();
     }
 
     render() {
@@ -35,7 +25,6 @@ let mapStateToProps = (state) => {
 }
 
 let HeaderContainer = connect(mapStateToProps, {
-    setUserData,
-    setAuthMe
+    authMeSuccess: authMeSuccessThunk
 })(HeaderCl);
 export default HeaderContainer;

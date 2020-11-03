@@ -1,31 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as axios from 'axios';
-import { doFollow, doUnfollow, setCurPage, setTotalCount, setUsers, toggleFetching, toggleFollowing } from '../../redux/users-reducer';
+import { changeCurPageThunk, setUsersThunk, unFollowThunk, followThunk } from '../../redux/users-reducer';
 import Users from './Users';
 import Preloader from '../common/Preloader';
-import { usersAPI } from '../../api/api';
 
 
 class UsersContainerClass extends React.Component {
     componentDidMount() {
-        this.props.toggleFetching(true);
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-            .then(data => {
-                this.props.toggleFetching(false);
-                this.props.setUsers(data.items);
-                this.props.setTotalCount(data.totalCount)
-            });
+        this.props.setUsers(this.props.currentPage,this.props.pageSize);
 
     }
     changeCurPage = (page) => {
-        this.props.setCurPage(page);
-        this.props.toggleFetching(true);
-        usersAPI.changeCurPage(page,this.props.pageSize)
-            .then(data => {
-                this.props.toggleFetching(false);
-                this.props.setUsers(data.items)
-            });
+        this.props.setCurPage(page,this.props.pageSize);
     }
     render() {
         return <>
@@ -52,12 +38,9 @@ let mapStateToProps = (state) => {
 
 
 const UsersContainer = connect(mapStateToProps, {
-    doFollow,
-    doUnfollow,
-    setUsers,
-    setCurPage,
-    setTotalCount,
-    toggleFetching,
-    toggleFollowing
+    doFollow: followThunk,
+    doUnfollow: unFollowThunk,
+    setUsers: setUsersThunk,
+    setCurPage: changeCurPageThunk
 })(UsersContainerClass);
 export default UsersContainer;

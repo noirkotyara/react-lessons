@@ -3,8 +3,9 @@ import messagesReducer from "./messages-reducer";
 import profileReducer from "./profile-reducer";
 import sideBarReducer from "./sideBar-reducer";
 import usersReducer from "./users-reducer";
+import thunkMiddleware from 'redux-thunk';
 
-const { createStore, combineReducers } = require("redux");
+const { createStore, combineReducers, applyMiddleware } = require("redux");
 
 let reducers = combineReducers({
     profilePage: profileReducer,
@@ -14,7 +15,7 @@ let reducers = combineReducers({
     authMe: authMe
 });
 
-let store = createStore(reducers); //створили об'єкт store
+let store = createStore(reducers, applyMiddleware(thunkMiddleware)); //створили об'єкт store
 
 window.store = store;
 
