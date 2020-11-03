@@ -13,5 +13,3 @@ return (
 }
 
 export default Dialog;
-
-/* <img src={props.avatar} className={cl.avatar} alt='avatar'></img> */

@@ -1,5 +1,6 @@
 import { userProfile } from "../api/api";
 
+
 const ADDPOSTSTATE = 'ADD-POST-STATE';
 const UPLOADPOSTSTATE = 'UPLOAD-POST-STATE';
 const SETPROF = 'SET-PROFILE'
@@ -7,7 +8,6 @@ const SETPROF = 'SET-PROFILE'
 export let addPostActionCreator = () => ({ type: ADDPOSTSTATE });
 export let uploadPoststateActionCreator = (text) => ({ type: UPLOADPOSTSTATE, newText: text });
 export let setProfile = (profile) => ({ type: SETPROF, profile });
-
 
 let initialState = {
     postsData: [
@@ -17,7 +17,6 @@ let initialState = {
     ],
     newPostText: '',
     profile: null
-
 
 };
 

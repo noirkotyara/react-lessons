@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import Dialog from './Dialog/Dialog';
 import cl from './Dialogs.module.css';
 import Message from './Message/Message';
@@ -16,7 +17,13 @@ const Dialogs = (props) => {
         props.onChange(text);
       
     };
-    
+    if(!props.isAuthMe){
+       return <Redirect to='login/'></Redirect>
+    }
+    let sendMessages = () => {
+        props.sendMessage();
+        props.onChange('');
+    }
 
     return (
         <div className={cl.dialogs}>
@@ -30,7 +37,7 @@ const Dialogs = (props) => {
             </div>
             <div>
                 <textarea className={cl.text}  onChange={onChangeMessage} value={props.newMessageText} cols="30" rows="5" />
-                <button onClick={props.sendMessage} className={cl.sendMessage}>send</button>
+                <button onClick={sendMessages} className={cl.sendMessage}>send</button>
             </div>
 
         </div>

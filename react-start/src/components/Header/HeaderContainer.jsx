@@ -7,18 +7,11 @@ class HeaderCl extends React.Component {
     componentDidMount() {
         this.props.authMeSuccess();
     }
-
     render() {
-        
-        return (
-            <>
-                <Header {...this.props} />
-            </>
-        )
+        return <> <Header {...this.props} /> </>
     }
 }
 let mapStateToProps = (state) => {
-    
     return {
          ...state.authMe
     }
