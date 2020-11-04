@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { addMessagestateActionCreator, uploadMessagestateActionCreator } from '../../redux/messages-reducer';
-import Dialogs from './Dialogs';
+import DialogsContainerHOCRedirect from './Dialogs';
 
 
 
@@ -8,8 +8,7 @@ let mapStateToProps = (state) => {
     return {
         newMessageText: state.messagesPage.newMessageText,
         dialogsGenerate: state.messagesPage.dialogsUsersData,
-        messagesGenerate: state.messagesPage.messagesData,
-        isAuthMe: state.authMe.isAuthMe
+        messagesGenerate: state.messagesPage.messagesData
     }
 }
 
@@ -19,11 +18,14 @@ let mapDispatchToProps = (dispatch) => {
         sendMessage: () => {
             dispatch(addMessagestateActionCreator());
         },
-        onChange: (text) => { dispatch(uploadMessagestateActionCreator(text)); }
+        onChange: (text) => {
+            dispatch(uploadMessagestateActionCreator(text));
+        }
     }
 }
 
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
+
+const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(DialogsContainerHOCRedirect);
 
 
 export default DialogsContainer;

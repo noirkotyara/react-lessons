@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { withAuthMe } from '../hoc/hoc';
 import Dialog from './Dialog/Dialog';
 import cl from './Dialogs.module.css';
 import Message from './Message/Message';
@@ -17,14 +19,13 @@ const Dialogs = (props) => {
         props.onChange(text);
       
     };
-    if(!props.isAuthMe){
-       return <Redirect to='login/'></Redirect>
-    }
     let sendMessages = () => {
         props.sendMessage();
         props.onChange('');
     }
-
+    // if(!props.isAuthMe){
+    //    return <Redirect to='login/'></Redirect>
+    // }
     return (
         <div className={cl.dialogs}>
             <div className={cl.dialogsItems}>
@@ -44,4 +45,11 @@ const Dialogs = (props) => {
 
     );
 }
-export default Dialogs;
+
+let mapStateToPropsRedirect = (state) => {
+    return {isAuthMe: state.authMe.isAuthMe}
+}
+let DialogsContainerHOC = withAuthMe(Dialogs);
+let DialogsContainerHOCRedirect = connect(mapStateToPropsRedirect,{})(DialogsContainerHOC);
+
+export default DialogsContainerHOCRedirect;
