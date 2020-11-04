@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { setProfileThunk } from '../../redux/profile-reducer';
 import { withAuthMe } from '../hoc/hoc';
 import Profile from './Profile';
@@ -15,7 +16,7 @@ class ProfileContainer extends React.Component {
 }
 
 let mapStateToPropsRedirect = (state) => {
-    return {isAuthMe: state.authMe.isAuthMe}
+    return { isAuthMe: state.authMe.isAuthMe }
 }
 
 
@@ -25,9 +26,11 @@ let mapStateToProps = (state) => {
     }
 }
 
-let ProfileContainerHOC = withAuthMe(ProfileContainer);
-let ProfileContainerHOCRedirect = connect(mapStateToPropsRedirect,{})(ProfileContainerHOC);
-let ProfileContainerWithRouter = withRouter(ProfileContainerHOCRedirect);
-export default connect(mapStateToProps, {
-    setProfile: setProfileThunk
-})(ProfileContainerWithRouter);
+export default compose(
+    connect(mapStateToProps, {
+        setProfile: setProfileThunk
+    }),
+    withRouter,
+    connect(mapStateToPropsRedirect, {}),
+    withAuthMe
+)(ProfileContainer);
