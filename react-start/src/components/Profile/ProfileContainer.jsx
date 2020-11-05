@@ -31,6 +31,6 @@ export default compose(
         setProfile: setProfileThunk
     }),
     withRouter,
-    connect(mapStateToPropsRedirect, {}),
-    withAuthMe
+    connect(mapStateToPropsRedirect, {})
+    // withAuthMe
 )(ProfileContainer);
