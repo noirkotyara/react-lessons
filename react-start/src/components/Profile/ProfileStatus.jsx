@@ -15,9 +15,12 @@ class ProfileStatus extends React.Component {
         this.setState({status: event.target.value})
     }
     
-    // updateStatus
-    // getStatus
-    
+    componentDidUpdate(prevProps, prevState) {
+        debugger;
+        if(this.props.status !== prevProps.status){
+            this.setState({status: this.props.status})
+        }
+    }
     readyStatus = () => {
         this.setState({ editMode: false });
         // debugger;
