@@ -4,6 +4,7 @@ import profileReducer from "./profile-reducer";
 import sideBarReducer from "./sideBar-reducer";
 import usersReducer from "./users-reducer";
 import thunkMiddleware from 'redux-thunk';
+import { reducer as formReducer } from 'redux-form';
 
 const { createStore, combineReducers, applyMiddleware } = require("redux");
 
@@ -12,7 +13,8 @@ let reducers = combineReducers({
     messagesPage: messagesReducer,
     sideBar: sideBarReducer,
     usersPage: usersReducer,
-    authMe: authMe
+    authMe: authMe,
+    form: formReducer
 });
 
 let store = createStore(reducers, applyMiddleware(thunkMiddleware)); //створили об'єкт store
