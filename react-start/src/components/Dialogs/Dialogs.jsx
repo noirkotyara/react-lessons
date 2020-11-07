@@ -51,7 +51,3 @@ export default compose(
     connect(mapStateToPropsRedirect,{}),
     withAuthMe)(Dialogs);
 
-// let DialogsContainerHOC = withAuthMe(Dialogs);
-// let DialogsContainerHOCRedirect = connect(mapStateToPropsRedirect,{})(DialogsContainerHOC);
-
-// export default DialogsContainerHOCRedirect;

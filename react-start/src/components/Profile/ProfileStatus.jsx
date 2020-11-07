@@ -3,28 +3,37 @@ import cl from './ProfileStatus.module.css';
 
 
 class ProfileStatus extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {editMode: false}
-    }
-    // state = {
-    //     editMode: false
-    // }
+    state = {
+            editMode: false,
+            status: this.props.status
+        }
     editStatus = () => {
+        console.log(this.state.status)
         this.setState({ editMode: true });
     }
+    onChange = (event) => {
+        this.setState({status: event.target.value})
+    }
+    
+    // updateStatus
+    // getStatus
+    
     readyStatus = () => {
         this.setState({ editMode: false });
+        // debugger;
+        this.props.updateStatus(this.state.status);
     }
     render() {
         return (
             <div className={cl.content}>
+                <span className={cl.status}>Status:</span>
                 {this.state.editMode
-                    ? <div>
-                        <input onBlur={this.readyStatus} autoFocus={true} type="text" value={this.props.status} />
+                    ? <div className={cl.editionVersion}>
+                        <input onBlur={this.readyStatus} autoFocus={true} type="text" value={this.state.status} onChange={this.onChange} ></input>
                     </div>
-                    : <div>
-                        <span onDoubleClick={this.editStatus}>{this.props.status}</span>
+                    : <div >
+                        <span className={cl.readyStatus} onDoubleClick={this.editStatus}>{this.props.status || '---------'}</span> 
+                        {/* значення беруться з пропсів потім вони відображаються в local state, --> рендеряться в інпуті */}
                     </div>}
 
             </div>

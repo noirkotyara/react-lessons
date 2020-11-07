@@ -12,8 +12,9 @@ const Profile = (props) => {
              {/* <div>
                     <img className={cl.back} src="https://www.talkwalker.com/images/2020/blog-headers/image-analysis.png" alt='background'></img>
                 </div> */}
-            <ProfileStatus status={'Hello my friend'}/>
+            
             <ProfileInfo profileData={props.profile}/>
+            <ProfileStatus {...props} />
             <MyPostsContainer store={props.store} />
         </div>
     );
