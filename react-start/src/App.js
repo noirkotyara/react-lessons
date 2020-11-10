@@ -10,14 +10,16 @@ import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
+import LoginFormContainer from './components/Login/Login';
 
 
 const App = (props) => {
-
+   
        
     let PostsComp = () => <ProfileContainer store={props.store}/>;
     let DialogsMessagesComp = () => <DialogsContainer store={props.store} />;
     let UsersComp = () => <UsersContainer store={props.store} />;
+    let LoginFormContainerCom = () => <LoginFormContainer store={props.store} />;
 
     return (
         <BrowserRouter>
@@ -31,7 +33,7 @@ const App = (props) => {
                 <Route path='/music' render={Music}/>
                 <Route path='/settings' render={Settings}/>
                 <Route path='/users' render={UsersComp}/>
-                <Route path='/login' render={Login}/>
+                <Route path='/login' render={LoginFormContainerCom}/>
             </div>
            
         </div>

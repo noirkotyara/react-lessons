@@ -83,7 +83,6 @@ export const setStatusThunk = (status) => {
 
         userProfile.updateStatus(status)
             .then(data => {
-                // debugger;
                 if (data.resultCode === 0) {
                     dispatch(updateStatusAC(status))
                 }
@@ -96,7 +95,6 @@ export const getStatusThunk = (userID) => {
         !userID && (userID = 12341);
         userProfile.getStatus(userID)
             .then(data => {
-                debugger;
                 dispatch(getStatusAC(data))
             });
     }

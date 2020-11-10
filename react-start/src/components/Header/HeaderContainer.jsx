@@ -5,7 +5,7 @@ import Header from './Header';
 
 class HeaderCl extends React.Component {
     componentDidMount() {
-        this.props.authMeSuccess();
+       // this.props.authMeSuccess();
     }
     render() {
         return <> <Header {...this.props} /> </>

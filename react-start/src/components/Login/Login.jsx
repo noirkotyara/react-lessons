@@ -1,12 +1,15 @@
 import cl from '../Login/Login.module.css';
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+import authMe, { putLoginPasswordThunk } from '../../redux/authMe';
 
 
 
 let Login = (props) => {
-    let onSubmit = (formData) => {
-        console.log(formData);
+    const onSubmit = (formData) => {
+            console.log(props.authMe);
+        props.isLogin(formData);
     }
     return <>
         <div className={cl.starter}>LOGIN</div>
@@ -15,9 +18,9 @@ let Login = (props) => {
 }
 
 let LoginForm = (props) => {
-console.log(props);
     return <>
-        <form onSubmit={(props) => props.handleSubmit(props)}>
+        <form onSubmit={props.handleSubmit}> 
+        {/* handleSubmit is in the Redux-Form === LoginFormRedux */}
            <div><Field name='login' component="input" type="text" placeholder={'login'}/></div>
            <div><Field name='password' component="input" type="text" placeholder={'password'}/></div> 
            <div><Field name='checkbox' component="input" type="checkbox"/>Remember Me</div> 
@@ -27,6 +30,12 @@ console.log(props);
 
 
 }
- let LoginFormRedux = reduxForm({form:'login'})(LoginForm)
+let mapStateToProps = (state) => {
+    return {authMe : state.authMe.isAuthMe}
+}
 
-export default Login;
+ let LoginFormRedux = reduxForm({form:'login'})(LoginForm)
+    let LoginFormContainer = connect(mapStateToProps, {
+        isLogin : putLoginPasswordThunk
+    })(Login);
+export default LoginFormContainer;
