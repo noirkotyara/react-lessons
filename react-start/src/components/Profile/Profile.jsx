@@ -6,16 +6,15 @@ import ProfileStatus from './ProfileStatus';
 
 
 const Profile = (props) => {
+    let onSubmit = (formData) => {
+        props.postForm(formData.newPostText);
+    }
     
     return (
         <div className={cl.content}>
-             {/* <div>
-                    <img className={cl.back} src="https://www.talkwalker.com/images/2020/blog-headers/image-analysis.png" alt='background'></img>
-                </div> */}
-            
             <ProfileInfo profileData={props.profile}/>
             <ProfileStatus {...props} />
-            <MyPostsContainer store={props.store} />
+            <MyPostsContainer store={props.store} onSubmit={onSubmit} />
         </div>
     );
 }

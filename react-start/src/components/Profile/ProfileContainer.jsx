@@ -2,15 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { getStatusThunk, setProfileThunk, setStatusThunk } from '../../redux/profile-reducer';
-import { withAuthMe } from '../hoc/hoc';
+import { getStatusThunk, postForm, setProfileThunk, setStatusThunk } from '../../redux/profile-reducer';
 import Profile from './Profile';
 
 class ProfileContainer extends React.Component {
     componentDidMount() {
         let userID = this.props.match.params.userId;
         this.props.setProfile(userID);
-        // if(userID === undefined){ userID = 12341 }    
         this.props.getStatus(userID);
     }
     render() {
@@ -34,7 +32,9 @@ export default compose(
     connect(mapStateToProps, {
         setProfile: setProfileThunk,
         updateStatus: setStatusThunk,
-        getStatus: getStatusThunk
+        getStatus: getStatusThunk,
+        postForm: postForm
+        
     }),
     withRouter,
     connect(mapStateToPropsRedirect, {})

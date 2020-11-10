@@ -1,4 +1,5 @@
 import React from 'react';
+import { Field, reduxForm } from 'redux-form';
 import cl from './MyPosts.module.css';
 import Post from './Post/Post';
 
@@ -6,23 +7,21 @@ const MyPosts = (props) => {
 
     let postLink = React.createRef();
     let postsGenerate = props.postsGenerate.map(p => <Post key={p.id} message={p.message} likes={p.likes} />);
-    
-    let onChange = () =>{
-        let text = postLink.current.value;
-        props.onChange(text);
-    } 
 
     return (
         <div>
-            <div>
-                <textarea ref={postLink} onChange={onChange} value={props.newPostText}  cols="30" rows="4"></textarea>
-                <button onClick={props.addPost} className={cl.addPost}>Add post</button>
-            </div>
+            <form onSubmit={props.handleSubmit}>
+                <Field component={'textarea'} name='newPostText' type="text" placeholder={'Write your post here...'}/>
+                <button type="submit" className={cl.addPost}>Add post</button>
+            </form>
             <div className={cl.posts}>
                 {postsGenerate}
             </div>
         </div>
     );
+    
 }
-
-    export default MyPosts;
+let MyPostsRedux = reduxForm({
+    form:'post'
+})(MyPosts);
+    export default MyPostsRedux;

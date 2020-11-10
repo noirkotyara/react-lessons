@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { withAuthMe } from '../hoc/hoc';
+import { Field, reduxForm } from 'redux-form';
 import Dialog from './Dialog/Dialog';
 import cl from './Dialogs.module.css';
 import Message from './Message/Message';
@@ -9,20 +9,14 @@ import Message from './Message/Message';
 
 const Dialogs = (props) => {
 
-
+let onSubmit = (formData) => {
+    debugger;
+        props.sendMessage(formData.newMessageText);
+}
     let dialogsGenerate = props.dialogsGenerate.map(d => <Dialog key={d.id} name={d.name} id={d.id} avatar={d.ava} />);
     let messagesGenerate = props.messagesGenerate.map(m => <Message key={m.id} message={m.message} />);
   
     
-    let onChangeMessage = (event) => {
-        let text = event.target.value;
-        props.onChange(text);
-      
-    };
-    let sendMessages = () => {
-        props.sendMessage();
-        props.onChange('');
-    }
     return (
         <div className={cl.dialogs}>
             <div className={cl.dialogsItems}>
@@ -33,21 +27,33 @@ const Dialogs = (props) => {
                 {messagesGenerate}
 
             </div>
-            <div>
-                <textarea className={cl.text}  onChange={onChangeMessage} value={props.newMessageText} cols="30" rows="5" />
-                <button onClick={sendMessages} className={cl.sendMessage}>send</button>
-            </div>
+           <SendMessageRedux onSubmit={onSubmit}/>
 
         </div>
 
     );
 }
 
+let SendMessage = (props) => {
+    return <>
+         <form onSubmit={props.handleSubmit}>
+                <Field name='newMessageText' component='textarea'/>
+                <button className={cl.sendMessage}>send</button>
+            </form>
+    </>;
+}
+
+let SendMessageRedux = reduxForm({form:'sendMessage'})(SendMessage);
+
+
 let mapStateToPropsRedirect = (state) => {
     return {isAuthMe: state.authMe.isAuthMe}
 }
 
+
+
 export default compose(
-    connect(mapStateToPropsRedirect,{}),
-    withAuthMe)(Dialogs);
+    reduxForm({form:'sendMessage'}),
+    connect(mapStateToPropsRedirect,{})
+    )(Dialogs);
 

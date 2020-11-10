@@ -1,17 +1,18 @@
 import { userProfile } from "../api/api";
 
 
-const ADDPOSTSTATE = 'ADD-POST-STATE';
-const UPLOADPOSTSTATE = 'UPLOAD-POST-STATE';
+
+
 const SETPROF = 'SET-PROFILE';
 const UPDATESTATUS = 'SET-STATUS';
 const GETSTATUS = 'GETSTATUS';
+const POSTF = 'POST-FORM-newPostText';
 
-export let addPostActionCreator = () => ({ type: ADDPOSTSTATE });
-export let uploadPoststateActionCreator = (text) => ({ type: UPLOADPOSTSTATE, newText: text });
+
 let setProfile = (profile) => ({ type: SETPROF, profile });
 let updateStatusAC = (status) => ({ type: UPDATESTATUS, status });
 let getStatusAC = (status) => ({ type: GETSTATUS, status });
+export let postForm = (content) => ({ type: POSTF, content });
 
 let initialState = {
     postsData: [
@@ -29,25 +30,17 @@ let profileReducer = (state = initialState, action) => {
 
 
     switch (action.type) {
-        case ADDPOSTSTATE:
-            if (state.newPostText.length !== 0) { //юзаю state бо я його по суті не змінюю
-                let newPost = {
-                    id: 5,
-                    message: state.newPostText,
-                    likes: 0
-                };
-                return {
-                    ...state,
-                    postsData: [...state.postsData, newPost]
-                };
-            }
-            break;
+        case POSTF:
+            let newPost = {
+                id: 5,
+                message: action.content,
+                likes: 0
+            };
 
-        case UPLOADPOSTSTATE:
             return {
                 ...state,
-                newPostText: action.newText
-            };
+                postsData: [...state.postsData, newPost]
+            }
         case SETPROF:
             return {
                 ...state,

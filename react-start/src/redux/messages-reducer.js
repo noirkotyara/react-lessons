@@ -3,8 +3,7 @@ const UPLOADMESSAGESTATE = 'UPLOAD-MESSAGE-STATE';
 
 // this._state.messagesPage
 
-export let addMessagestateActionCreator = () => ({ type: ADDMESSAGESTATE });
-export let uploadMessagestateActionCreator = (text) => ({ type: UPLOADMESSAGESTATE, newText: text });
+export let sendMessage = (newMessageText) => ({ type: ADDMESSAGESTATE, newMessageText });
 
 
 let initialState = {
@@ -18,8 +17,7 @@ let initialState = {
         { id: 1, name: 'Zorro', ava: 'dcdc' },
         { id: 2, name: 'Lyubov', ava: 'img-l' },
         { id: 3, name: 'Kuscherenko', ava: 'img-ll' }
-    ],
-    newMessageText: ''
+    ]
 };
 
 
@@ -28,18 +26,10 @@ let messagesReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case ADDMESSAGESTATE:
-            if (state.newMessageText.length !== 0) {
-                return {
-                    ...state,
-                    messagesData: [...state.messagesData, { id: 8, message: state.newMessageText }]
-                }
-            }
-            break;
-
-        case UPLOADMESSAGESTATE:
+            debugger;
             return {
                 ...state,
-                newMessageText: action.newText
+                messagesData: [...state.messagesData, { id: 8, message: action.newMessageText }]
             }
 
         default:
