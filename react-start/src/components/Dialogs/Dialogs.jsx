@@ -4,6 +4,7 @@ import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
 import { InputComp } from '../common/InputChecker/InputChecker';
 import { maxLengthC, required } from '../common/Validators/Validators';
+import { withAuthMe } from '../hoc/hoc';
 import Dialog from './Dialog/Dialog';
 import cl from './Dialogs.module.css';
 import Message from './Message/Message';
@@ -55,6 +56,7 @@ let mapStateToPropsRedirect = (state) => {
 
 export default compose(
     reduxForm({form:'sendMessage'}),
-    connect(mapStateToPropsRedirect,{})
+    connect(mapStateToPropsRedirect,{}),
+    withAuthMe
     )(Dialogs);
 

@@ -1,6 +1,6 @@
-.checker.error textarea {
-    border: solid 5px red;
-    font-style: italic;
+.error textarea,
+.error input {
+    border: 5px solid red;
 }
 
 .messageError {

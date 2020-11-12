@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { authMeSuccessThunk } from '../../redux/authMe';
+import { authMeSuccessThunk, logoutThunk } from '../../redux/authMe';
 import Header from './Header';
 
 class HeaderCl extends React.Component {
@@ -18,6 +18,7 @@ let mapStateToProps = (state) => {
 }
 
 let HeaderContainer = connect(mapStateToProps, {
-    authMeSuccess: authMeSuccessThunk
+    authMeSuccess: authMeSuccessThunk,
+    logout: logoutThunk
 })(HeaderCl);
 export default HeaderContainer;

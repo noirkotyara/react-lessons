@@ -3,10 +3,12 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { getStatusThunk, postForm, setProfileThunk, setStatusThunk } from '../../redux/profile-reducer';
+import { withAuthMe } from '../hoc/hoc';
 import Profile from './Profile';
 
 class ProfileContainer extends React.Component {
     componentDidMount() {
+        debugger;
         let userID = this.props.match.params.userId;
         this.props.setProfile(userID);
         this.props.getStatus(userID);
@@ -37,6 +39,7 @@ export default compose(
         
     }),
     withRouter,
-    connect(mapStateToPropsRedirect, {})
-    // withAuthMe
+    connect(mapStateToPropsRedirect, {}),
+    withAuthMe
 )(ProfileContainer);
+
