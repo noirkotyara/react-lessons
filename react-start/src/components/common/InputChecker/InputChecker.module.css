@@ -1,0 +1,9 @@
+.checker.error textarea {
+    border: solid 5px red;
+    font-style: italic;
+}
+
+.messageError {
+    color: crimson;
+    font-style: italic;
+}

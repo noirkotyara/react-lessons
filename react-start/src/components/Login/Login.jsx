@@ -3,6 +3,8 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import authMe, { putLoginPasswordThunk } from '../../redux/authMe';
+import { InputComp } from '../common/InputChecker/InputChecker';
+import { maxLengthC, required } from '../common/Validators/Validators';
 
 
 
@@ -16,14 +18,13 @@ let Login = (props) => {
         <LoginFormRedux onSubmit={onSubmit}/>
     </>
 }
-
+let maxLength30 = maxLengthC(30);
 let LoginForm = (props) => {
     return <>
         <form onSubmit={props.handleSubmit}> 
-        {/* handleSubmit is in the Redux-Form === LoginFormRedux */}
-           <div><Field name='login' component="input" type="text" placeholder={'login'}/></div>
-           <div><Field name='password' component="input" type="text" placeholder={'password'}/></div> 
-           <div><Field name='checkbox' component="input" type="checkbox"/>Remember Me</div> 
+           <div><Field name='login' component={InputComp} type="text" placeholder={'login'} validate={[required, maxLength30]}/></div>
+           <div><Field name='password' component={InputComp} type="text" placeholder={'password'} validate={[required, maxLength30]}/></div> 
+           <div><Field name='checkbox' component='input' type="checkbox" />Remember Me</div> 
            <div><button>Login</button></div> 
         </form>
     </>

@@ -1,27 +1,40 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { TextareaComp } from '../../common/InputChecker/InputChecker';
+import { maxLengthC, required } from '../../common/Validators/Validators';
 import cl from './MyPosts.module.css';
 import Post from './Post/Post';
+let maxLength20 = maxLengthC(20);
 
 const MyPosts = (props) => {
 
-    let postLink = React.createRef();
     let postsGenerate = props.postsGenerate.map(p => <Post key={p.id} message={p.message} likes={p.likes} />);
-
+    let onSubmit = (formData) => {
+        props.postForm(formData.newPostText);
+    }
     return (
         <div>
-            <form onSubmit={props.handleSubmit}>
-                <Field component={'textarea'} name='newPostText' type="text" placeholder={'Write your post here...'}/>
-                <button type="submit" className={cl.addPost}>Add post</button>
-            </form>
+
+            <FormMyPostR {...props} onSubmit={onSubmit} />
+
             <div className={cl.posts}>
                 {postsGenerate}
             </div>
         </div>
     );
-    
+
 }
-let MyPostsRedux = reduxForm({
-    form:'post'
-})(MyPosts);
-    export default MyPostsRedux;
+let FormMyPost = (props) => {
+    return <>
+        <form onSubmit={props.handleSubmit}>
+            <Field component={TextareaComp} name='newPostText' type="text" validate={[required, maxLength20]} placeholder={'Write your post here...'} />
+            <button type="submit" className={cl.addPost}>Add post</button>
+        </form>
+    </>
+}
+
+let FormMyPostR = reduxForm({
+    form: 'post'
+})(FormMyPost);
+
+export default MyPosts;

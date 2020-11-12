@@ -6,15 +6,13 @@ import ProfileStatus from './ProfileStatus';
 
 
 const Profile = (props) => {
-    let onSubmit = (formData) => {
-        props.postForm(formData.newPostText);
-    }
+    
     
     return (
         <div className={cl.content}>
             <ProfileInfo profileData={props.profile}/>
             <ProfileStatus {...props} />
-            <MyPostsContainer store={props.store} onSubmit={onSubmit} />
+            <MyPostsContainer store={props.store}  />
         </div>
     );
 }

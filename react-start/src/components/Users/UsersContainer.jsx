@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { changeCurPageThunk, setUsersThunk, unFollowThunk, followThunk } from '../../redux/users-reducer';
 import Users from './Users';
-import Preloader from '../common/Preloader';
+import Preloader from '../common/Preloader/Preloader';
 
 
 class UsersContainerClass extends React.Component {

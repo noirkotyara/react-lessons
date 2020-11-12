@@ -1,6 +1,6 @@
 import React from 'react';
 import cl from './ProfileInfo.module.css';
-import Preloader from '../common/Preloader';
+import Preloader from '../common/Preloader/Preloader';
 import sad from '../../assets/images/sad.png';
 import happy from '../../assets/images/happy.png';
 
@@ -16,7 +16,7 @@ const ProfileInfo = (props) =>{
     <li>{props.profileData.contacts.instagram}</li>
     <li>{props.profileData.contacts.vk}</li>
                     </ul>
-    <div>{props.profileData.lookingForAJob ? <img src={happy} style={{width:'50px', height:'50px'}} alt=""></img> : <img src={sad} alt=""></img>}</div>
+    <div>{props.profileData.lookingForAJob ? <img src={happy} style={{width:'50px', height:'50px'}} alt=""></img> : <img src={sad} style={{width:'50px', height:'50px'}}alt=""></img>}</div>
                 </div>
                
             </div>

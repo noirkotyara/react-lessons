@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
+import { InputComp } from '../common/InputChecker/InputChecker';
+import { maxLengthC, required } from '../common/Validators/Validators';
 import Dialog from './Dialog/Dialog';
 import cl from './Dialogs.module.css';
 import Message from './Message/Message';
@@ -10,7 +12,6 @@ import Message from './Message/Message';
 const Dialogs = (props) => {
 
 let onSubmit = (formData) => {
-    debugger;
         props.sendMessage(formData.newMessageText);
 }
     let dialogsGenerate = props.dialogsGenerate.map(d => <Dialog key={d.id} name={d.name} id={d.id} avatar={d.ava} />);
@@ -33,11 +34,11 @@ let onSubmit = (formData) => {
 
     );
 }
-
+ let maxLength10 = maxLengthC(10);
 let SendMessage = (props) => {
     return <>
          <form onSubmit={props.handleSubmit}>
-                <Field name='newMessageText' component='textarea'/>
+                <Field name='newMessageText' validate={[required, maxLength10]} component={InputComp}/>
                 <button className={cl.sendMessage}>send</button>
             </form>
     </>;
