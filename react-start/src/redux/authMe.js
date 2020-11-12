@@ -1,3 +1,4 @@
+import { stopSubmit } from "redux-form";
 import { authAPI } from "../api/api";
 
 const SET_USER_DATA = 'SET-USER-DATA';
@@ -54,13 +55,19 @@ export const authMeSuccessThunk = () => {
 }
 
 export const putLoginPasswordThunk = (data) => {
+
     return (dispatch) => {
+
+
         authAPI.isLogin(data)
             .then(dataR => {
                 debugger;
-                dataR.resultCode === 0 && dispatch(authMeSuccessThunk());
-                // dispatch(putLoginPassword(dataR.data.userId));
-                // (dataR.resultCode === 0) && dispatch(setAuthMe(true));
+                if (dataR.resultCode === 0) dispatch(authMeSuccessThunk());
+                else {
+                    let catchError = dataR.messages.length > 0 ? dataR.messages[0] : 'Some errors';
+                    dispatch(stopSubmit('login', { _error: catchError }));
+                }
+
             });
 
 
