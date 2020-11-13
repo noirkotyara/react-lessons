@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, withRouter } from 'react-router-dom';
 import './App.css';
 import News from './components/News/News';
 import Music from './components/Music/Music';
@@ -9,40 +9,55 @@ import NavbarContainer from './components/Navbar/NavbarContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
-import Login from './components/Login/Login';
 import LoginFormContainer from './components/Login/Login';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { setInitializeThunk } from './redux/app-reducer';
+import Preloader from './components/common/Preloader/Preloader';
 
 
-const App = (props) => {
-   
-       
-    let PostsComp = () => <ProfileContainer store={props.store}/>;
-    let DialogsMessagesComp = () => <DialogsContainer store={props.store} />;
-    let UsersComp = () => <UsersContainer store={props.store} />;
-    let LoginFormContainerCom = () => <LoginFormContainer store={props.store} />;
+class App extends React.Component {
+    
+componentDidMount(){
+        this.props.setInitialize();
+}
+    PostsComp = () => <ProfileContainer store={this.props.store} />;
+    DialogsMessagesComp = () => <DialogsContainer store={this.props.store} />;
+    UsersComp = () => <UsersContainer store={this.props.store} />;
+    LoginFormContainerCom = () => <LoginFormContainer store={this.props.store} />;
+    render() {
+        if(!this.props.initialized){ return <Preloader/>}
+        return (
+            
+                <div className='app-wrapper'>
+                    <HeaderContainer />
+                    <NavbarContainer />
+                    <div className='app-wrapper-content'>
+                        <Route path='/dialogs' render={this.DialogsMessagesComp} />
+                        <Route path='/profile/:userId?' render={this.PostsComp} />
+                        <Route path='/news' render={News} />
+                        <Route path='/music' render={Music} />
+                        <Route path='/settings' render={Settings} />
+                        <Route path='/users' render={this.UsersComp} />
+                        <Route path='/login' render={this.LoginFormContainerCom} />
+                    </div>
 
-    return (
-        <BrowserRouter>
-        <div className='app-wrapper'>
-            <HeaderContainer />
-            <NavbarContainer />
-            <div className='app-wrapper-content'>
-                <Route path='/dialogs' render={DialogsMessagesComp}/>
-                <Route path='/profile/:userId?' render={PostsComp}/>
-                <Route path='/news' render={News}/>
-                <Route path='/music' render={Music}/>
-                <Route path='/settings' render={Settings}/>
-                <Route path='/users' render={UsersComp}/>
-                <Route path='/login' render={LoginFormContainerCom}/>
-            </div>
+                </div>
            
-        </div>
-        </BrowserRouter>
-    );
+        );
+    }
+
 }
 
 
+let mapStateToProps = (state) => {
+    return ({
+        initialized: state.appInit.initialized
+    })
+}
 
-
-
-export default App;
+let AppMain = compose(
+   withRouter,
+    connect(mapStateToProps,{ setInitialize: setInitializeThunk})    
+)(App);
+export default AppMain;

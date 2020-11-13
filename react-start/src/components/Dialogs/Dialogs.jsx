@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
+import { authMeSuccessThunk } from '../../redux/authMe';
 import { InputComp } from '../common/InputChecker/InputChecker';
 import { maxLengthC, required } from '../common/Validators/Validators';
 import { withAuthMe } from '../hoc/hoc';
@@ -10,30 +11,31 @@ import cl from './Dialogs.module.css';
 import Message from './Message/Message';
 
 
-const Dialogs = (props) => {
-
-let onSubmit = (formData) => {
-        props.sendMessage(formData.newMessageText);
-}
-    let dialogsGenerate = props.dialogsGenerate.map(d => <Dialog key={d.id} name={d.name} id={d.id} avatar={d.ava} />);
-    let messagesGenerate = props.messagesGenerate.map(m => <Message key={m.id} message={m.message} />);
-  
+class Dialogs extends React.Component{
     
-    return (
+ onSubmit = (formData) => {
+        this.props.sendMessage(formData.newMessageText);
+}
+     dialogsGenerate = this.props.dialogsGenerate.map(d => <Dialog key={d.id} name={d.name} id={d.id} avatar={d.ava} />);
+     messagesGenerate = this.props.messagesGenerate.map(m => <Message key={m.id} message={m.message} />);
+  
+    render(){
+        return (
         <div className={cl.dialogs}>
             <div className={cl.dialogsItems}>
-                {dialogsGenerate}
+                {this.dialogsGenerate}
 
             </div>
             <div className={cl.messages}>
-                {messagesGenerate}
+                {this.messagesGenerate}
 
             </div>
-           <SendMessageRedux onSubmit={onSubmit}/>
+           <SendMessageRedux onSubmit={this.onSubmit}/>
 
         </div>
 
-    );
+    );}
+    
 }
  let maxLength10 = maxLengthC(10);
 let SendMessage = (props) => {
@@ -56,7 +58,7 @@ let mapStateToPropsRedirect = (state) => {
 
 export default compose(
     reduxForm({form:'sendMessage'}),
-    connect(mapStateToPropsRedirect,{}),
+    connect(mapStateToPropsRedirect,{authMeSuccess: authMeSuccessThunk}),
     withAuthMe
     )(Dialogs);
 

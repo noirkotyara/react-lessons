@@ -8,7 +8,7 @@ export let sendMessage = (newMessageText) => ({ type: ADDMESSAGESTATE, newMessag
 
 let initialState = {
     messagesData: [
-        { id: 1, message: 'Hi' },
+        { id: 1, message: 'злтщототолиолиг' },
         { id: 2, message: 'Hello' },
         { id: 3, message: 'Privet' },
         { id: 4, message: 'Au revoir' }

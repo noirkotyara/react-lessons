@@ -45,9 +45,8 @@ let authMe = (state = initialState, action) => {
 
 export const authMeSuccessThunk = () => {
     return (dispatch) => {
-        authAPI.isAuthMe()
+        return authAPI.isAuthMe()
             .then(data => {
-                debugger;
                 dispatch(setUserData({...data.data }));
                 (data.resultCode === 0) && dispatch(setAuthMe(true));
             });
@@ -61,7 +60,6 @@ export const putLoginPasswordThunk = (data) => {
 
         authAPI.isLogin(data)
             .then(dataR => {
-                debugger;
                 if (dataR.resultCode === 0) dispatch(authMeSuccessThunk());
                 else {
                     let catchError = dataR.messages.length > 0 ? dataR.messages[0] : 'Some errors';
@@ -80,7 +78,7 @@ export const logoutThunk = () => {
         authAPI.isLogout()
             .then(dataR => {
                 // let dataNull = { id: null, login: null, email: null };
-                debugger;
+
                 if (dataR.resultCode === 0) {
                     dispatch(setAuthMe(false));
                     dispatch(setUserData({...dataR.data }));

@@ -9,8 +9,8 @@ import checker from './../common/InputChecker/InputChecker.module.css';
 
 
 let Login = (props) => {
+ 
     const onSubmit = (formData) => {
-        console.log(props.authMe);
         props.isLogin(formData);
     }
     return <>
@@ -19,8 +19,7 @@ let Login = (props) => {
     </>
 }
 let maxLength30 = maxLengthC(30);
-let LoginForm = (props) => {
-    console.log(props);
+let LoginForm = (props) => {  
     return <>
         <form onSubmit={props.handleSubmit}>
             <div><Field name='login' component={InputComp} type="text" placeholder={'login'} validate={[required, maxLength30]} /></div>
@@ -30,8 +29,6 @@ let LoginForm = (props) => {
             <div><button>Login</button></div>
         </form>
     </>
-
-
 }
 let mapStateToProps = (state) => {
     return { authMe: state.authMe.isAuthMe }
