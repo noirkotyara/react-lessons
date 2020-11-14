@@ -1,9 +1,11 @@
-export const getUsersData = (state) => {
-    return state.usersPage.usersData;
-}
+import { createSelector } from "reselect";
 
-export const getCurrentPage = (state) => { return state.usersPage.currentPage }
-export const getTotalCount = (state) => { return state.usersPage.totalCount }
-export const getPageSize = (state) => { return state.usersPage.pageSize }
-export const getIsFetching = (state) => { return state.usersPage.isFetching }
-export const getFollowingInProgress = (state) => { return state.usersPage.followingInProgress }
+const getUsersPage = (state) => { return state.usersPage };
+
+
+export const getUsersData = createSelector(getUsersPage, (usersPage) => { return usersPage.usersData; });
+export const getCurrentPage = createSelector(getUsersPage, (usersPage) => { return usersPage.currentPage });
+export const getTotalCount = createSelector(getUsersPage, (usersPage) => { return usersPage.totalCount });
+export const getPageSize = createSelector(getUsersPage, (usersPage) => { return usersPage.pageSize });
+export const getIsFetching = createSelector(getUsersPage, (usersPage) => { return usersPage.isFetching });
+export const getFollowingInProgress = createSelector(getUsersPage, (usersPage) => { return usersPage.followingInProgress });
