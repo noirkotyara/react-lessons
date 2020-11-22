@@ -5,13 +5,11 @@ import { userProfile } from "../api/api";
 
 const SETPROF = 'SET-PROFILE';
 const UPDATESTATUS = 'SET-STATUS';
-const GETSTATUS = 'GETSTATUS';
 const POSTF = 'POST-FORM-newPostText';
 
 
 let setProfile = (profile) => ({ type: SETPROF, profile });
 let updateStatusAC = (status) => ({ type: UPDATESTATUS, status });
-let getStatusAC = (status) => ({ type: GETSTATUS, status });
 export let postForm = (content) => ({ type: POSTF, content });
 
 let initialState = {
@@ -51,11 +49,6 @@ let profileReducer = (state = initialState, action) => {
                 ...state,
                 status: action.status
             }
-        case GETSTATUS:
-            return {
-                ...state,
-                status: action.status
-            }
         default:
             return state;
     }
@@ -73,7 +66,6 @@ export const setProfileThunk = (userID) => {
 
 export const setStatusThunk = (status) => {
     return (dispatch) => {
-
         userProfile.updateStatus(status)
             .then(data => {
                 if (data.resultCode === 0) {
@@ -88,7 +80,7 @@ export const getStatusThunk = (userID) => {
         !userID && (userID = 12341);
         userProfile.getStatus(userID)
             .then(data => {
-                dispatch(getStatusAC(data))
+                dispatch(updateStatusAC(data))
             });
     }
 }

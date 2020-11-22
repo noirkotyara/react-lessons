@@ -10,7 +10,7 @@ import Profile from './Profile';
 class ProfileContainer extends React.Component {
     componentDidMount() {
         let userID = this.props.match.params.userId;
-        if(!userID && !this.props.authorized) { debugger; return <Preloader/>}
+        if(!userID && !this.props.authorized) { return <Preloader/>}
         !userID && (userID = this.props.authorizedUser) 
         this.props.setProfile(userID);
         this.props.getStatus(userID);
