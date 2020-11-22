@@ -54,8 +54,7 @@ let usersReducer = (state = initialState, action) => {
         case DATA:
             return {
                 ...state,
-                usersData: [...action.usersData] // [...state.usersData, ...action.usersData] склеюємо старих і нових юзерів
-                    //[...action.usersData] затираэмо старих юзерыв новими якы прийшли з action
+                usersData: [...action.usersData]
             };
         case CURPAGE:
             return {
@@ -90,50 +89,35 @@ let usersReducer = (state = initialState, action) => {
     }
 }
 
-export const setUsersThunk = (currentPage, pageSize) => {
-    return (dispatch) => {
-        dispatch(toggleFetching(true));
-        usersAPI.getUsers(currentPage, pageSize)
-            .then(data => {
-                dispatch(toggleFetching(false));
-                dispatch(setUsers(data.items));
-                dispatch(setTotalCount(data.totalCount))
-            });
-    }
+export const setUsersThunk = (currentPage, pageSize) => async(dispatch) => {
+    dispatch(toggleFetching(true));
+    let data = await usersAPI.getUsers(currentPage, pageSize)
+    dispatch(toggleFetching(false));
+    dispatch(setUsers(data.items));
+    dispatch(setTotalCount(data.totalCount));
 }
-export const changeCurPageThunk = (page, pageSize) => {
-    return (dispatch) => {
-        dispatch(setCurPage(page));
-        dispatch(toggleFetching(true));
-        usersAPI.changeCurPage(page, pageSize)
-            .then(data => {
-                dispatch(toggleFetching(false));
-                dispatch(setUsers(data.items))
-            });
-    }
+export const changeCurPageThunk = (page, pageSize) => async(dispatch) => {
+    dispatch(setCurPage(page));
+    dispatch(toggleFetching(true));
+    let data = await usersAPI.changeCurPage(page, pageSize)
+
+    dispatch(toggleFetching(false));
+    dispatch(setUsers(data.items));
 }
 
-export const unFollowThunk = (userId) => {
-    return (dispatch) => {
-        dispatch(toggleFollowing(true, userId));
-        usersAPI.unFollowDeleteRequest(userId)
-            .then(data => {
-                data.resultCode === 0 && dispatch(doUnfollow(userId));
-                dispatch(toggleFollowing(false, userId));
-            });
+export const unFollowThunk = (userId) => async(dispatch) => {
 
-    }
+    dispatch(toggleFollowing(true, userId));
+    let data = await usersAPI.unFollowDeleteRequest(userId);
+    data.resultCode === 0 && dispatch(doUnfollow(userId));
+    dispatch(toggleFollowing(false, userId));
 }
 
-export const followThunk = (userId) => {
-    return (dispatch) => {
-        dispatch(toggleFollowing(true, userId));
-        usersAPI.followPostRequest(userId)
-            .then(data => {
-                data.resultCode === 0 && dispatch(doFollow(userId));
-                dispatch(toggleFollowing(false, userId));
-            });
+export const followThunk = (userId) => async(dispatch) => {
 
-    }
+    dispatch(toggleFollowing(true, userId));
+    let data = await usersAPI.followPostRequest(userId);
+    data.resultCode === 0 && dispatch(doFollow(userId));
+    dispatch(toggleFollowing(false, userId));
 }
 export default usersReducer;

@@ -1,8 +1,5 @@
 import { userProfile } from "../api/api";
 
-
-
-
 const SETPROF = 'SET-PROFILE';
 const UPDATESTATUS = 'SET-STATUS';
 const POSTF = 'POST-FORM-newPostText';
@@ -54,35 +51,22 @@ let profileReducer = (state = initialState, action) => {
     }
 }
 
-export const setProfileThunk = (userID) => {
-    return (dispatch) => {
-        !userID && (userID = 12341);
-        userProfile.showProfile(userID)
-            .then(data => {
-                dispatch(setProfile(data));
-            });
-    }
+export const setProfileThunk = (userID) => async(dispatch) => {
+    !userID && (userID = 12341);
+    let data = await userProfile.showProfile(userID);
+    dispatch(setProfile(data));
 }
 
-export const setStatusThunk = (status) => {
-    return (dispatch) => {
-        userProfile.updateStatus(status)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(updateStatusAC(status))
-                }
+export const setStatusThunk = (status) => async(dispatch) => {
+    let data = await userProfile.updateStatus(status)
+        (data.resultCode === 0) &&
+        dispatch(updateStatusAC(status))
 
-            });
-    }
 }
-export const getStatusThunk = (userID) => {
-    return (dispatch) => {
-        !userID && (userID = 12341);
-        userProfile.getStatus(userID)
-            .then(data => {
-                dispatch(updateStatusAC(data))
-            });
-    }
+export const getStatusThunk = (userID) => async(dispatch) => {
+    !userID && (userID = 12341);
+    let data = await userProfile.getStatus(userID)
+    dispatch(updateStatusAC(data));
 }
 
 export default profileReducer;

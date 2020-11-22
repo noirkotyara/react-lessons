@@ -1,7 +1,8 @@
+import zorroAva from './../assets/images/zorro.jpg';
+import kuscherenkoAva from './../assets/images/kuscherenko.jpg';
+import lyubovAva from './../assets/images/lyubov.jpg';
 const ADDMESSAGESTATE = 'ADD-MESSAGE-STATE';
-const UPLOADMESSAGESTATE = 'UPLOAD-MESSAGE-STATE';
 
-// this._state.messagesPage
 
 export let sendMessage = (newMessageText) => ({ type: ADDMESSAGESTATE, newMessageText });
 
@@ -14,9 +15,9 @@ let initialState = {
         { id: 4, message: 'Au revoir' }
     ],
     dialogsUsersData: [
-        { id: 1, name: 'Zorro', ava: 'dcdc' },
-        { id: 2, name: 'Lyubov', ava: 'img-l' },
-        { id: 3, name: 'Kuscherenko', ava: 'img-ll' }
+        { id: 1, name: 'Zorro', ava: zorroAva },
+        { id: 2, name: 'Lyubov', ava: lyubovAva },
+        { id: 3, name: 'Kuscherenko', ava: kuscherenkoAva }
     ]
 };
 

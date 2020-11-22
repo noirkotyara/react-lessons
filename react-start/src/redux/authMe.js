@@ -42,47 +42,29 @@ let authMe = (state = initialState, action) => {
     }
 }
 
-export const authMeSuccessThunk = () => {
-    return (dispatch) => {
-
-        return authAPI.isAuthMe()
-            .then(data => {
-                dispatch(setUserData({...data.data }));
-                (data.resultCode === 0) && dispatch(setAuthMe(true));
-            });
-    }
+export const authMeSuccessThunk = () => async(dispatch) => {
+    let data = await authAPI.isAuthMe();
+    dispatch(setUserData({...data.data }));
+    (data.resultCode === 0) && dispatch(setAuthMe(true));
 }
 
-export const putLoginPasswordThunk = (data) => {
-    return (dispatch) => {
-
-
-        authAPI.isLogin(data)
-            .then(dataR => {
-                if (dataR.resultCode === 0) dispatch(authMeSuccessThunk());
-                else {
-                    let catchError = dataR.messages.length > 0 ? dataR.messages[0] : 'Some errors';
-                    dispatch(stopSubmit('login', { _error: catchError }));
-                }
-
-            });
-
-
-
-
+export const putLoginPasswordThunk = (data) => async(dispatch) => {
+    let dataR = await authAPI.isLogin(data);
+    if (dataR.resultCode === 0) dispatch(authMeSuccessThunk());
+    else {
+        let catchError = dataR.messages.length > 0 ? dataR.messages[0] : 'Some errors';
+        dispatch(stopSubmit('login', { _error: catchError }));
     }
+
 }
-export const logoutThunk = () => {
-    return (dispatch) => {
-        authAPI.isLogout()
-            .then(dataR => {
-                if (dataR.resultCode === 0) {
-                    dispatch(setAuthMe(false));
-                    dispatch(setUserData({...dataR.data }));
-                }
-            })
+export const logoutThunk = () => async(dispatch) => {
 
-    }
+    let dataR = await authAPI.isLogout();
+    (dataR.resultCode === 0) &&
+    dispatch(setAuthMe(false));
+    dispatch(setUserData({...dataR.data }));
+
+
 }
 
 

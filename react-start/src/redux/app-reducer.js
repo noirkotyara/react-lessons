@@ -22,14 +22,9 @@ let appInitialization = (state = initialState, action) => {
     }
 }
 
-export const setInitializeThunk = () => {
-    return (dispatch) => {
-        let promise = dispatch(authMeSuccessThunk());
-        Promise.all([promise]).then(() => {
-            dispatch(setInitialize());
-        })
-
-    }
+export const setInitializeThunk = () => async(dispatch) => {
+    await dispatch(authMeSuccessThunk());
+    dispatch(setInitialize());
 }
 
 
