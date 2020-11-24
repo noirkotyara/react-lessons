@@ -13,11 +13,11 @@ import Message from './Message/Message';
 
 class Dialogs extends React.Component{
     
- onSubmit = (formData) => {
-        this.props.sendMessage(formData.newMessageText);
-}
-     dialogsGenerate = this.props.dialogsGenerate.map(d => <Dialog key={d.id} name={d.name} id={d.id} avatar={d.ava} />);
-     messagesGenerate = this.props.messagesGenerate.map(m => <Message key={m.id} message={m.message} />);
+    onSubmit = (formData) => { this.props.sendMessage(formData.newMessageText);}
+
+
+    dialogsGenerate = this.props.dialogsGenerate.map(d => <Dialog key={d.id} name={d.name} id={d.id} avatar={d.ava} />);
+    messagesGenerate = this.props.messagesGenerate.map(m => <Message key={m.id} message={m.message} />);
   
     render(){
         return (
@@ -31,18 +31,19 @@ class Dialogs extends React.Component{
 
             </div>
            <SendMessageRedux onSubmit={this.onSubmit}/>
-
         </div>
-
-    );}
-    
+    );} 
 }
+
+
+
  let maxLength10 = maxLengthC(10);
+
 let SendMessage = (props) => {
     return <>
          <form onSubmit={props.handleSubmit}>
-                <Field name='newMessageText' validate={[required, maxLength10]} component={InputComp}/>
-                <button className={cl.sendMessage}>send</button>
+                <Field name='newMessageText' type="text" validate={[required, maxLength10]} component={InputComp}/>
+                <button type="submit" className={cl.sendMessage}>send</button>
             </form>
     </>;
 }

@@ -23,7 +23,6 @@ let initialState = {
 
 let profileReducer = (state = initialState, action) => {
 
-
     switch (action.type) {
         case POSTF:
             let newPost = {
@@ -58,9 +57,9 @@ export const setProfileThunk = (userID) => async(dispatch) => {
 }
 
 export const setStatusThunk = (status) => async(dispatch) => {
-    let data = await userProfile.updateStatus(status)
-        (data.resultCode === 0) &&
-        dispatch(updateStatusAC(status))
+    let data = await userProfile.updateStatus(status);
+    (data.resultCode === 0) &&
+    dispatch(updateStatusAC(status))
 
 }
 export const getStatusThunk = (userID) => async(dispatch) => {

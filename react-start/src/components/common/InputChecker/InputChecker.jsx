@@ -10,14 +10,12 @@ export const TextareaComp = ({ input, meta, ...props }) => {
     </>
 }
 
-
 export const InputComp = ({ input, meta, ...props }) => {
     return <>
         <div className={(meta.error && meta.visited && !meta.active) && cl.error}>
             <input  {...input} placeholder={props.placeholder}></input>
         </div>
             <span className={cl.messageError}>{ (meta.visited && !meta.active) &&  meta.error}</span>
-    
+
     </>
 }
-
