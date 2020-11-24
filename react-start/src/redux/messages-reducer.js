@@ -22,19 +22,16 @@ let initialState = {
 
 
 let messagesReducer = (state = initialState, action) => {
-
-
     switch (action.type) {
         case ADDMESSAGESTATE:
-            let message = {
-                id: 5,
-                message: action.newMessageText
-            };
+            debugger;
             return {
                 ...state,
-                messagesData: [...state.messagesData, message]
-            }
-
+                messagesData: [...state.messagesData, {
+                    id: 5,
+                    message: action.newMessageText
+                }]
+    }
         default:
             return state;
     }

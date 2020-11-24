@@ -1,4 +1,5 @@
 import React from 'react';
+import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
@@ -11,28 +12,29 @@ import cl from './Dialogs.module.css';
 import Message from './Message/Message';
 
 
-class Dialogs extends React.Component{
+const Dialogs = (props) => {
     
-    onSubmit = (formData) => { this.props.sendMessage(formData.newMessageText);}
+    let onSubmit = (formData) => { 
+        debugger; 
+        props.sendMessage(formData.newMessageText);}
+   
 
+    let dialogsGenerate = props.dialogsGenerate.map(d => <Dialog key={d.id} name={d.name} id={d.id} avatar={d.ava} />);
+    let messagesGenerate = props.messagesGenerate.map(m => <Message key={m.id} message={m.message} />);
 
-    dialogsGenerate = this.props.dialogsGenerate.map(d => <Dialog key={d.id} name={d.name} id={d.id} avatar={d.ava} />);
-    messagesGenerate = this.props.messagesGenerate.map(m => <Message key={m.id} message={m.message} />);
-  
-    render(){
         return (
         <div className={cl.dialogs}>
             <div className={cl.dialogsItems}>
-                {this.dialogsGenerate}
-
+                {dialogsGenerate}
             </div>
             <div className={cl.messages}>
-                {this.messagesGenerate}
+                {messagesGenerate}
 
             </div>
-           <SendMessageRedux onSubmit={this.onSubmit}/>
+           <SendMessageRedux onSubmit={onSubmit}/>
         </div>
-    );} 
+    );
+
 }
 
 
@@ -58,7 +60,6 @@ let mapStateToPropsRedirect = (state) => {
 
 
 export default compose(
-    reduxForm({form:'sendMessage'}),
     connect(mapStateToPropsRedirect,{authMeSuccess: authMeSuccessThunk}),
     withAuthMe
     )(Dialogs);
