@@ -7,12 +7,11 @@ const LOG_IN = 'LOG-AND-PASSWORD';
 
 export let setUserData = ({ id, login, email, isAuthMe }) => ({ type: SET_USER_DATA, data: { id, login, email, isAuthMe } });
 export let setAuthMe = (isAuthMe) => ({ type: IS_AUTH_ME, isAuthMe });
-let putLoginPassword = (id) => ({ type: LOG_IN, id })
 
 
 
 let initialState = {
-    userId: null,
+    id: null,
     login: null,
     email: null,
     isAuthMe: false,
@@ -24,7 +23,7 @@ let authMe = (state = initialState, action) => {
         case SET_USER_DATA:
             return {
                 ...state,
-                ...action.data
+               ...action.data
             }
         case IS_AUTH_ME:
             return {

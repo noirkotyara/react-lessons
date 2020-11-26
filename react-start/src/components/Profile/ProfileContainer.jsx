@@ -8,12 +8,22 @@ import { withAuthMe } from '../hoc/hoc';
 import Profile from './Profile';
 
 class ProfileContainer extends React.Component {
-    componentDidMount() {
+  refreshProfile = () => {
         let userID = this.props.match.params.userId;
-        if(!userID && !this.props.authorized) { return <Preloader/>}
-        !userID && (userID = this.props.authorizedUser) 
+        if(!userID){
+            userID = this.props.authorizedUser;
+            if(!userID) return<Preloader/>
+        } 
         this.props.setProfile(userID);
         this.props.getStatus(userID);
+  }
+    componentDidMount() {  
+        this.refreshProfile();
+    }
+ componentDidUpdate(prevProps, prevState){
+        if (prevProps.match.params.userId != this.props.match.params.userId){
+        this.refreshProfile();
+        }
     }
     render() {
         return <Profile {...this.props} />
@@ -29,7 +39,7 @@ let mapStateToProps = (state) => {
     return {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
-        authorizedUser: state.authMe.userId,
+        authorizedUser: state.authMe.id,
         authorized: state.authMe.isAuthMe
     }
 }

@@ -1,16 +1,28 @@
 .nav {
     grid-area: n;
-    background-color: blueviolet;
+    background-image: url(https://wallpaperaccess.com/full/1767482.jpg);
     padding: 20px;
     margin: 20px 20px 0 0;
+    box-shadow: -7px 5px 15px 1px beige;
 }
 
-.item a {
-    color: white;
+.item a{
+    color: var(--main-bg-color);
     text-decoration: none;
+    font-size: 20px;
+    
+}
+.item{
+    margin: 10px;
+    font-family:  var( --main-text-font);
+
 }
 
 a.active {
     background-color: yellow;
     color: black;
+}
+
+.friendsNav{
+
 }

@@ -13,14 +13,14 @@ const User = (props) => {
                     alt='ava'></img>
                 </NavLink>
 
-                <div className={cl.country}>props.country,</div>
+    <div className={cl.country}>{props.user.id%3 === 0 
+    ? <div className={cl.off}>offline</div> : <div className={cl.on}>online</div> }</div>
 
                 <div className={cl.name}>{props.user.name}</div>
-                <div className={cl.city}>props.city</div>
-                <div className={cl.lastMessage}>props.lastMessage</div>
+                <div className={cl.stars}></div>
+    <div className={cl.lastMessage}>{props.user.status ? 'status: ' + props.user.status : '----'}</div>
 
                 <div>
-
                     {
                         props.user.followed
                             ? <button disabled={props.followingInProgress.some(id => id === props.user.id)} onClick={() => {

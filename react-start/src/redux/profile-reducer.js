@@ -51,7 +51,6 @@ let profileReducer = (state = initialState, action) => {
 }
 
 export const setProfileThunk = (userID) => async(dispatch) => {
-    !userID && (userID = 12341);
     let data = await userProfile.showProfile(userID);
     dispatch(setProfile(data));
 }
@@ -63,7 +62,6 @@ export const setStatusThunk = (status) => async(dispatch) => {
 
 }
 export const getStatusThunk = (userID) => async(dispatch) => {
-    !userID && (userID = 12341);
     let data = await userProfile.getStatus(userID)
     dispatch(updateStatusAC(data));
 }

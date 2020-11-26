@@ -20,15 +20,15 @@ let initialState = {
     ]
 };
 
-
+let idNum = 5;
 let messagesReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADDMESSAGESTATE:
-            debugger;
+            idNum++;
             return {
                 ...state,
                 messagesData: [...state.messagesData, {
-                    id: 5,
+                    id: idNum,
                     message: action.newMessageText
                 }]
     }

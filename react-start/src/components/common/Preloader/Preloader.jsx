@@ -1,11 +1,11 @@
 import React from 'react';
-import preloader from './777.gif';
+import preloader from './preloader.svg';
 import cl from './Preloader.module.css';
 
-let Preloader = (props) => {
+let Preloader = () => {
     return (
-        <div>
-            {props.isFetching ? <img className={cl.preloader} src={preloader} alt="preloader" /> : null}
+        <div className={cl.divPreloader}>
+            <img className={cl.preloader} src={preloader} alt="preloader" />
         </div>
     );
 }

@@ -1,5 +1,5 @@
 .userItem {
-    border: 2px solid black;
+    border: 2px solid yellow;
     margin: 10px;
     margin-bottom: 30px;
     padding: 20px;
@@ -7,25 +7,43 @@
 
 .avatar {
     float: left;
-    width: 80px;
-    height: 80px;
-    /* border-radius: 50px; */
+    width: 90px;
+    height: 90px;
     text-align: center;
     padding-right: 20px;
 }
 
 .lastMessage {
-    background: chartreuse;
+    color: var( --main-color2);
 }
 
 .name {
-    font-size: 30px;
+    font-size: 34px;
+    border-bottom: 2px solid yellow;
+    color: var(--main-bg-color);
+    font-family: var(--main-name);
+    background: rgba(245, 222, 179, 0.333);
+
+}
+.off{
+    background-color: rgba(68, 62, 53, 0.353);
+    padding: 3px 4px 3px 70px;
+    font-size: 25px;
+}
+.on{
+    background-color: rgba(195, 255, 98, 0.353);
+    padding: 3px 4px 3px 70px;
+    font-size: 25px;
+    color: rgb(211, 255, 13);
 }
 
 .country {
     float: right;
+    color: var( --main-color2);
 }
 
-.city {
-    float: right;
+.stars {
+    /* float: right; */
+    width: 10px;
+    height: 10px;
 }

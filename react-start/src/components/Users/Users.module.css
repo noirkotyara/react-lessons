@@ -1,17 +1,13 @@
-.menuName {
+.userPage {
     font-size: 50px;
+    font-family: 'Texturina', serif;
+    color: var(--main-bg-color);
 }
 
 .butGET {
     font-size: 100px;
 }
 
-.pages {
-    font-size: 40px;
-    /* text-align: center; */
-}
-
-.pageSelected {
-    color: chartreuse;
-    font-size: 60px;
+.preloader{
+    float: right;
 }

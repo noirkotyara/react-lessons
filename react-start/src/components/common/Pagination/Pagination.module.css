@@ -1,0 +1,9 @@
+.pages {
+    font-size: 40px;
+    color: darkkhaki;
+}
+
+.pageSelected {
+    color: chartreuse;
+    font-size: 60px;
+}

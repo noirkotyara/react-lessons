@@ -22,7 +22,7 @@ const Navbar = (props) => {
                 Users</NavLink></div>
 
 
-            <div className={cl.friendsList}> <h3>FRIENDS</h3> {friendsListComp} </div>
+            <div className={cl.friendsList}> <h3 className={cl.friendsNav}>FRIENDS</h3> {friendsListComp} </div>
             
         </nav>
     );
