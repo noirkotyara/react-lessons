@@ -34,7 +34,7 @@ class ProfileStatus extends React.Component {
                     </div>
                     : <div >
                         <span className={cl.readyStatus} onDoubleClick={this.editStatus}>{this.props.status || '---------'}</span> 
-                        {/* значення беруться з пропсів потім вони відображаються в local state, --> рендеряться в інпуті */}
+                       
                     </div>}
 
             </div>

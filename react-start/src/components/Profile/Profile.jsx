@@ -7,11 +7,10 @@ import ProfileStatusHook from './ProfileStatusHook';
 
 
 const Profile = (props) => {
-    
-    
+
     return (
         <div className={cl.content}>
-            <ProfileInfo profileData={props.profile}/>
+            <ProfileInfo profileData={props.profile} userId={props.match.params.userId}/>
             <ProfileStatusHook {...props} />
             <MyPostsContainer store={props.store}  />
         </div>
