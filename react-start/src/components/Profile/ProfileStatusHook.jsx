@@ -5,8 +5,6 @@ import cl from './ProfileStatus.module.css';
 
 
  let ProfileStatusHook = (props) => {
-   
-debugger;
     let [editMode, changeEditMode] = useState(false);
     let [status,setStatus] = useState(props.status);
 
@@ -31,13 +29,11 @@ debugger;
                         <input onBlur={readyStatus} autoFocus={true} type="text" value={status} onChange={onChange} ></input>
                     </div>
                     : <div >
-                        <span className={cl.readyStatus} onDoubleClick={() => (!props.match.params.userId) ? editStatus() : false}>{props.status || '---------'}</span> 
-                        
+                        <span className={cl.readyStatus} 
+                        onDoubleClick={() => (!props.match.params.userId) 
+                        ? editStatus() 
+                        : false}>{props.status || '---------'}</span> 
                     </div>
-               
-      
-                
-                
                 }
 
             </div>

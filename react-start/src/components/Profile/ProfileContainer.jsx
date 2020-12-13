@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { getStatusThunk, postForm, setProfileThunk, setStatusThunk } from '../../redux/profile-reducer';
+import { getStatusThunk, postForm, setProfileThunk, setStatusThunk, uploadPhotoThunk } from '../../redux/profile-reducer';
 import Preloader from '../common/Preloader/Preloader';
 import { withAuthMe } from '../hoc/hoc';
 import Profile from './Profile';
@@ -49,7 +49,8 @@ export default compose(
         setProfile: setProfileThunk,
         updateStatus: setStatusThunk,
         getStatus: getStatusThunk,
-        postForm: postForm
+        postForm: postForm,
+        uploadPhoto: uploadPhotoThunk
         
     }),
     withRouter,

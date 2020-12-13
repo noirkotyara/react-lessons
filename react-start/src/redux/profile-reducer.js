@@ -3,11 +3,12 @@ import { userProfile } from "../api/api";
 const SETPROF = 'SET-PROFILE';
 const UPDATESTATUS = 'SET-STATUS';
 const POSTF = 'POST-FORM-newPostText';
-
+const UPLOAD_PHOTO = 'UPLOAD-PHOTO';
 
 let setProfile = (profile) => ({ type: SETPROF, profile });
 let updateStatusAC = (status) => ({ type: UPDATESTATUS, status });
 export let postForm = (content) => ({ type: POSTF, content });
+let uploadPhoto = (image) => ({type: UPLOAD_PHOTO, image })
 
 let initialState = {
     postsData: [
@@ -18,7 +19,6 @@ let initialState = {
     newPostText: '',
     profile: null,
     status: 'no status'
-
 };
 
 let profileReducer = (state = initialState, action) => {
@@ -39,6 +39,11 @@ let profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 profile: action.profile
+            };
+        case UPLOAD_PHOTO:
+            return {
+                ...state,
+               profile: {...state.profile, photos: action.image}
             };
         case UPDATESTATUS:
             return {
@@ -65,5 +70,13 @@ export const getStatusThunk = (userID) => async(dispatch) => {
     let data = await userProfile.getStatus(userID)
     dispatch(updateStatusAC(data));
 }
+
+export const uploadPhotoThunk = (image) => async(dispatch) => {
+    debugger;
+    let data = await userProfile.uploadPhoto(image);
+    (data.resultCode === 0) &&
+    dispatch(uploadPhoto(data.data.photos));
+}
+
 
 export default profileReducer;

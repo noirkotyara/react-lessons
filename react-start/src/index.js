@@ -5,20 +5,20 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './redux/redux-store';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import AppMain from './App';
 
 
-// export let renderEntireTree = () => {
+
     ReactDOM.render(
         <Provider store={store}>
-            <BrowserRouter>
+            <HashRouter>
             <AppMain />
-            </BrowserRouter>
+            </HashRouter>
         </Provider>,
         document.getElementById('root')
     );
-// };
+
 // renderEntireTree(store.getState()); //вже викликаємо
 //redux не вертає state змінений, тож викликаємо анонімну функцію, яка отримає зміни і віддасть rerender
 // store.subscribe(() => {    переходить у власність виконання connect from  'react-redux'

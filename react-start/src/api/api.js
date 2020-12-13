@@ -1,9 +1,7 @@
 const { instance } = require("./instance")
 
 export const usersAPI = {
-    getUsers(currentPage, pageSize) { //юзаємо return бо функція getUsers вертає проміси, 
-        //які в свою чергу є об'єктом, а отже даними, 
-        //які будемо юзати в подальшому
+    getUsers(currentPage, pageSize) { 
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
             .then(response => response.data);
     },
@@ -53,5 +51,15 @@ export const userProfile = {
         return instance.get(`/profile/status/${userID}`)
             .then(response => response.data)
 
+    },
+    uploadPhoto(file){
+        let formData = new FormData();
+        formData.append('image',file);
+        return instance.put(`/profile/photo`, formData, {
+            headers:{
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+            .then(response => response.data)
     }
 }
