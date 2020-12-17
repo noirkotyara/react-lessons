@@ -72,7 +72,6 @@ export const getStatusThunk = (userID) => async(dispatch) => {
 }
 
 export const uploadPhotoThunk = (image) => async(dispatch) => {
-    debugger;
     let data = await userProfile.uploadPhoto(image);
     (data.resultCode === 0) &&
     dispatch(uploadPhoto(data.data.photos));
