@@ -14,14 +14,16 @@ let Login = (props) => {
     <div className={cl.starter}>LOGIN</div>
     {props.authMe
         ?<div >You are login successfully</div>
-        :<LoginForm onSubmit={onSubmit} />
+        :<LoginForm onSubmit={onSubmit} captcha={props.captcha}/>
     }   
     </>
 }
 
 
 let mapStateToProps = (state) => {
-    return { authMe: state.authMe.isAuthMe }
+    return { 
+        authMe: state.authMe.isAuthMe,
+        captcha: state.authMe.captcha }
 }
 
 let LoginFormContainer = connect(mapStateToProps, {

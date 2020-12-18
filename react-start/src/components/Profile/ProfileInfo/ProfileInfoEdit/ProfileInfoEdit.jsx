@@ -13,7 +13,6 @@ const ProfileInfoEdit = ({ owner, profileData, updateProfile }) => {
 
     }
     return (<>
-        <div>{owner ? 'true' : 'false'}</div>
         <div>
             {
                 (editMode && owner)

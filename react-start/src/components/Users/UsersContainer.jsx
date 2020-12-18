@@ -18,7 +18,7 @@ class UsersContainerClass extends React.Component {
     render() {
         return <>
         <div className={cl.userPage}>Choose your friends{this.props.isFetching && <span className={cl.preloader}><Preloader/></span>}</div>
-          <Pagination {...this.props} changeCurPage={this.changeCurPage} />
+         <div className={cl.pagination}> <Pagination {...this.props} changeCurPage={this.changeCurPage} /> </div>
         {!this.props.isFetching
         && <Users
                 {...this.props}

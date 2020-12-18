@@ -1,13 +1,14 @@
 import { stopSubmit } from "redux-form";
-import { authAPI } from "../api/api";
+import { authAPI, securityAPI } from "../api/api";
 
 const SET_USER_DATA = 'SET-USER-DATA';
 const IS_AUTH_ME = 'IS-AUTH-ME';
 const LOG_IN = 'LOG-AND-PASSWORD';
+const CAPTCHA = 'CAPTCHA-SUCCESS';
 
-export let setUserData = ({ id, login, email, isAuthMe }) => ({ type: SET_USER_DATA, data: { id, login, email, isAuthMe } });
+export let setUserData = ({ id, login, email, isAuthMe, captcha = null }) => ({ type: SET_USER_DATA, data: { id, login, email, isAuthMe, captcha } });
 export let setAuthMe = (isAuthMe) => ({ type: IS_AUTH_ME, isAuthMe });
-
+let setCaptcha = (captcha) => ({type: CAPTCHA, captcha});
 
 
 let initialState = {
@@ -15,7 +16,8 @@ let initialState = {
     login: null,
     email: null,
     isAuthMe: false,
-    checkbox: false
+    checkbox: false,
+    captcha: null
 };
 
 let authMe = (state = initialState, action) => {
@@ -36,6 +38,12 @@ let authMe = (state = initialState, action) => {
                 userId: action.id
 
             }
+        case CAPTCHA: {
+            return {
+                ...state,
+                captcha: action.captcha
+            }
+        }
         default:
             return state;
     }
@@ -48,22 +56,26 @@ export const authMeSuccessThunk = () => async(dispatch) => {
 }
 
 export const putLoginPasswordThunk = (data) => async(dispatch) => {
+    debugger;
     let dataR = await authAPI.isLogin(data);
     if (dataR.resultCode === 0) dispatch(authMeSuccessThunk());
     else {
+        if(dataR.resultCode === 10) {dispatch(getCaptchaThunk())}
         let catchError = dataR.messages.length > 0 ? dataR.messages[0] : 'Some errors';
         dispatch(stopSubmit('login', { _error: catchError }));
     }
 
 }
 export const logoutThunk = () => async(dispatch) => {
-
     let dataR = await authAPI.isLogout();
     (dataR.resultCode === 0) &&
     dispatch(setAuthMe(false));
     dispatch(setUserData({...dataR.data }));
-
-
+}
+const getCaptchaThunk = () => async (dispatch) => {
+    debugger;
+    let data = await securityAPI.getCaptchaURL();
+    dispatch(setCaptcha(data.url))
 }
 
 

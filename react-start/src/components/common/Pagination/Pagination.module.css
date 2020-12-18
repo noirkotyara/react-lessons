@@ -1,9 +1,14 @@
 .pages {
     font-size: 40px;
     color: darkkhaki;
+    cursor: pointer;
+}
+.page:hover{
+    font-size: 50px;
 }
 
 .pageSelected {
     color: chartreuse;
     font-size: 60px;
+    
 }

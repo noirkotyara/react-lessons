@@ -6,6 +6,7 @@ import usersReducer from "./users-reducer";
 import thunkMiddleware from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
 import appInitialization from "./app-reducer";
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 const { createStore, combineReducers, applyMiddleware } = require("redux");
 
@@ -19,7 +20,7 @@ let reducers = combineReducers({
     form: formReducer
 });
 
-let store = createStore(reducers, applyMiddleware(thunkMiddleware)); //створили об'єкт store
+let store = createStore(reducers, composeWithDevTools(applyMiddleware(thunkMiddleware))); //створили об'єкт store
 
 window.store = store;
 

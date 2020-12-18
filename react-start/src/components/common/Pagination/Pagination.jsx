@@ -24,7 +24,7 @@ let Pagination = (props) => {
                 .filter(page => page >= leftBorder && page <= rightBorder)
                 .map(page => {
                     return (
-                        <span onClick={() => { props.changeCurPage(page) }} className={props.currentPage === page && cl.pageSelected} key={page}>{page} </span>
+                        <span  onClick={() => { props.changeCurPage(page) }} className={props.currentPage === page && cl.pageSelected || cl.page} key={page}>{page} </span>
                     );
                 })
                 }

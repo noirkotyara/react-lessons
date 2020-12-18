@@ -11,3 +11,7 @@
 .preloader{
     float: right;
 }
+
+.pagination{
+    text-align: center;
+}
