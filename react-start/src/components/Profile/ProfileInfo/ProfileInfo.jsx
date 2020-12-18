@@ -9,8 +9,8 @@ import ProfileInfoEdit from './ProfileInfoEdit/ProfileInfoEdit';
 
 
 const ProfileInfo = React.memo((props) => {
-
-    const { checkedAuth, profileData, uploadPhoto, userId } = props;
+  
+    const { checkedAuth, profileData, uploadPhoto, userId, updateProfile } = props;
     let [editMode, changeEditMode] = useState(false);
     let [photoFile, changePhotoFile] = useState('');
     if (!props.profileData) {
@@ -39,8 +39,11 @@ const ProfileInfo = React.memo((props) => {
                     :
                     <img style={{ width: '100px', height: '100px' }} src={profileData.photos.small ? profileData.photos.small : avaDefault} alt="avatar" onDoubleClick={choosePhotoEdition} />
                 }
-                <ProfileInfoEdit owner={checkedAuth === userId || !userId} profileData={profileData}/>
-               
+                <ProfileInfoEdit
+                    owner={checkedAuth === userId || !userId}
+                    profileData={profileData}
+                    updateProfile={updateProfile} />
+
             </div>
 
         </div>

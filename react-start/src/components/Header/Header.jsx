@@ -9,7 +9,7 @@ const Header = (props) => {
         <header className={cl.header}>
             <div className={cl.loginPhrase}>
                 {props.isAuthMe
-                    ? <div onClick={props.logout} className={cl.userLogin}>{props.userId} Jess Noir  </div>
+                    ? <div onClick={props.logout} className={cl.userLogin}>Click to logOut </div>
                     : <div className={cl.logIn}><NavLink  to='login/'><div>Log In</div> </NavLink></div>
                 }
             </div>

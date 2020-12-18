@@ -10,9 +10,15 @@ const Profile = (props) => {
 
     return (
         <div className={cl.content}>
-            <ProfileInfo profileData={props.profile} userId={props.match.params.userId} uploadPhoto={props.uploadPhoto} checkedAuth={props.authorizedUser}/>
+            <ProfileInfo
+                profileData={props.profile}
+                userId={props.match.params.userId}
+                uploadPhoto={props.uploadPhoto}
+                checkedAuth={props.authorizedUser}
+                updateProfile={props.updateProfile} />
+
             <ProfileStatusHook {...props} />
-            <MyPostsContainer store={props.store}  />
+            <MyPostsContainer store={props.store} />
         </div>
     );
 }

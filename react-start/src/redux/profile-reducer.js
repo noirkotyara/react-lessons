@@ -1,3 +1,4 @@
+import { stopSubmit } from "redux-form";
 import { userProfile } from "../api/api";
 
 const SETPROF = 'SET-PROFILE';
@@ -5,10 +6,13 @@ const UPDATESTATUS = 'SET-STATUS';
 const POSTF = 'POST-FORM-newPostText';
 const UPLOAD_PHOTO = 'UPLOAD-PHOTO';
 
-let setProfile = (profile) => ({ type: SETPROF, profile });
-let updateStatusAC = (status) => ({ type: UPDATESTATUS, status });
-export let postForm = (content) => ({ type: POSTF, content });
-let uploadPhoto = (image) => ({type: UPLOAD_PHOTO, image })
+
+const setProfile = (profile) => ({ type: SETPROF, profile });
+const updateStatusAC = (status) => ({ type: UPDATESTATUS, status });
+export const postForm = (content) => ({ type: POSTF, content });
+const uploadPhoto = (image) => ({type: UPLOAD_PHOTO, image });
+
+
 
 let initialState = {
     postsData: [
@@ -77,5 +81,15 @@ export const uploadPhotoThunk = (image) => async(dispatch) => {
     dispatch(uploadPhoto(data.data.photos));
 }
 
+export const updateProfileThunk = (profile) => async( dispatch, getState)=> {
+    let data = await userProfile.updateProfile(profile);
+    debugger;
+    if (data.resultCode === 0) dispatch(setProfileThunk(getState().authMe.id))
+    else{
+        if (data.messages.length > 0){dispatch(stopSubmit('editProfile', {_error: data.messages}))
+    return Promise.reject(data.messages)} 
+    } 
+    
+}
 
 export default profileReducer;

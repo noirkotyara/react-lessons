@@ -14,3 +14,9 @@ height: 70px;
 .contacts{
     text-align: right;
 }
+
+.editData{
+    border: 2px dashed darksalmon;
+    text-align: center;
+    padding: 20px;
+}
