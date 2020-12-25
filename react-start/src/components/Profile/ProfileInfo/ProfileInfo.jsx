@@ -1,5 +1,5 @@
 import React from 'react';
-import cl from './ProfileInfo.module.css';
+import cl from './ProfileInfo.module.scss';
 import Preloader from '../../common/Preloader/Preloader';
 import { useState } from 'react';
 import avaDefault from './../../../assets/startPage/av.jpg';

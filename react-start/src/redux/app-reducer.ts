@@ -2,14 +2,11 @@ import { authMeSuccessThunk } from "./authMe";
 
 const SET_INIT = 'SET-INITIALIZE';
 
-
-export let setInitialize = () => ({ type: SET_INIT });
-
 let initialState = {
     initialized: false
 };
-
-let appInitialization = (state = initialState, action) => {
+export type InitialStateType = typeof initialState;
+let appInitialization = (state = initialState, action:setInitializeActionType):InitialStateType => {
     switch (action.type) {
         case SET_INIT:
             return {
@@ -22,7 +19,12 @@ let appInitialization = (state = initialState, action) => {
     }
 }
 
-export const setInitializeThunk = () => async(dispatch) => {
+type setInitializeActionType = { type: typeof SET_INIT };
+
+export let setInitialize = ():setInitializeActionType => ({ type: SET_INIT });
+
+
+export const setInitializeThunk = () => async(dispatch: Function) => {
     await dispatch(authMeSuccessThunk());
     dispatch(setInitialize());
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import cl from './ProfileInfo.module.css';
+import cl from './ProfileInfo.module.scss';
 
 const socialIcons = {
     facebook: 'https://www.flaticon.com/svg/static/icons/svg/2111/2111393.svg',

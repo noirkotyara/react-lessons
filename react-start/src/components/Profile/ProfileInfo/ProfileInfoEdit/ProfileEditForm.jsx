@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { InputComp } from '../../../common/InputChecker/InputChecker';
-import cl from './../ProfileInfo.module.css';
+import cl from './../ProfileInfo.module.scss';
 import checker from './../../../common/InputChecker/InputChecker.module.css';
 const ProfileEditForm = (props) => {
     let contactsArray = Object.keys(props.profileData.contacts).map(key => {

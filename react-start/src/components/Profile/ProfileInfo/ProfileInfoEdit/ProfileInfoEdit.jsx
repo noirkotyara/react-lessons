@@ -3,7 +3,7 @@ import Contact from '../Contacts';
 import ProfileEditForm from './ProfileEditForm';
 import sad from '../../../../assets/images/sad.png';
 import happy from '../../../../assets/images/happy.png';
-import cl from './../ProfileInfo.module.css';
+import cl from './../ProfileInfo.module.scss';
 
 const ProfileInfoEdit = ({ owner, profileData, updateProfile }) => {
     let [editMode, changeEditMode] = useState(false);
@@ -22,9 +22,9 @@ const ProfileInfoEdit = ({ owner, profileData, updateProfile }) => {
                         onSubmit={onSubmit} />
                     : owner &&
                     <div>
-                        <button onClick={() => changeEditMode(true)}>Edit Profile</button>
-                        <div>{profileData.fullName}</div>
-                        <div>{profileData.aboutMe}</div>
+                        <button className={cl.editButton} onClick={() => changeEditMode(true)}>Edit Profile</button>
+                        <div className={cl.fullname}>{profileData.fullName}</div>
+                        <div className={cl.aboutMe}>{profileData.aboutMe}</div>
                         <div className={cl.contacts}>
                             {Object.keys(profileData.contacts).map((key) => {
                                 return <Contact key={key} property={key} value={profileData.contacts[key]} />

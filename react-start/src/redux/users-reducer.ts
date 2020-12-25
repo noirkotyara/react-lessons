@@ -1,3 +1,4 @@
+import { UsersDataType } from './../types/types';
 import { usersAPI } from "../api/api";
 
 const FOLLOW = 'FOLLOW';
@@ -8,24 +9,16 @@ const TOTALCOUNT = 'TOTALCOUNT';
 const TOGGLE_IS_FETCHING = 'TOGGLEIF';
 const FOL_IS_FETCHING = 'FOLISFETCH';
 
-export let doFollow = (id) => ({ type: FOLLOW, id });
-export let doUnfollow = (id) => ({ type: UNFOLLOW, id });
-export let setUsers = (usersData) => ({ type: DATA, usersData });
-export let setCurPage = (currentPage) => ({ type: CURPAGE, currentPage });
-export let setTotalCount = (totalCount) => ({ type: TOTALCOUNT, totalCount });
-export let toggleFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching });
-export let toggleFollowing = (followingTF, userId) => ({ type: FOL_IS_FETCHING, followingTF, userId });
-
 let initialState = {
-    usersData: [],
+    usersData: [] as Array<UsersDataType>,
     currentPage: 1,
     pageSize: 90,
     totalCount: 10,
     isFetching: false,
-    followingInProgress: []
+    followingInProgress: [] as Array<number>
 };
-
-let usersReducer = (state = initialState, action) => {
+export type InitialStateType = typeof initialState;
+let usersReducer = (state = initialState, action: any):InitialStateType => {
 
 
     switch (action.type) {
@@ -89,14 +82,32 @@ let usersReducer = (state = initialState, action) => {
     }
 }
 
-export const setUsersThunk = (currentPage, pageSize) => async(dispatch) => {
+
+type DoFollowActionType = { type: typeof FOLLOW, id: number }
+type DoUnfollowActionType = { type: typeof UNFOLLOW, id: number }
+type SetUsersActionType = { type: typeof DATA, usersData: Array<UsersDataType>}
+type SetCurPageActionType = {type: typeof CURPAGE, currentPage: number }
+type SetTotalCountActionType = { type: typeof TOTALCOUNT, totalCount: number }
+type ToggleFetchingActionType = {type:typeof  TOGGLE_IS_FETCHING, isFetching: boolean}
+type ToggleFollowingActionCreator = {type: typeof FOL_IS_FETCHING, followingTF: boolean, userId: number }
+
+export let doUnfollow = (id: number): DoUnfollowActionType => ({ type: UNFOLLOW, id });
+export let doFollow = (id: number): DoFollowActionType => ({ type: FOLLOW, id });
+export let setUsers = (usersData: Array<UsersDataType>): SetUsersActionType => ({ type: DATA, usersData });
+export let setCurPage = (currentPage: number): SetCurPageActionType => ({ type: CURPAGE, currentPage });
+export let setTotalCount = (totalCount: number): SetTotalCountActionType => ({ type: TOTALCOUNT, totalCount });
+export let toggleFetching = (isFetching: boolean): ToggleFetchingActionType => ({ type: TOGGLE_IS_FETCHING, isFetching });
+export let toggleFollowing = (followingTF: boolean, userId: number): ToggleFollowingActionCreator => ({ type: FOL_IS_FETCHING, followingTF, userId });
+
+
+export const setUsersThunk = (currentPage:number, pageSize: number) => async(dispatch: Function) => {
     dispatch(toggleFetching(true));
     let data = await usersAPI.getUsers(currentPage, pageSize)
     dispatch(toggleFetching(false));
     dispatch(setUsers(data.items));
     dispatch(setTotalCount(data.totalCount));
 }
-export const changeCurPageThunk = (page, pageSize) => async(dispatch) => {
+export const changeCurPageThunk = (page: number, pageSize: number) => async(dispatch: Function) => {
     dispatch(setCurPage(page));
     dispatch(toggleFetching(true));
     let data = await usersAPI.changeCurPage(page, pageSize)
@@ -105,7 +116,7 @@ export const changeCurPageThunk = (page, pageSize) => async(dispatch) => {
     dispatch(setUsers(data.items));
 }
 
-export const unFollowThunk = (userId) => async(dispatch) => {
+export const unFollowThunk = (userId: number) => async(dispatch: Function) => {
 
     dispatch(toggleFollowing(true, userId));
     let data = await usersAPI.unFollowDeleteRequest(userId);
@@ -113,7 +124,7 @@ export const unFollowThunk = (userId) => async(dispatch) => {
     dispatch(toggleFollowing(false, userId));
 }
 
-export const followThunk = (userId) => async(dispatch) => {
+export const followThunk = (userId: number) => async(dispatch: Function) => {
 
     dispatch(toggleFollowing(true, userId));
     let data = await usersAPI.followPostRequest(userId);
