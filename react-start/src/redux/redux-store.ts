@@ -10,7 +10,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 const { createStore, combineReducers, applyMiddleware } = require("redux");
 
-let reducers = combineReducers({
+let rootReducers = combineReducers({
     profilePage: profileReducer,
     messagesPage: messagesReducer,
     sideBar: sideBarReducer,
@@ -20,8 +20,11 @@ let reducers = combineReducers({
     form: formReducer
 });
 
-let store = createStore(reducers, composeWithDevTools(applyMiddleware(thunkMiddleware))); //створили об'єкт store
+ // (globalState: AppStateType) => AppStateType
+export type AppStateType = ReturnType<typeof rootReducers>;
 
+let store = createStore(rootReducers, composeWithDevTools(applyMiddleware(thunkMiddleware))); //створили об'єкт store
+//@ts-ignore
 window.store = store;
 
 export default store;

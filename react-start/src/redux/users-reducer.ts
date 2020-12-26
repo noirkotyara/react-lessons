@@ -1,3 +1,4 @@
+import { Action } from 'redux';
 import { UsersDataType } from './../types/types';
 import { usersAPI } from "../api/api";
 
@@ -9,6 +10,19 @@ const TOTALCOUNT = 'TOTALCOUNT';
 const TOGGLE_IS_FETCHING = 'TOGGLEIF';
 const FOL_IS_FETCHING = 'FOLISFETCH';
 
+type DoFollowActionType = { type: typeof FOLLOW, id: number }
+type DoUnfollowActionType = { type: typeof UNFOLLOW, id: number }
+type SetUsersActionType = { type: typeof DATA, usersData: Array<UsersDataType>}
+type SetCurPageActionType = {type: typeof CURPAGE, currentPage: number }
+type SetTotalCountActionType = { type: typeof TOTALCOUNT, totalCount: number }
+type ToggleFetchingActionType = {type:typeof  TOGGLE_IS_FETCHING, isFetching: boolean}
+type ToggleFollowingActionCreator = {type: typeof FOL_IS_FETCHING, followingTF: boolean, userId: number }
+
+type ActionsType = DoFollowActionType | DoUnfollowActionType |
+                    SetUsersActionType | SetCurPageActionType | 
+                    SetTotalCountActionType | ToggleFetchingActionType | ToggleFollowingActionCreator;
+
+
 let initialState = {
     usersData: [] as Array<UsersDataType>,
     currentPage: 1,
@@ -17,8 +31,10 @@ let initialState = {
     isFetching: false,
     followingInProgress: [] as Array<number>
 };
+
+
 export type InitialStateType = typeof initialState;
-let usersReducer = (state = initialState, action: any):InitialStateType => {
+let usersReducer = (state = initialState, action: ActionsType):InitialStateType => {
 
 
     switch (action.type) {
@@ -83,13 +99,7 @@ let usersReducer = (state = initialState, action: any):InitialStateType => {
 }
 
 
-type DoFollowActionType = { type: typeof FOLLOW, id: number }
-type DoUnfollowActionType = { type: typeof UNFOLLOW, id: number }
-type SetUsersActionType = { type: typeof DATA, usersData: Array<UsersDataType>}
-type SetCurPageActionType = {type: typeof CURPAGE, currentPage: number }
-type SetTotalCountActionType = { type: typeof TOTALCOUNT, totalCount: number }
-type ToggleFetchingActionType = {type:typeof  TOGGLE_IS_FETCHING, isFetching: boolean}
-type ToggleFollowingActionCreator = {type: typeof FOL_IS_FETCHING, followingTF: boolean, userId: number }
+
 
 export let doUnfollow = (id: number): DoUnfollowActionType => ({ type: UNFOLLOW, id });
 export let doFollow = (id: number): DoFollowActionType => ({ type: FOLLOW, id });

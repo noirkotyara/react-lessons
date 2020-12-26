@@ -23,7 +23,7 @@ componentDidMount(){
 }
     PostsComp = () => <ProfileContainer store={this.props.store} />;
     DialogsMessagesComp = () => <DialogsContainer store={this.props.store} />;
-    UsersComp = () => <UsersContainer store={this.props.store} />;
+    UsersComp = () => <UsersContainer store={this.props.store} title='UsersContainer'/>;
     LoginFormContainerCom = () => <LoginFormContainer store={this.props.store} />;
     render() {
         if(!this.props.initialized){ return <Preloader/>}

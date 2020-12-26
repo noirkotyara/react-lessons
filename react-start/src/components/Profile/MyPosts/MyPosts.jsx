@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { TextareaComp } from '../../common/InputChecker/InputChecker';
+import { InputComp } from '../../common/InputChecker/InputChecker';
 import { maxLengthC, required } from '../../common/Validators/Validators';
 import cl from './MyPosts.module.css';
 import Post from './Post/Post';
@@ -27,7 +27,7 @@ const MyPosts = (props) => {
 let FormMyPost = (props) => {
     return <>
         <form onSubmit={props.handleSubmit}>
-            <Field component={TextareaComp} name='newPostText' type="text" validate={[required, maxLength20]} placeholder={'Write your post here...'} />
+            <Field component={InputComp} name='newPostText' type="text" validate={[required, maxLength20]} placeholder={'Write your post here...'} />
             <button type="submit" className={cl.addPost}>Add post</button>
         </form>
     </>

@@ -1,9 +1,19 @@
 import { connect } from 'react-redux';
 import { sendMessage } from '../../redux/messages-reducer';
-import DialogsContainerHOCRedirect from './Dialogs';
+import { AppStateType } from '../../redux/redux-store';
+import DialogsContainerHOC from './Dialogs';
+import { DialogsUsersDataType, MessagesDataType } from '../../redux/messages-reducer';
 
+// type mapStateToPropsType = {
+//     dialogsGenerate: Array<DialogsUsersDataType>
+//     messagesGenerate: Array<MessagesDataType>
+// }
+// type mapDispatchToPropsType = {
+//     sendMessage: (a: string) => void
+// }
 
-
+// export type PropsType = mapStateToPropsType & mapDispatchToPropsType;
+// : AppStateType
 let mapStateToProps = (state) => {
     return {
         dialogsGenerate: state.messagesPage.dialogsUsersData,
@@ -11,8 +21,7 @@ let mapStateToProps = (state) => {
     }
 }
 
-
-const DialogsContainer = connect(mapStateToProps, {sendMessage})(DialogsContainerHOCRedirect);
+const DialogsContainer = connect(mapStateToProps, {sendMessage})(DialogsContainerHOC);
 
 
 export default DialogsContainer;

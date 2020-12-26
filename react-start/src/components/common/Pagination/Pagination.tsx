@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
 import cl from './Pagination.module.css';
 
-let Pagination = (props) => {
+type PropsType = {
+    totalCount: number
+    pageSize: number
+    currentPage: number
+
+    changeCurPage: (page: number) => void
+}
+
+let Pagination = (props: PropsType) => {
     
     let portionSize = 5;
     let pagesQuantity = Math.ceil(props.totalCount / props.pageSize);

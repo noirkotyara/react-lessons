@@ -10,6 +10,7 @@ let initialState = {
     ] as Array<FriendsList>
 };
 export type initialStateType = typeof initialState;
+
 let sideBarReducer = (state = initialState, action: any):initialStateType => {
     return state;
 }

@@ -2,11 +2,15 @@ import React from 'react';
 import cl from './User.module.css';
 import avaDefault from '../../../assets/images/zorro.jpg'
 import { NavLink } from 'react-router-dom';
+import { PropsType } from '../UsersContainer';
 
-const User = (props) => {
+
+
+
+const User: React.FC<PropsType> = (props) => {
 
     return (
-        <>
+        <> 
             <div className={cl.userItem}>
                 <NavLink to={'profile/' + props.user.id}><img className={cl.avatar}
                     src={props.user.photos.small != null ? props.user.photos.small : avaDefault}

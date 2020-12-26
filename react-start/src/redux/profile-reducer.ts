@@ -1,18 +1,37 @@
 import { stopSubmit } from "redux-form";
+import { ThunkAction } from "redux-thunk";
 import { userProfile } from "../api/api";
 import { ProfileType } from "../types/types";
+import { AppStateType } from "./redux-store";
 
 const SETPROF = 'SET-PROFILE';
 const UPDATESTATUS = 'SET-STATUS';
 const POSTF = 'POST-FORM-newPostText';
 const UPLOAD_PHOTO = 'UPLOAD-PHOTO';
 
-
+type SetProfileActionType = {
+    type: typeof SETPROF
+    profile: object
+};
+type UpdateStatusActionType = {
+    type: typeof UPDATESTATUS
+    status: string
+};
+type PostFormActionType = {
+    type: typeof POSTF
+    content: string
+};
+type UploadPhotoActionType = {
+    type: typeof UPLOAD_PHOTO
+    image: string
+};
 type PostsDataType = {
     id: number,
     message: string
     likes: number
 };
+type ActionsTypes = SetProfileActionType | UpdateStatusActionType | PostFormActionType | UploadPhotoActionType;
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>;
 
 let initialState = {
     postsData: [
@@ -24,8 +43,12 @@ let initialState = {
     profile: null as object | null,
     status: 'no status'
 };
+
 export type InitialStateType = typeof initialState;
-let profileReducer = (state = initialState, action: SetProfileActionType | UpdateStatusActionType | PostFormActionType | UploadPhotoActionType):InitialStateType => {
+
+
+
+let profileReducer = (state = initialState, action: ActionsTypes):InitialStateType => {
 
     switch (action.type) {
         case POSTF:
@@ -58,51 +81,38 @@ let profileReducer = (state = initialState, action: SetProfileActionType | Updat
             return state;
     }
 }
-type SetProfileActionType = {
-    type: typeof SETPROF
-    profile: object
-};
-type UpdateStatusActionType = {
-    type: typeof UPDATESTATUS
-    status: string
-};
-type PostFormActionType = {
-    type: typeof POSTF
-    content: string
-};
-type UploadPhotoActionType = {
-    type: typeof UPLOAD_PHOTO
-    image: string
-};
+
 
 const setProfile = (profile: ProfileType): SetProfileActionType => ({ type: SETPROF, profile });
 const updateStatusAC = (status: string): UpdateStatusActionType => ({ type: UPDATESTATUS, status });
 export const postForm = (content: string): PostFormActionType => ({ type: POSTF, content });
 const uploadPhoto = (image: string): UploadPhotoActionType => ({ type: UPLOAD_PHOTO, image });
 
-export const setProfileThunk = (userID: string) => async (dispatch: Function) => {
+
+
+export const setProfileThunk = (userID: string): ThunkType=> async (dispatch: Function) => {
     let data = await userProfile.showProfile(userID);
     dispatch(setProfile(data));
 }
 
-export const setStatusThunk = (status: string) => async (dispatch: Function) => {
+export const setStatusThunk = (status: string): ThunkType => async (dispatch: Function) => {
     let data = await userProfile.updateStatus(status);
     (data.resultCode === 0) &&
         dispatch(updateStatusAC(status))
 
 }
-export const getStatusThunk = (userID: string) => async (dispatch: Function) => {
+export const getStatusThunk = (userID: string): ThunkType => async (dispatch: Function) => {
     let data = await userProfile.getStatus(userID)
     dispatch(updateStatusAC(data));
 }
 
-export const uploadPhotoThunk = (image: string) => async (dispatch: Function) => {
+export const uploadPhotoThunk = (image: string): ThunkType => async (dispatch: Function) => {
     let data = await userProfile.uploadPhoto(image);
     (data.resultCode === 0) &&
         dispatch(uploadPhoto(data.data.photos));
 }
 
-export const updateProfileThunk = (profile: object) => async (dispatch: Function, getState: Function) => {
+export const updateProfileThunk = (profile: object): ThunkType => async (dispatch: Function, getState: Function) => {
     let data = await userProfile.updateProfile(profile);
     debugger;
     if (data.resultCode === 0) dispatch(setProfileThunk(getState().authMe.id))
