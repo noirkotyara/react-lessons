@@ -1,8 +1,8 @@
 import React from 'react';
+import { FriendsList, initialStateType } from '../../../redux/sideBar-reducer';
 import cl from './Friends.module.css';
 
-
-const Friends = (props) => {
+const Friends: React.FC<FriendsList> = (props) => {
 
     return (
         <div className={cl.friend}>

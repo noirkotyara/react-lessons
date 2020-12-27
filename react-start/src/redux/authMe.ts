@@ -65,11 +65,11 @@ let authMe = (state = initialState, action:setUserDataAType | setAuthMeAType | s
             return state;
     }
 }
-type DataTypeLogin = {
+export type DataTypeLogin = {
     email: string
     password: string
     rememberMe: boolean
-    captcha:null 
+    captcha: null | string
 }
 
 type ActionsTypes = setUserDataAType | setAuthMeAType | setCaptchaAType;

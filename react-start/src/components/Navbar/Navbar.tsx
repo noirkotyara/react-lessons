@@ -1,11 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { initialStateType } from '../../redux/sideBar-reducer';
 import Friends from './Friends/Friends';
 import cl from './Navbar.module.css';
 
-const Navbar = (props) => {
+const Navbar = (props: initialStateType) => {
   
-    let friendsListComp = props.friendsListComp.map (  fff => <Friends key={fff.id} id={fff.id} name={fff.name}/>);
+    let friendsListComp = props.friendsList.map (  fff => <Friends key={fff.id} id={fff.id} name={fff.name}/>);
     return (
         <nav className={cl.nav}>
             <div className={cl.item}><NavLink to='/profile' activeClassName={cl.active}>

@@ -54,7 +54,7 @@ class UsersContainerClass extends React.Component<PropsType> {
 }
 
 // usersGenerate, currentPage, totalCount, pageSize, isFetching
-let mapStateToProps = (state: AppStateType) => {
+let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         usersGenerate: getUsersData(state),
         currentPage: getCurrentPage(state),
@@ -62,6 +62,7 @@ let mapStateToProps = (state: AppStateType) => {
         pageSize: getPageSize(state),
         isFetching: getIsFetching(state),
         followingInProgress: getFollowingInProgress(state)
+        
     };
 }
 

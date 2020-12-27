@@ -5,7 +5,7 @@ import lyubovAva from './../assets/images/lyubov.jpg';
 const ADDMESSAGESTATE = 'ADD-MESSAGE-STATE';
 
 export type MessagesDataType = {
-    id: number
+    id?: number
     message: string
 };
 export type DialogsUsersDataType = {

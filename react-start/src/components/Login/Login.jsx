@@ -1,8 +1,11 @@
 import cl from '../Login/Login.module.css';
 import React from 'react';
 import { connect } from 'react-redux';
-import { putLoginPasswordThunk } from '../../redux/authMe';
+import {  putLoginPasswordThunk } from '../../redux/authMe';
 import LoginForm from './LoginForm';
+
+
+
 
 
 
@@ -19,11 +22,11 @@ let Login = (props) => {
     </>
 }
 
-
 let mapStateToProps = (state) => {
     return { 
         authMe: state.authMe.isAuthMe,
-        captcha: state.authMe.captcha }
+        captcha: state.authMe.captcha 
+    }
 }
 
 let LoginFormContainer = connect(mapStateToProps, {

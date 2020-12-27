@@ -10,7 +10,7 @@ const News = () => {
 }
 
 function ActionLink() {
-  function handleClick(e) {
+  function handleClick() {
     // e.preventDefault();
     console.log('По ссылке кликнули.');
   }

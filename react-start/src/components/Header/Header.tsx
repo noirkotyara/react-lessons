@@ -2,10 +2,12 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import cl from './Header.module.css';
 import logo from './../../assets/startPage/logo2.jpg';
+import { initialStateType } from '../../redux/authMe';
 
-const Header = (props) => {
+type AllPropsType = initialStateType & {logout: () => void} ;
+
+const Header = (props: AllPropsType) => {
     return (<>
-
         <header className={cl.header}>
             <div className={cl.loginPhrase}>
                 {props.isAuthMe

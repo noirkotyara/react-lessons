@@ -34,7 +34,7 @@ let initialState = {
 
 
 export type InitialStateType = typeof initialState;
-let usersReducer = (state = initialState, action: ActionsType):InitialStateType => {
+let usersReducer = (state = initialState, action: ActionsType): InitialStateType => {
 
 
     switch (action.type) {
