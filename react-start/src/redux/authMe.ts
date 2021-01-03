@@ -1,3 +1,4 @@
+import { ResultCodeType } from './../api/api';
 import { Dispatch } from 'react';
 import { stopSubmit } from "redux-form";
 import { ThunkAction } from "redux-thunk";
@@ -13,8 +14,8 @@ type DataType = {
     id: number | null
     login: string | null
     email: string | null
-    isAuthMe: boolean
-    captcha: string | null
+    isAuthMe?: boolean
+    captcha?: string | null
 } 
 export type setUserDataAType = {
     type: typeof SET_USER_DATA
@@ -65,11 +66,11 @@ let authMe = (state = initialState, action:setUserDataAType | setAuthMeAType | s
             return state;
     }
 }
-export type DataTypeLogin = {
-    email: string
+export type dataIsLoginType = {
+    checkbox: boolean
+    symbols: string
     password: string
-    rememberMe: boolean
-    captcha: null | string
+    login: string
 }
 
 type ActionsTypes = setUserDataAType | setAuthMeAType | setCaptchaAType;
@@ -78,11 +79,11 @@ type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
 export const authMeSuccessThunk = (): ThunkType => async(dispatch, getState: () => AppStateType) => {
     let data = await authAPI.isAuthMe();
     dispatch(setUserData({...data.data}));
-    (data.resultCode === 0) && dispatch(setAuthMe(true));
+    (data.resultCode === ResultCodeType.Success) && dispatch(setAuthMe(true));
 }
 
 //I need to fix this shit
-export const putLoginPasswordThunk = (data:DataTypeLogin ) => async(dispatch: Function) => {
+export const putLoginPasswordThunk = (data: dataIsLoginType ): ThunkType => async(dispatch: Function) => {
     debugger;
     let dataR = await authAPI.isLogin(data);
     if (dataR.resultCode === 0) dispatch(authMeSuccessThunk());
@@ -97,7 +98,7 @@ export const logoutThunk = (): ThunkType => async(dispatch) => {
     let dataR = await authAPI.isLogout();
     (dataR.resultCode === 0) &&
     dispatch(setAuthMe(false));
-    dispatch(setUserData({...dataR.data }));
+    dispatch(setUserData({...dataR.data}));
 }
 const getCaptchaThunk = (): ThunkType => async (dispatch) => {
     debugger;

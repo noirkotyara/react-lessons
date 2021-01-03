@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import { InputComp } from '../common/InputChecker/InputChecker';
 import { maxLengthC, required } from '../common/Validators/Validators';
 import checker from './../common/InputChecker/InputChecker.module.css';
-import { DataTypeLogin } from '../../redux/authMe';
+import { dataIsLoginType } from '../../redux/authMe';
 
 const maxLength30 = maxLengthC(30);
 

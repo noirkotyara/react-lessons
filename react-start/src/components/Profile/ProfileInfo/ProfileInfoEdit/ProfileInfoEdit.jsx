@@ -4,12 +4,14 @@ import ProfileEditForm from './ProfileEditForm';
 import sad from '../../../../assets/images/sad.png';
 import happy from '../../../../assets/images/happy.png';
 import cl from './../ProfileInfo.module.scss';
+import { reset } from 'redux-form';
 
 const ProfileInfoEdit = ({ owner, profileData, updateProfile }) => {
     let [editMode, changeEditMode] = useState(false);
-    let onSubmit = (dataFlow) => {
+    let onSubmit = (dataFlow, dispatch) => {
         let promise = updateProfile(dataFlow);
         promise.then(() => changeEditMode(false));
+        dispatch(reset('editProfile'));
 
     }
     return (<>

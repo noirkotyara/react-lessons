@@ -18,7 +18,7 @@ export type MapDispatchToPropsType = {
 
 export type PropsType = MapStateToPropsType & MapDispatchToPropsType;
 
-let mapStateToProps = (state: AppStateType)  => {
+let mapStateToProps = (state: AppStateType) => {
     return {
         dialogsGenerate: state.messagesPage.dialogsUsersData,
         messagesGenerate: state.messagesPage.messagesData,
@@ -27,7 +27,13 @@ let mapStateToProps = (state: AppStateType)  => {
 }
 // authMeSuccess: authMeSuccessThunk
 // withAuthMe
-const DialogsContainer = compose(connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {sendMessage}), withAuthMe)(DialogsContainerHOC);
+const DialogsContainer = compose(
+    connect<MapStateToPropsType,
+        MapDispatchToPropsType,
+        {}, AppStateType>
+        (mapStateToProps, { sendMessage }),
+    withAuthMe)
+    (DialogsContainerHOC);
 
 
 export default DialogsContainer;

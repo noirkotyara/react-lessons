@@ -1,6 +1,7 @@
+import { Dispatch } from 'react';
 import { stopSubmit } from "redux-form";
 import { ThunkAction } from "redux-thunk";
-import { userProfile } from "../api/api";
+import { ResultCodeType, userProfile } from "../api/api";
 import { ProfileType } from "../types/types";
 import { AppStateType } from "./redux-store";
 
@@ -90,31 +91,30 @@ const uploadPhoto = (image: string): UploadPhotoActionType => ({ type: UPLOAD_PH
 
 
 
-export const setProfileThunk = (userID: string): ThunkType=> async (dispatch: Function) => {
+export const setProfileThunk = (userID: number): ThunkType=> async (dispatch) => {
     let data = await userProfile.showProfile(userID);
     dispatch(setProfile(data));
 }
 
-export const setStatusThunk = (status: string): ThunkType => async (dispatch: Function) => {
+export const setStatusThunk = (status: string): ThunkType => async (dispatch) => {
     let data = await userProfile.updateStatus(status);
-    (data.resultCode === 0) &&
+    (data.resultCode === ResultCodeType.Success) &&
         dispatch(updateStatusAC(status))
 
 }
-export const getStatusThunk = (userID: string): ThunkType => async (dispatch: Function) => {
+export const getStatusThunk = (userID: number): ThunkType => async (dispatch) => {
     let data = await userProfile.getStatus(userID)
     dispatch(updateStatusAC(data));
 }
 
-export const uploadPhotoThunk = (image: string): ThunkType => async (dispatch: Function) => {
+export const uploadPhotoThunk = (image: File): ThunkType => async (dispatch) => {
     let data = await userProfile.uploadPhoto(image);
-    (data.resultCode === 0) &&
+    (data.resultCode === ResultCodeType.Success) &&
         dispatch(uploadPhoto(data.data.photos));
 }
-
-export const updateProfileThunk = (profile: object): ThunkType => async (dispatch: Function, getState: Function) => {
+///I need to fix this shit
+export const updateProfileThunk = (profile: ProfileType): ThunkType => async (dispatch: Function, getState) => {
     let data = await userProfile.updateProfile(profile);
-    debugger;
     if (data.resultCode === 0) dispatch(setProfileThunk(getState().authMe.id))
     else {
         if (data.messages.length > 0) {
