@@ -1,21 +1,18 @@
 import cl from '../Login/Login.module.css';
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { InputComp } from '../common/InputChecker/InputChecker';
 import { maxLengthC, required } from '../common/Validators/Validators';
 import checker from './../common/InputChecker/InputChecker.module.css';
-import { dataIsLoginType } from '../../redux/authMe';
+import { DataIsLoginType } from '../../redux/authMe';
 
 const maxLength30 = maxLengthC(30);
 
-type PropsType = {
-    // handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void
-    // error: any
-    // captcha: string
-    // handleSubmit: () => void
+type OwnPropsType = {
+    captcha: string | null
 }
-////////////////////////////any
-let LoginForm: React.FC<PropsType> = (props: any) => { 
+
+let LoginForm: React.FC<InjectedFormProps<DataIsLoginType, OwnPropsType> & OwnPropsType> = (props) => { 
     return <>
         <form onSubmit={props.handleSubmit}>
             <div><Field name='login' component={InputComp} type="text" placeholder={'login'} validate={[required, maxLength30]} /></div>
@@ -29,4 +26,4 @@ let LoginForm: React.FC<PropsType> = (props: any) => {
     </>
 }
 
-export default reduxForm<{ handleSubmit: () => void }, {}>({ form: 'login' })(LoginForm);
+export default reduxForm<DataIsLoginType, OwnPropsType>({ form: 'login' })(LoginForm);

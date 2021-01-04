@@ -1,6 +1,7 @@
 import zorroAva from './../assets/images/zorro.jpg';
 import kuscherenkoAva from './../assets/images/kuscherenko.jpg';
 import lyubovAva from './../assets/images/lyubov.jpg';
+import { InferActionsType } from './redux-store';
 
 const ADDMESSAGESTATE = 'ADD-MESSAGE-STATE';
 
@@ -29,7 +30,7 @@ let initialState = {
 };
 export type initialStateType = typeof initialState;
 let idNum = 5;
-let messagesReducer = (state = initialState, action: sendMessageAType):initialStateType => {
+let messagesReducer = (state = initialState, action: ActionsType):initialStateType => {
     switch (action.type) {
         case ADDMESSAGESTATE:
             idNum++;
@@ -45,11 +46,12 @@ let messagesReducer = (state = initialState, action: sendMessageAType):initialSt
     }
 }
 
-type sendMessageAType = {
-    type: typeof ADDMESSAGESTATE
-    newMessageText: string 
-};
-export let sendMessage = (newMessageText: string):sendMessageAType => ({ type: ADDMESSAGESTATE, newMessageText });
+type ActionsType = InferActionsType<typeof actions>
+
+export const actions = {
+    sendMessage: (newMessageText: string) => ({ type: ADDMESSAGESTATE, newMessageText })
+}
+
 
 
 export default messagesReducer;

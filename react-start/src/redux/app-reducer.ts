@@ -1,6 +1,6 @@
 import { ThunkAction } from "redux-thunk";
-import { authMeSuccessThunk, setUserDataAType } from "./authMe";
-import { AppStateType } from "./redux-store";
+import { authMeSuccessThunk } from "./authMe";
+import { AppStateType, InferActionsType } from "./redux-store";
 
 const SET_INIT = 'SET-INITIALIZE';
 
@@ -8,7 +8,7 @@ let initialState = {
     initialized: false
 };
 export type InitialStateType = typeof initialState;
-let appInitialization = (state = initialState, action: setInitializeActionType): InitialStateType => {
+let appInitialization = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case SET_INIT:
             return {
@@ -21,14 +21,17 @@ let appInitialization = (state = initialState, action: setInitializeActionType):
     }
 }
 
-type setInitializeActionType = { type: typeof SET_INIT };
+export const actions = {
+    setInitialize: () => ({ type: SET_INIT } as const)
+}
 
-export let setInitialize = (): setInitializeActionType => ({ type: SET_INIT });
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
 
-type ActionsTypes = setInitializeActionType;
-export const setInitializeThunk = (): ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes> => async dispatch => {
+type ActionsType = InferActionsType<typeof actions>;
+
+export const setInitializeThunk = (): ThunkType => async dispatch => {
     await dispatch(authMeSuccessThunk());
-    dispatch(setInitialize());
+    dispatch(actions.setInitialize());
 }
 
 

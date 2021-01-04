@@ -1,9 +1,8 @@
 import { ResultCodeType } from './../api/api';
-import { Dispatch } from 'react';
 import { stopSubmit } from "redux-form";
 import { ThunkAction } from "redux-thunk";
 import { authAPI, securityAPI } from "../api/api";
-import { AppStateType } from "./redux-store";
+import { AppStateType, InferActionsType } from "./redux-store";
 
 const SET_USER_DATA = 'SET-USER-DATA';
 const IS_AUTH_ME = 'IS-AUTH-ME';
@@ -14,42 +13,35 @@ type DataType = {
     id: number | null
     login: string | null
     email: string | null
-    isAuthMe?: boolean
+    isAuthMe?: boolean | undefined
     captcha?: string | null
-} 
-export type setUserDataAType = {
-    type: typeof SET_USER_DATA
-    data: DataType 
 }
-export type setAuthMeAType = {
-    type: typeof IS_AUTH_ME
-    isAuthMe: boolean
-}
-type setCaptchaAType = {
-    type: typeof CAPTCHA
-    captcha: string | null
-}
-export let setUserData = ({ id, login, email, isAuthMe, captcha = null }: DataType): setUserDataAType => ({ type: SET_USER_DATA, data: { id, login, email, isAuthMe, captcha } });
-export let setAuthMe = (isAuthMe:boolean):setAuthMeAType => ({ type: IS_AUTH_ME, isAuthMe });
-let setCaptcha = (captcha: string):setCaptchaAType => ({type: CAPTCHA, captcha});
 
+export const actions = {
+    setUserData: ({ id, login, email, isAuthMe, captcha = null }: DataType) => ({ type: SET_USER_DATA, data: { id, login, email, isAuthMe, captcha } } as const ),
+    setAuthMe: (isAuthMe: boolean) => ({ type: IS_AUTH_ME, isAuthMe } as const),
+    setCaptcha: (captcha: string) => ({ type: CAPTCHA, captcha }as const)
+
+}
+
+type ActionsType = InferActionsType<typeof actions>
 
 let initialState = {
     id: null as number | null,
     login: null as string | null,
     email: null as string | null,
-    isAuthMe: false,
+    isAuthMe: false as boolean | undefined,
     checkbox: false,
     captcha: null as string | null
 };
 export type initialStateType = typeof initialState;
 
-let authMe = (state = initialState, action:setUserDataAType | setAuthMeAType | setCaptchaAType):initialStateType => {
+let authMe = (state = initialState, action: ActionsType): initialStateType => {
     switch (action.type) {
         case SET_USER_DATA:
             return {
                 ...state,
-               ...action.data
+                ...action.data
             }
         case IS_AUTH_ME:
             return {
@@ -66,44 +58,43 @@ let authMe = (state = initialState, action:setUserDataAType | setAuthMeAType | s
             return state;
     }
 }
-export type dataIsLoginType = {
+export type DataIsLoginType = {
     checkbox: boolean
     symbols: string
     password: string
     login: string
 }
 
-type ActionsTypes = setUserDataAType | setAuthMeAType | setCaptchaAType;
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>;
-// : ThunkAction<Promise<void>, AppStateType, unknown, Action<STRING>>
-export const authMeSuccessThunk = (): ThunkType => async(dispatch, getState: () => AppStateType) => {
+
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>;
+
+
+export const authMeSuccessThunk = (): ThunkType => async (dispatch, getState: () => AppStateType) => {
     let data = await authAPI.isAuthMe();
-    dispatch(setUserData({...data.data}));
-    (data.resultCode === ResultCodeType.Success) && dispatch(setAuthMe(true));
+    dispatch(actions.setUserData({ ...data.data }));
+    (data.resultCode === ResultCodeType.Success) && dispatch(actions.setAuthMe(true));
 }
 
 //I need to fix this shit
-export const putLoginPasswordThunk = (data: dataIsLoginType ): ThunkType => async(dispatch: Function) => {
-    debugger;
+export const putLoginPasswordThunk = (data: DataIsLoginType): ThunkType => async (dispatch: Function) => {
     let dataR = await authAPI.isLogin(data);
     if (dataR.resultCode === 0) dispatch(authMeSuccessThunk());
     else {
-        if(dataR.resultCode === 10) {dispatch(getCaptchaThunk())}
+        if (dataR.resultCode === 10) { dispatch(getCaptchaThunk()) }
         let catchError = dataR.messages.length > 0 ? dataR.messages[0] : 'Some errors';
         dispatch(stopSubmit('login', { _error: catchError }));
     }
 
 }
-export const logoutThunk = (): ThunkType => async(dispatch) => {
+export const logoutThunk = (): ThunkType => async (dispatch) => {
     let dataR = await authAPI.isLogout();
     (dataR.resultCode === 0) &&
-    dispatch(setAuthMe(false));
-    dispatch(setUserData({...dataR.data}));
+        dispatch(actions.setAuthMe(false));
+    dispatch(actions.setUserData({ ...dataR.data }));
 }
 const getCaptchaThunk = (): ThunkType => async (dispatch) => {
-    debugger;
     let data = await securityAPI.getCaptchaURL();
-    dispatch(setCaptcha(data.url))
+    dispatch(actions.setCaptcha(data.url))
 }
 
 

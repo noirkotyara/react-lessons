@@ -9,7 +9,7 @@ import Pagination from '../common/Pagination/Pagination';
 import { UsersDataType } from '../../types/types';
 import { AppStateType } from './../../redux/redux-store';
 
- type MapStateToPropsType = {
+export type MapStateToPropsType = {
     usersGenerate: Array<UsersDataType>
     currentPage: number
     totalCount: number
@@ -19,13 +19,13 @@ import { AppStateType } from './../../redux/redux-store';
 }
 
 // usersGenerate, currentPage, totalCount, pageSize, isFetching
- type MapDispatchToPropsType = {
+export type MapDispatchToPropsType = {
     setUsers: (currentPage: number, pageSize: number) => void
     setCurPage: (page: number, pageSize: number) => void
     doFollow: (id: number) => void 
     doUnfollow: (id: number) => void 
 }
- type OwnPropsType = {
+export type OwnPropsType = {
     title: string
     user: UsersDataType
 }
@@ -46,9 +46,7 @@ class UsersContainerClass extends React.Component<PropsType> {
         <div className={cl.userPage}>Choose your friends{this.props.isFetching && <span className={cl.preloader}><Preloader/></span>}</div>
          <div className={cl.pagination}> <Pagination {...this.props} changeCurPage={this.changeCurPage} /> </div>
         {!this.props.isFetching
-        && <Users
-                {...this.props}
-                isFetching={this.props.isFetching}/>}
+        && <Users {...this.props}/>}
             </>
     }
 }

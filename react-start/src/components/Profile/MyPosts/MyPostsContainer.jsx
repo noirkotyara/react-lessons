@@ -1,6 +1,6 @@
 
 import { connect } from 'react-redux';
-import { postForm } from '../../../redux/profile-reducer';
+import { actions } from '../../../redux/profile-reducer';
 import MyPosts from './MyPosts';
 
 let mapStateToProps = (state) => {
@@ -11,6 +11,6 @@ let mapStateToProps = (state) => {
 }
 
 
-let MyPostsContainer = connect(mapStateToProps, {postForm: postForm})(MyPosts);
+let MyPostsContainer = connect(mapStateToProps, {postForm: actions.postForm})(MyPosts);
 
 export default MyPostsContainer;

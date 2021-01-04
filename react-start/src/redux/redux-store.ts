@@ -8,6 +8,7 @@ import { reducer as formReducer } from 'redux-form';
 import appInitialization from "./app-reducer";
 import { composeWithDevTools } from 'redux-devtools-extension';
 
+
 const { createStore, combineReducers, applyMiddleware } = require("redux");
 
 let rootReducers = combineReducers({
@@ -20,7 +21,10 @@ let rootReducers = combineReducers({
     form: formReducer
 });
 
- // (globalState: AppStateType) => AppStateType
+type InferValueType<T> = T extends {[key: string]: infer U} ? U : never
+
+export type InferActionsType<T extends {[key: string]: (...args: any[]) => any}> = ReturnType<InferValueType<T>>
+
 export type AppStateType = ReturnType<typeof rootReducers>;
 
 let store = createStore(rootReducers, composeWithDevTools(applyMiddleware(thunkMiddleware))); //створили об'єкт store

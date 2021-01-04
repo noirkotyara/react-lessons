@@ -1,14 +1,14 @@
 import React from 'react';
 import { InputComp } from '../../common/InputChecker/InputChecker';
 import { maxLengthC, required } from '../../common/Validators/Validators';
-import { Field,  reduxForm } from 'redux-form';
+import { Field,  InjectedFormProps,  reduxForm } from 'redux-form';
 import cl from './../Dialogs.module.css';
 
-type SendMessageProps = {
-    handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void
+export type SendMessageType = {
+    newMessageText: string
 }
 
-let SendMessage = (props: SendMessageProps) => {
+let SendMessage: React.FC<InjectedFormProps<SendMessageType>> = (props) => {
     return <>
         <form onSubmit={props.handleSubmit}>
             <Field name='newMessageText' type="text" validate={[required, maxLength10]} component={InputComp} />
@@ -17,6 +17,6 @@ let SendMessage = (props: SendMessageProps) => {
     </>;
 }
 
-export const SendMessageRedux = reduxForm<{ handleSubmit: () => void }, {}>({ form: 'sendMessage' })(SendMessage);
+export const SendMessageRedux = reduxForm<SendMessageType>({ form: 'sendMessage' })(SendMessage);
 
 let maxLength10 = maxLengthC(10);

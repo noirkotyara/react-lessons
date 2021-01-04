@@ -1,10 +1,9 @@
 
-export const required = (value: null | string) => {
+type ValidatorsType = (value: null | string) => undefined | string
+
+export const required: ValidatorsType = (value) => {
    return value ? undefined : 'Field is required';
 }
-type valueType = {
-   value: number
-   length: number
-}
-export let maxLengthC = (maxLen: number) => (value: valueType) => {
+
+export let maxLengthC = (maxLen: number): ValidatorsType => (value) => {
    return value && value.length < maxLen ? undefined : `${maxLen} is reached`} 
