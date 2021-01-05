@@ -3,17 +3,7 @@ import kuscherenkoAva from './../assets/images/kuscherenko.jpg';
 import lyubovAva from './../assets/images/lyubov.jpg';
 import { InferActionsType } from './redux-store';
 
-const ADDMESSAGESTATE = 'ADD-MESSAGE-STATE';
-
-export type MessagesDataType = {
-    id?: number
-    message: string
-};
-export type DialogsUsersDataType = {
-    id: number
-    name: string
-    ava: string
-}
+const ADDMESSAGESTATE = 'SN/MESSAGES/ADD-MESSAGE-STATE';
 
 let initialState = {
     messagesData: [
@@ -28,7 +18,7 @@ let initialState = {
         { id: 3, name: 'Kuscherenko', ava: kuscherenkoAva }
     ] as Array<DialogsUsersDataType>
 };
-export type initialStateType = typeof initialState;
+
 let idNum = 5;
 let messagesReducer = (state = initialState, action: ActionsType):initialStateType => {
     switch (action.type) {
@@ -46,12 +36,24 @@ let messagesReducer = (state = initialState, action: ActionsType):initialStateTy
     }
 }
 
-type ActionsType = InferActionsType<typeof actions>
+
 
 export const actions = {
     sendMessage: (newMessageText: string) => ({ type: ADDMESSAGESTATE, newMessageText })
 }
 
-
-
 export default messagesReducer;
+
+//types
+export type MessagesDataType = {
+    id?: number
+    message: string
+};
+export type DialogsUsersDataType = {
+    id: number
+    name: string
+    ava: string
+}
+export type initialStateType = typeof initialState
+
+type ActionsType = InferActionsType<typeof actions>

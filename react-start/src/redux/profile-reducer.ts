@@ -1,22 +1,12 @@
-import { stopSubmit } from "redux-form";
-import { ThunkAction } from "redux-thunk";
+import { FormAction, stopSubmit } from "redux-form";
 import { ResultCodeType, userProfile } from "../api/api";
 import { ProfileType } from "../types/types";
-import { AppStateType, InferActionsType } from "./redux-store";
+import { BasicThunkType, InferActionsType } from "./redux-store";
 
-const SETPROF = 'SET-PROFILE';
-const UPDATESTATUS = 'SET-STATUS';
-const POSTF = 'POST-FORM-newPostText';
-const UPLOAD_PHOTO = 'UPLOAD-PHOTO';
-
-type PostsDataType = {
-    id: number,
-    message: string
-    likes: number
-};
-
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>;
-
+const SETPROF = 'SN/PROFILE/SET-PROFILE';
+const UPDATESTATUS = 'SN/PROFILE/SET-STATUS';
+const POSTF = 'SN/PROFILE/POST-FORM-newPostText';
+const UPLOAD_PHOTO = 'SN/PROFILE/UPLOAD-PHOTO';
 
 let initialState = {
     postsData: [
@@ -29,11 +19,8 @@ let initialState = {
     status: 'no status'
 };
 
-export type InitialStateType = typeof initialState;
 
-
-
-let profileReducer = (state = initialState, action: ActionsType): InitialStateType => {
+const profileReducer = (state = initialState, action: ActionsType): InitialStateType => {
 
     switch (action.type) {
         case POSTF:
@@ -66,7 +53,6 @@ let profileReducer = (state = initialState, action: ActionsType): InitialStateTy
     }
 }
 
-type ActionsType = InferActionsType<typeof actions>
 
 export const actions = {
     setProfile: (profile: ProfileType) => ({ type: SETPROF, profile } as const),
@@ -74,8 +60,6 @@ export const actions = {
     postForm: (content: string) => ({ type: POSTF, content } as const),
     uploadPhoto: (image: string) => ({ type: UPLOAD_PHOTO, image } as const)
 }
-
-// export const postForm = (content: string): PostFormActionType => ({ type: POSTF, content });
 
 export const setProfileThunk = (userID: number): ThunkType => async (dispatch) => {
     let data = await userProfile.showProfile(userID);
@@ -98,8 +82,8 @@ export const uploadPhotoThunk = (image: File): ThunkType => async (dispatch) => 
     (data.resultCode === ResultCodeType.Success) &&
         dispatch(actions.uploadPhoto(data.data.photos));
 }
-///I need to fix this shit
-export const updateProfileThunk = (profile: ProfileType): ThunkType => async (dispatch: Function, getState) => {
+
+export const updateProfileThunk = (profile: ProfileType): ThunkType => async (dispatch, getState) => {
     let data = await userProfile.updateProfile(profile);
     if (data.resultCode === 0) dispatch(setProfileThunk(getState().authMe.id))
     else {
@@ -112,3 +96,14 @@ export const updateProfileThunk = (profile: ProfileType): ThunkType => async (di
 }
 
 export default profileReducer;
+
+//types 
+type PostsDataType = {
+    id: number,
+    message: string
+    likes: number
+};
+
+type ThunkType = BasicThunkType<ActionsType | FormAction>
+export type InitialStateType = typeof initialState
+type ActionsType = InferActionsType<typeof actions>

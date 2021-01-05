@@ -31,8 +31,8 @@ export const usersAPI = {
             .then(response => response.data);
     },
     unFollowDeleteRequest(id: number) {
-        return instance.delete<FollowUnfollowResponseType>(`follow/${id}`)
-            .then(response => response.data);
+        return instance.delete(`follow/${id}`)
+            .then(response => response.data) as Promise<FollowUnfollowResponseType>
     },
     followPostRequest(id: number) {
         return instance.post<FollowUnfollowResponseType>(`follow/${id}`)

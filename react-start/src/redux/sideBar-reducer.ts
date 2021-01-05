@@ -1,7 +1,3 @@
-export type FriendsList = {
-    id: number
-    name: string
-}
 
 let initialState = {
     friendsList: [
@@ -11,9 +7,15 @@ let initialState = {
     ] as Array<FriendsList>
 };
 
-export type initialStateType = typeof initialState;
 
-let sideBarReducer = (state = initialState, action: any):initialStateType => {
+const sideBarReducer = (state = initialState, action: any):initialStateType => {
     return state;
 }
 export default sideBarReducer;
+
+//types
+export type FriendsList = {
+    id: number
+    name: string
+}
+export type initialStateType = typeof initialState
