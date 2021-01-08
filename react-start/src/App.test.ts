@@ -1,7 +1,4 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import App from './App';
-import profileReducer, { postForm, setStatusThunk } from './redux/profile-reducer';
+import profileReducer, { actions , setStatusThunk } from './redux/profile-reducer';
 
 // test('renders learn react link', () => {
 //     const { getByText } = render( < App / > );
@@ -15,14 +12,14 @@ let state = {
         { id: 2, message: 'Bonjour', likes: 30 },
         { id: 3, message: 'Привет', likes: 15000 },
     ],
-    newPostText: '',
+    // newPostText: '',
     profile: null,
     status: 'no status'
 
 };
 
 test('PostForm text', () => {
-    let action = postForm('hello');
+    let action = actions.postForm('hello');
     let newState = profileReducer(state, action);
 
     expect(newState.postsData[3].message).toBe('hello');
@@ -30,7 +27,7 @@ test('PostForm text', () => {
 
 
 test('Do not post empty PostForm', () => {
-    let action = postForm('hello');
+    let action = actions.postForm('hello');
     let newState = profileReducer(state, action);
     expect(newState.postsData.length).toBe(4);
 });
@@ -40,6 +37,7 @@ test('UpdateStatus anonymous user text', () => {
     let state = {
         status: 'no status'
     };
+    //@ts-ignore
     let newState = profileReducer(state, action2);
     expect(newState.status).toBe('no status');
 });

@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
+import { MapStateToPropsType, PathParamsType, PropsType } from '../ProfileContainer';
 import cl from './ProfileStatus.module.css';
 
 
- let ProfileStatusHook = (props) => {
+
+ let ProfileStatusHook: React.FC<MapStateToPropsType & RouteComponentProps<PathParamsType> & OwnPropsType> = (props) => {
     let [editMode, changeEditMode] = useState(false);
     let [status,setStatus] = useState(props.status);
 
 
     let editStatus = () =>  changeEditMode(true);
-    let onChange = (event) => setStatus(event.target.value);
+    let onChange = (event: ChangeEvent<HTMLInputElement>) => setStatus(event.target.value);
     
    useEffect(() => { setStatus(props.status)},[props.status]);
 
@@ -42,3 +45,8 @@ import cl from './ProfileStatus.module.css';
 }
 
 export default ProfileStatusHook;
+
+//types 
+type OwnPropsType = {
+    updateStatus: (status: string) => void
+}

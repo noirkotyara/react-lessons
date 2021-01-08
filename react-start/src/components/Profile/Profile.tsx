@@ -1,24 +1,26 @@
 import React from 'react';
+import { PropsType } from './ProfileContainer';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import cl from './Profile.module.css';
-import ProfileInfo from './ProfileInfo/ProfileInfo';
+import ProfileInfoMemoized from './ProfileInfo/ProfileInfo';
 import ProfileStatus from './ProfileStatus/ProfileStatus'; //class component
 import ProfileStatusHook from './ProfileStatus/ProfileStatusHook';
+import { AppStateType } from '../../redux/redux-store';
+import { OwnPropsType } from './ProfileInfo/ProfileInfoEdit/ProfileEditForm';
 
 
-const Profile = (props) => {
+const Profile: React.FC<PropsType & {store: AppStateType}> = (props) => {
 
     return (
         <div className={cl.content}>
-            <ProfileInfo
+            <ProfileInfoMemoized
                 profileData={props.profile}
-                userId={props.match.params.userId}
-                uploadPhoto={props.uploadPhoto}
+                userId={+props.match.params.userId}
                 checkedAuth={props.authorizedUser}
-                updateProfile={props.updateProfile} />
-
+                {...props} 
+            />
             <ProfileStatusHook {...props} />
-            <MyPostsContainer store={props.store} />
+            <MyPostsContainer {...props} />
         </div>
     );
 }

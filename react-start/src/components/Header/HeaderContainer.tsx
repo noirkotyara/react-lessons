@@ -1,14 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { initialStateType, logoutThunk } from '../../redux/authMe';
+import { logoutThunk } from '../../redux/authMe';
 import { AppStateType } from '../../redux/redux-store';
 import Header from './Header';
 
-let mapStateToProps = (state: AppStateType): initialStateType => {
+let mapStateToProps = (state: AppStateType) => {
     return {...state.authMe}
 }
 
-let HeaderContainer = connect<initialStateType>(mapStateToProps, {
+let HeaderContainer = connect<MapStateToProps, MapDispatchToProps, {}, AppStateType >(mapStateToProps, {
     logout: logoutThunk
 })(Header);
 export default HeaderContainer;
+
+type MapStateToProps = {
+    isAuthMe: boolean
+}
+export type MapDispatchToProps = {
+    logout: () => void
+}

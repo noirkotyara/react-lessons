@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { actions } from '../../redux/messages-reducer';
-import { AppStateType } from '../../redux/redux-store';
+import { AppStateType, BasicComponentType } from '../../redux/redux-store';
 import DialogsContainerHOC from './Dialogs';
 import { DialogsUsersDataType, MessagesDataType } from '../../redux/messages-reducer';
 import { withAuthMe } from '../hoc/hoc';
@@ -27,7 +27,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 }
 // authMeSuccess: authMeSuccessThunk
 // withAuthMe
-const DialogsContainer = compose(
+const DialogsContainer = compose<BasicComponentType>(
     connect<MapStateToPropsType,
         MapDispatchToPropsType,
         {}, AppStateType>

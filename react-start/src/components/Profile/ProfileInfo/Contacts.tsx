@@ -1,4 +1,5 @@
 import React from 'react';
+import { ContactsType } from '../../../types/types';
 import cl from './ProfileInfo.module.scss';
 
 const socialIcons = {
@@ -13,19 +14,24 @@ const socialIcons = {
 
 };
 
+type OwnPropsType = {
+    property: string
+    value: string
+}
 
-const Contact = ({ property, value }) => {
+const Contact: React.FC<OwnPropsType> = ({ property, value }) => {
     let sIcon;
-   let socialChoosed = Object.keys(socialIcons).forEach(key => { if(key===property)  sIcon = socialIcons[key]});
+    Object
+    .keys(socialIcons)
+    .forEach(key => { 
+        if(key===property)  
+        sIcon = socialIcons[key as keyof ContactsType]});
     return (<>
         {value
             && <span><a href={value}><img className={cl.socialIcon}
                     src={sIcon} alt="" /></a>
                  </span>
-            
-            
             }
-{/* <div>{property} : {value}</div> */}
     </>)
 }
 

@@ -4,10 +4,8 @@ import cl from './Message.module.css';
 
 
 
-const Message = (props: MessagesDataType) =>{
-    return (
-    <div className={cl.message}>{props.message}</div>
-    );
+const Message = (props: MessagesDataType) => {
+    return (<div className={cl.message}>{props.message}</div>);
 }
 
 

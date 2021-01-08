@@ -14,9 +14,9 @@ let initialState = {
         { id: 2, message: 'Bonjour', likes: 30 },
         { id: 3, message: 'Привет', likes: 15000 },
     ] as Array<PostsDataType>,
-    newPostText: '',
+    // newPostText: '',
     profile: null as object | null,
-    status: 'no status'
+    status: 'no status' 
 };
 
 
@@ -67,9 +67,18 @@ export const setProfileThunk = (userID: number): ThunkType => async (dispatch) =
 }
 
 export const setStatusThunk = (status: string): ThunkType => async (dispatch) => {
-    let data = await userProfile.updateStatus(status);
+    //обработка ошибок
+    // try
+    // {
+        let data = await userProfile.updateStatus(status);
     (data.resultCode === ResultCodeType.Success) &&
         dispatch(actions.updateStatusAC(status))
+    // }
+    // catch(error)
+    // {
+    //     alert(error)
+    // }
+    
 
 }
 export const getStatusThunk = (userID: number): ThunkType => async (dispatch) => {
@@ -98,11 +107,11 @@ export const updateProfileThunk = (profile: ProfileType): ThunkType => async (di
 export default profileReducer;
 
 //types 
-type PostsDataType = {
-    id: number,
+export type PostsDataType = {
+    id?: number
     message: string
     likes: number
-};
+}
 
 type ThunkType = BasicThunkType<ActionsType | FormAction>
 export type InitialStateType = typeof initialState

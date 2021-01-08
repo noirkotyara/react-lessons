@@ -3,32 +3,16 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { getStatusThunk, actions, setProfileThunk, setStatusThunk, updateProfileThunk, uploadPhotoThunk } from '../../redux/profile-reducer';
-import { AppStateType } from '../../redux/redux-store';
+import { AppStateType, BasicComponentType } from '../../redux/redux-store';
 import { ProfileType } from '../../types/types';
 import Preloader from '../common/Preloader/Preloader';
 import { withAuthMe } from '../hoc/hoc';
 import Profile from './Profile';
 
-type MapStateToPropsRedirectType = {
-     isAuthMe: boolean
-}
-
-type MapStateToPropsType =  {
-        profile: ProfileType
-        status: string
-        authorizedUser: number
-        authorized: boolean
-}
-
-type StateType = {
-
-}
-type PropsType = MapStateToPropsRedirectType & MapStateToPropsType & MapDispatchToPropsType & RouteComponentProps
-
-class ProfileContainer extends React.Component<PropsType, StateType> {
+class ProfileContainer extends React.Component<PropsType & {store: AppStateType}, StateType> {
   refreshProfile = () => {
-      //@ts-ignore
-        let userID = this.props.match.params.userId;
+    // : number | null
+        let userID = +this.props.match.params.userId;
         if(!userID){
             userID = this.props.authorizedUser;
             if(!userID) return<Preloader/>
@@ -40,7 +24,6 @@ class ProfileContainer extends React.Component<PropsType, StateType> {
         this.refreshProfile();
     }
     componentDidUpdate(prevProps: PropsType){
-        //@ts-ignore
         if (prevProps.match.params.userId != this.props.match.params.userId){
         this.refreshProfile();
         }
@@ -63,16 +46,8 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         authorized: state.authMe.isAuthMe
     }
 }
-// <P extends RouteComponentProps<any>, C extends React.ComponentType<P>>
-type MapDispatchToPropsType = {
-        setProfile: (userID: number) => void
-        updateStatus: () => void
-        getStatus: (userID: number) => void
-        postForm: () => void
-        uploadPhoto: () => void
-        updateProfile: () => void
-}
-export default compose(
+//todo: connect is not typized
+export default compose<BasicComponentType>(
     withRouter,
     connect(mapStateToProps, {
         setProfile: setProfileThunk,
@@ -82,7 +57,40 @@ export default compose(
         uploadPhoto: uploadPhotoThunk,
         updateProfile: updateProfileThunk
     }),
-    connect(mapStateToPropsRedirect, {}),
+    connect<MapStateToPropsRedirectType, {}, {}, AppStateType>(mapStateToPropsRedirect, {}),
     withAuthMe
 )(ProfileContainer);
+
+//types
+
+export type MapStateToPropsRedirectType = {
+    isAuthMe: boolean
+}
+
+export type MapStateToPropsType =  {
+       profile: ProfileType
+       status: string
+       authorizedUser: number
+       authorized: boolean
+}
+// <P extends RouteComponentProps<any>, C extends React.ComponentType<P>>
+export type MapDispatchToPropsType = {
+    updateStatus: (status: string) => void 
+    postForm?: () => void
+    uploadPhoto: (file: File | string) => void
+    updateProfile: (dataFlow: FormProfileType) => Promise<any>
+}
+type StateType = {}
+export type PathParamsType = {
+   userId: string
+}
+type FormProfileType = {
+    profileData: ProfileType
+}
+
+type OwnPropsType = {
+    setProfile: (userID: number) => void
+    getStatus: (userID: number) => void
+}
+export type PropsType = OwnPropsType & MapStateToPropsRedirectType & MapStateToPropsType & MapDispatchToPropsType & RouteComponentProps<PathParamsType>
 

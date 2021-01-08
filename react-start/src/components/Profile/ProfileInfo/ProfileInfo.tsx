@@ -1,27 +1,34 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import cl from './ProfileInfo.module.scss';
 import Preloader from '../../common/Preloader/Preloader';
 import { useState } from 'react';
 import avaDefault from './../../../assets/startPage/av.jpg';
 import ProfileInfoEdit from './ProfileInfoEdit/ProfileInfoEdit';
+import { ProfileType } from '../../../types/types';
+import { MapDispatchToPropsType } from '../ProfileContainer';
 
+type OwnPropsType = {
+    checkedAuth: number
+    profileData: ProfileType
+    userId: number
+}
 
+const ProfileInfo: React.FC<OwnPropsType & MapDispatchToPropsType> = ({ checkedAuth, profileData, uploadPhoto, userId, updateProfile }) => {
 
-
-const ProfileInfo = React.memo((props) => {
-  
-    const { checkedAuth, profileData, uploadPhoto, userId, updateProfile } = props;
     let [editMode, changeEditMode] = useState(false);
-    let [photoFile, changePhotoFile] = useState('');
-    if (!props.profileData) {
+    let [photoFile, changePhotoFile] = useState<File | string>('');
+    if (!profileData) {
         return <Preloader />
     }
     let choosePhotoEdition = () => {
         changeEditMode(true);
     }
-    let choosedPhoto = (file) => {
-        changePhotoFile(file);
+    let choosedPhoto = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length) {
+            changePhotoFile(e.target.files[0])
+        }
     }
+
     let uploadPhotoPreparation = () => {
         uploadPhoto(photoFile);
         changeEditMode(false);
@@ -33,11 +40,15 @@ const ProfileInfo = React.memo((props) => {
 
                 {(editMode && (checkedAuth === userId || !userId))
                     ? (<div>
-                        <input type="file" accept="image/*" onChange={(e) => choosedPhoto(e.target.files[0])} />
+                        <input type="file" accept="image/*" onChange={(e) => choosedPhoto(e)} />
                         <input onClick={uploadPhotoPreparation} type="button" value='Upload' />
                     </div>)
                     :
-                    <img style={{ width: '100px', height: '100px' }} src={profileData.photos.small ? profileData.photos.small : avaDefault} alt="avatar" onDoubleClick={choosePhotoEdition} />
+                    <img
+                        style={{ width: '100px', height: '100px' }}
+                        src={profileData.photos.small ? profileData.photos.small : avaDefault}
+                        alt="avatar"
+                        onDoubleClick={choosePhotoEdition} />
                 }
                 <ProfileInfoEdit
                     owner={checkedAuth === userId || !userId}
@@ -48,8 +59,8 @@ const ProfileInfo = React.memo((props) => {
 
         </div>
     );
-});
+}
 
+const ProfileInfoMemoized = React.memo(ProfileInfo);
 
-
-export default ProfileInfo;
+export default ProfileInfoMemoized;

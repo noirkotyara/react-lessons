@@ -3,10 +3,14 @@ import { NavLink } from 'react-router-dom';
 import cl from './Header.module.css';
 import logo from './../../assets/startPage/logo2.jpg';
 import { initialStateType } from '../../redux/authMe';
+import { MapDispatchToProps } from './HeaderContainer';
 
-type AllPropsType = initialStateType & {logout: () => void} ;
 
-const Header = (props: AllPropsType) => {
+type PropsType = {
+    isAuthMe: boolean
+}
+
+const Header: React.FC<PropsType & MapDispatchToProps> =  (props) => {
     return (<>
         <header className={cl.header}>
             <div className={cl.loginPhrase}>

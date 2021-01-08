@@ -1,7 +1,8 @@
 import React from 'react';
 import cl from './Post.module.css';
+import {PostsDataType} from './../../../../redux/profile-reducer'
 
-const Post = (props) => {
+const Post: React.FC<PostsDataType> = (props) => {
     return (
         <div className={cl.item}>
 

@@ -1,19 +1,16 @@
 import React, { Dispatch } from 'react';
-import { InjectedArrayProps, InjectedFormProps, reset } from 'redux-form';
-import { MessagesDataType } from '../../redux/messages-reducer';
+import { FormAction, InjectedFormProps, reset } from 'redux-form';
 import Dialog from './Dialog/Dialog';
 import cl from './Dialogs.module.css';
 import { PropsType } from './DialogsContainer';
 import { SendMessageRedux, SendMessageType } from './Form/SendMessageRedux';
 import Message from './Message/Message';
 
-
-////////////////////////////////////////////fix this shit any
 const Dialogs: React.FC<InjectedFormProps<SendMessageType, PropsType> & PropsType> = (props) => {
 
-    let onSubmit = (formData: {newMessageText: string}, dispatch: any )=> {
-        props.sendMessage(formData.newMessageText);
-        dispatch(reset('sendMessage'));
+    let onSubmit = (formData: {newMessageText: string}, dispatch: Dispatch<FormAction> )=> {
+        props.sendMessage(formData.newMessageText)
+        dispatch(reset('sendMessage'))
     }
 
     let dialogsGenerate = props.dialogsGenerate.map(d => <Dialog key={d.id} name={d.name} id={d.id} ava={d.ava} />);

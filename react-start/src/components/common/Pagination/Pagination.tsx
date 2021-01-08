@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import cl from './Pagination.module.css';
+import cn from 'classnames';
 
 type PropsType = {
     totalCount: number
@@ -26,13 +27,13 @@ let Pagination = (props: PropsType) => {
  
     return (
         <>
-            <div className={cl.pages}>
+            <div className={cn(cl.pages)}>
                 {currentPortion > 1 && <button onClick={() => setCurrentPortion(currentPortion-1)}>minus</button> }
                 {pA
                 .filter(page => page >= leftBorder && page <= rightBorder)
                 .map(page => {
                     return (
-                        <span  onClick={() => { props.changeCurPage(page) }} className={props.currentPage === page && cl.pageSelected || cl.page} key={page}>{page} </span>
+                        <span onClick={() => { props.changeCurPage(page) }} className={cn({[cl.pageSelected || cl.page]: props.currentPage === page}) } key={page}>{page} </span>
                     );
                 })
                 }

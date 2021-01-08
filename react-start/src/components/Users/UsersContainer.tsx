@@ -27,7 +27,8 @@ export type MapDispatchToPropsType = {
 }
 export type OwnPropsType = {
     title: string
-    user: UsersDataType
+    user?: UsersDataType
+    store: AppStateType
 }
 export type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType;
 
@@ -46,12 +47,17 @@ class UsersContainerClass extends React.Component<PropsType> {
         <div className={cl.userPage}>Choose your friends{this.props.isFetching && <span className={cl.preloader}><Preloader/></span>}</div>
          <div className={cl.pagination}> <Pagination {...this.props} changeCurPage={this.changeCurPage} /> </div>
         {!this.props.isFetching
-        && <Users {...this.props}/>}
+        && <Users 
+            usersGenerate={this.props.usersGenerate}
+            doFollow={this.props.doFollow}
+            doUnfollow={this.props.doUnfollow}
+            followingInProgress={this.props.followingInProgress}
+                    />}
             </>
     }
 }
 
-// usersGenerate, currentPage, totalCount, pageSize, isFetching
+
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         usersGenerate: getUsersData(state),
@@ -67,9 +73,9 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 // <TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState>
 // <ReturnType<typeof mapStateToProps>, MapDispatchToProps, OwnPropsType, AppStateType >
 
-export default connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType >(mapStateToProps, {
+export default connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType , AppStateType>(mapStateToProps, {
     doFollow: followThunk,
     doUnfollow: unFollowThunk,
     setUsers: setUsersThunk,
     setCurPage: changeCurPageThunk
-})(UsersContainerClass);
+})(UsersContainerClass)

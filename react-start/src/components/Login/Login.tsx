@@ -34,7 +34,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-let LoginFormContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {
+let LoginFormContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {store: AppStateType}, AppStateType>(mapStateToProps, {
     isLogin: putLoginPasswordThunk
 })(Login);
 

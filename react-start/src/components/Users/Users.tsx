@@ -2,18 +2,21 @@ import React from 'react';
 import { UsersDataType } from '../../types/types';
 import User from './User/User';
 import cl from './Users.module.css';
-import {PropsType} from './UsersContainer';
 
 
+export type PropsType = {
+    usersGenerate: Array<UsersDataType>
+    doFollow: (id: number) => void 
+    doUnfollow: (id: number) => void 
+    followingInProgress: Array<number>
+}
 
 
 let Users: React.FC<PropsType> = (props) => {
     return(
         <>                
                 <div className={cl.usersItem}>
-                    {props.usersGenerate.map((user) =>
-                    // I need to fix this shit
-                //@ts-ignore
+                    {props.usersGenerate.map((user) =>               
                         <User key={user.id}
                             user={user}
                             doFollow={props.doFollow}
