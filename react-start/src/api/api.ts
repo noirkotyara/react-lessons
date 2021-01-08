@@ -9,7 +9,7 @@ const instance = axios.create({
     }
 });
 
-type UsersAPIResponseType = {
+export type UsersAPIResponseType = {
     items: Array<UsersDataType>
     totalCount: number
     error: null | string
