@@ -9,6 +9,7 @@ const CURPAGE = 'SN/USERS/CURPAGE';
 const TOTALCOUNT = 'SN/USERS/TOTALCOUNT';
 const TOGGLE_IS_FETCHING = 'SN/USERS/TOGGLEIF';
 const FOL_IS_FETCHING = 'SN/USERS/FOLISFETCH';
+const SET_FILTER = 'SN/USERS/SET-FILTER-FOR-USERS';
 
 
 let initialState = {
@@ -17,7 +18,11 @@ let initialState = {
     pageSize: 90,
     totalCount: 10,
     isFetching: false,
-    followingInProgress: [] as Array<number>
+    followingInProgress: [] as Array<number>,
+    filter: {
+        term: '',
+        friend: null as null | boolean
+    }
 };
 
 const usersReducer = (state = initialState, action: ActionsType): InitialStateType => {
@@ -57,6 +62,11 @@ const usersReducer = (state = initialState, action: ActionsType): InitialStateTy
                 ...state,
                 totalCount: action.totalCount
             };
+        case SET_FILTER:
+            return {
+                ...state,
+                filter: action.filter
+            };
         case TOGGLE_IS_FETCHING:
             return {
                 ...state,
@@ -86,14 +96,16 @@ export const actions = {
     setUsers: (usersData: Array< UsersDataType >) => ({ type: DATA, usersData } as const),
     setCurPage: (currentPage: number) => ({ type: CURPAGE, currentPage } as const),
     setTotalCount: (totalCount: number) => ({ type: TOTALCOUNT, totalCount } as const),
+    setFilter: (filter: FilterType) => ({ type: SET_FILTER, filter } as const),
     toggleFetching: (isFetching: boolean) => ({ type: TOGGLE_IS_FETCHING, isFetching } as const),
     toggleFollowing: (followingTF: boolean, userId: number) => ({ type: FOL_IS_FETCHING, followingTF, userId } as const)
 }
 
 
-export const setUsersThunk = (currentPage: number, pageSize: number): ThunkType => async (dispatch) => {
+export const setUsersThunk = (currentPage: number, pageSize: number, filter: FilterType): ThunkType => async (dispatch) => {
     dispatch(actions.toggleFetching(true));
-    let data = await usersAPI.getUsers(currentPage, pageSize)
+    dispatch(actions.setFilter(filter))
+    let data = await usersAPI.getUsers(currentPage, pageSize, filter.term, filter.friend)
     dispatch(actions.toggleFetching(false));
     dispatch(actions.setUsers(data.items));
     dispatch(actions.setTotalCount(data.totalCount));
@@ -123,5 +135,6 @@ export default usersReducer;
 
 //types
 export type InitialStateType = typeof initialState
+export type FilterType = typeof initialState.filter
 type ActionsType = InferActionsType<typeof actions>
 type ThunkType = BasicThunkType<ActionsType>

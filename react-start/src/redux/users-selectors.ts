@@ -9,3 +9,4 @@ export const getTotalCount = createSelector(getUsersPage, (usersPage) => { retur
 export const getPageSize = createSelector(getUsersPage, (usersPage) => { return usersPage.pageSize });
 export const getIsFetching = createSelector(getUsersPage, (usersPage) => { return usersPage.isFetching });
 export const getFollowingInProgress = createSelector(getUsersPage, (usersPage) => { return usersPage.followingInProgress });
+export const getFilter = createSelector(getUsersPage, (usersPage) => { return usersPage.filter });
