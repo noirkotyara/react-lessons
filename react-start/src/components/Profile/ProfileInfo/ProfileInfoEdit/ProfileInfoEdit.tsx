@@ -6,19 +6,25 @@ import happy from '../../../../assets/images/happy.png';
 import cl from './../ProfileInfo.module.scss';
 import { FormAction, reset } from 'redux-form';
 import { ContactsType, ProfileType } from '../../../../types/types';
+import { getProfileObjectData } from '../../../../redux/profile-selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppStateType } from '../../../../redux/redux-store';
+import { updateProfileThunk } from '../../../../redux/profile-reducer';
 
-type OwnPropsType = {
+type PropsType = {
     owner: boolean
-    profileData: ProfileType 
-    updateProfile: (dataFlow: FormProfileType) => Promise<void>
 }
 
-const ProfileInfoEdit: React.FC<OwnPropsType> = ({ owner, profileData, updateProfile }) => {
+export const ProfileInfoEdit: React.FC<PropsType> = ({ owner }) => {
     let [editMode, changeEditMode] = useState(false);
-    
+
+    const profileData = useSelector<AppStateType, ProfileType>(getProfileObjectData)
+    const dispatchR = useDispatch()
+
     let onSubmit = (dataFlow: FormProfileType, dispatch: Dispatch<FormAction>) => {
-        let promise = updateProfile(dataFlow);
-        promise.then(() => changeEditMode(false));
+        // typeScript is annoying that`s why there is an <any>
+        let promise: any = dispatchR(updateProfileThunk(dataFlow))
+        promise.then(() => changeEditMode(false))
         dispatch(reset('editProfile'));
 
     }
@@ -29,7 +35,6 @@ const ProfileInfoEdit: React.FC<OwnPropsType> = ({ owner, profileData, updatePro
                     ? <ProfileEditForm
                         //@ts-ignore I need to fix this shit
                         initialValues={profileData}
-                        profileData={profileData}
                         onSubmit={onSubmit} />
                     : owner &&
                     <div>
@@ -44,7 +49,6 @@ const ProfileInfoEdit: React.FC<OwnPropsType> = ({ owner, profileData, updatePro
                             })
                             }
                         </div>
-
                         <div>lookingForAJob:  <img src={profileData.lookingForAJob ? happy : sad} style={{ width: '50px', height: '50px' }} alt=""></img> </div>
                         <div>Description: {profileData.lookingForAJobDescription}</div>
 
@@ -53,4 +57,3 @@ const ProfileInfoEdit: React.FC<OwnPropsType> = ({ owner, profileData, updatePro
         </div>
     </>)
 }
-export default ProfileInfoEdit;

@@ -1,5 +1,5 @@
-import { UsersDataType } from './../types/types';
 import { usersAPI } from "../api/api";
+import { UsersDataType } from './../types/types';
 import { BasicThunkType, InferActionsType } from './redux-store';
 
 const FOLLOW = 'SN/USERS/FOLLOW';

@@ -4,7 +4,7 @@ import { DialogsUsersDataType } from '../../../redux/messages-reducer';
 import cl from './Dialog.module.css';
 
 
-const Dialog = (props: DialogsUsersDataType) => {
+const Dialog: React.FC<DialogsUsersDataType> = (props) => {
     let path = '/dialogs/' + props.id;
     return (
         <div className={cl.dialog}>

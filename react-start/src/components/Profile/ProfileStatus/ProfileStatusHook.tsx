@@ -1,25 +1,30 @@
-import React, { ChangeEvent } from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
-import { MapStateToPropsType, PathParamsType, PropsType } from '../ProfileContainer';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setStatusThunk } from '../../../redux/profile-reducer';
+import { getStatus } from '../../../redux/profile-selectors';
 import cl from './ProfileStatus.module.css';
 
+type PropsType = {
+    isUserAuth: number
+}
 
+ export const ProfileStatusWithHook: React.FC<PropsType> = (props) => {
+    
+    const status = useSelector(getStatus)
+    const dispatch = useDispatch()
 
- let ProfileStatusHook: React.FC<MapStateToPropsType & RouteComponentProps<PathParamsType> & OwnPropsType> = (props) => {
     let [editMode, changeEditMode] = useState(false);
-    let [status,setStatus] = useState(props.status);
+    let [statusState,setStatus] = useState(status);
 
 
     let editStatus = () =>  changeEditMode(true);
     let onChange = (event: ChangeEvent<HTMLInputElement>) => setStatus(event.target.value);
     
-   useEffect(() => { setStatus(props.status)},[props.status]);
+   useEffect(() => { setStatus(status)},[status]);
 
     let readyStatus = () => {
         changeEditMode(false);
-        props.updateStatus(status);
+        dispatch(setStatusThunk(statusState))
     }
   
         return (
@@ -29,13 +34,13 @@ import cl from './ProfileStatus.module.css';
             
                     editMode
                     ? <div className={cl.editionVersion}>
-                        <input onBlur={readyStatus} autoFocus={true} type="text" value={status} onChange={onChange} ></input>
+                        <input onBlur={readyStatus} autoFocus={true} type="text" value={statusState} onChange={onChange} ></input>
                     </div>
                     : <div >
                         <span className={cl.readyStatus} 
-                        onDoubleClick={() => (!props.match.params.userId) 
+                        onDoubleClick={() => (!props.isUserAuth) 
                         ? editStatus() 
-                        : false}>{props.status || '---------'}</span> 
+                        : false}>{status || '---------'}</span> 
                     </div>
                 }
 
@@ -44,9 +49,4 @@ import cl from './ProfileStatus.module.css';
     
 }
 
-export default ProfileStatusHook;
 
-//types 
-type OwnPropsType = {
-    updateStatus: (status: string) => void
-}

@@ -108,7 +108,7 @@ export default profileReducer;
 
 //types 
 export type PostsDataType = {
-    id?: number
+    id: number
     message: string
     likes: number
 }

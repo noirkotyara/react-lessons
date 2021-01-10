@@ -1,41 +1,38 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { AppStateType } from '../../redux/redux-store';
 import { FilterType } from '../../redux/users-reducer';
+import { getUsersData } from '../../redux/users-selectors';
 import { UsersDataType } from '../../types/types';
-import SearchForm from './FormType';
-import User from './User/User';
+import { User } from './User/User';
 import cl from './Users.module.css';
 
 
-export type PropsType = {
-    usersGenerate: Array<UsersDataType>
-    doFollow: (id: number) => void 
-    doUnfollow: (id: number) => void 
-    followingInProgress: Array<number>
-    filter: FilterType
-    onFilterChange: (filter: FilterType) => void
-}
-
 
 let Users: React.FC<PropsType> = (props) => {
-    return(
+
+    const usersGenerate = useSelector<AppStateType, Array<UsersDataType>>(getUsersData)
+
+    return (
         <>
-        <div>
-        <SearchForm onFilterChange={props.onFilterChange} filter={props.filter}/>
-        </div>
-                <div className={cl.usersItem}>
-                    {props.usersGenerate.map((user) =>               
-                        <User key={user.id}
-                            user={user}
-                            doFollow={props.doFollow}
-                            doUnfollow={props.doUnfollow}
-                            followingInProgress={props.followingInProgress}
-                        />)}
-                </div>
-            </>
+            <div className={cl.usersItem}>
+                {usersGenerate.map((user) =>
+                    <User
+                        key={user.id}
+                        user={user}
+                    />)}
+            </div>
+        </>
     );
 
 }
 
 
 export default Users;
+
+//types
+export type PropsType = {
+    filter: FilterType
+    onFilterChange: (filter: FilterType) => void
+}
 

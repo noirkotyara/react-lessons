@@ -1,41 +1,26 @@
-import cl from '../Login/Login.module.css';
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { DataIsLoginType, putLoginPasswordThunk } from '../../redux/authMe';
-import LoginForm from './LoginForm';
+import { getAuthMe } from '../../redux/authMe-selectors';
 import { AppStateType } from '../../redux/redux-store';
+import cl from '../Login/Login.module.css';
+import LoginForm from './LoginForm';
 
-type MapStateToPropsType = {
-    authMe: boolean
-    captcha: string | null
-}
 
-type MapDispatchToPropsType = {
-    isLogin: (data: DataIsLoginType) => void
-}
-type PropsType = MapStateToPropsType & MapDispatchToPropsType;
-let Login: React.FC<PropsType> = (props) => {
+export const LoginPage: React.FC<{}> = () => {
+    
+    const authMe = useSelector(getAuthMe)
+    const dispatch = useDispatch()
+
     const onSubmit = (formData: DataIsLoginType) => {
-        props.isLogin(formData);
+        dispatch(putLoginPasswordThunk(formData))
     }
     return <>
         <div className={cl.starter}>LOGIN</div>
-        {props.authMe
+        {authMe
             ? <div >You are login successfully</div>
-            : <LoginForm onSubmit={onSubmit} captcha={props.captcha} />
+            : <LoginForm onSubmit={onSubmit} />
         }
     </>
 }
 
-let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
-    return {
-        authMe: state.authMe.isAuthMe,
-        captcha: state.authMe.captcha
-    }
-}
-
-let LoginFormContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {store: AppStateType}, AppStateType>(mapStateToProps, {
-    isLogin: putLoginPasswordThunk
-})(Login);
-
-export default LoginFormContainer;

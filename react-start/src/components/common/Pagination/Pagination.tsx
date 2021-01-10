@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import cl from './Pagination.module.css';
 import cn from 'classnames';
+import { useSelector } from 'react-redux';
+import { AppStateType } from '../../../redux/redux-store';
+import { getTotalCount } from '../../../redux/users-selectors';
 
-type PropsType = {
-    totalCount: number
-    pageSize: number
-    currentPage: number
 
-    changeCurPage: (page: number) => void
-}
 
-let Pagination = (props: PropsType) => {
-    
+let Pagination: React.FC<PropsType> = (props) => {
+
+    const totalCount = useSelector<AppStateType, number>(getTotalCount)
+
+
     let portionSize = 5;
-    let pagesQuantity = Math.ceil(props.totalCount / props.pageSize);
+    let pagesQuantity = Math.ceil(totalCount / props.pageSize);
     let pA = [];
     for (let i = 1; i <= pagesQuantity; i++) {
         pA.push(i);
@@ -46,3 +46,10 @@ let Pagination = (props: PropsType) => {
 
 export default Pagination;
 
+
+// types 
+type PropsType = {
+    pageSize: number
+    currentPage: number
+    changeCurPage: (page: number) => void
+}

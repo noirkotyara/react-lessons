@@ -32,4 +32,4 @@ export type InferActionsType<T extends {[key:string]: (...args: any) => any}> = 
 export type BasicThunkType<A extends Action,R = Promise<void> > = ThunkAction<R, AppStateType, unknown, A>
 export type AppStateType = ReturnType<typeof rootReducers>
 
-export type BasicComponentType = React.ComponentType<{store: AppStateType}>
+export type BasicComponentType = React.ComponentType<{store: AppStateType}>//for compose

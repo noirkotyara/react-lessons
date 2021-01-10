@@ -1,11 +1,19 @@
 import React from 'react';
-import cl from './User.module.css';
-import avaDefault from '../../../assets/images/zorro.jpg'
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import avaDefault from '../../../assets/images/zorro.jpg';
+import { AppStateType } from '../../../redux/redux-store';
+import { followThunk, unFollowThunk } from '../../../redux/users-reducer';
+import { getFollowingInProgress } from '../../../redux/users-selectors';
 import { UsersDataType } from '../../../types/types';
-import { PropsType } from '../Users';
+import cl from './User.module.css';
 
-const User: React.FC< OwnPropsType> = (props) => {
+
+export const User: React.FC<PropsType> = (props) => {
+
+    const dispatch = useDispatch()
+    const followingInProgress = useSelector<AppStateType ,Array<number>>(getFollowingInProgress)
+
     return (<>
         <div className={cl.userItem}>
             <NavLink to={'profile/' + props.user.id}><img className={cl.avatar}
@@ -24,12 +32,12 @@ const User: React.FC< OwnPropsType> = (props) => {
             <div>
                 {
                     props.user.followed
-                        ? <button disabled={props.followingInProgress.some(id => id === props.user.id)} onClick={() => {
-                            props.doUnfollow(props.user.id);
+                        ? <button disabled={followingInProgress.some(id => id === props.user.id)} onClick={() => {
+                            dispatch(unFollowThunk(props.user.id))
 
                         }} className={cl.statusFollow}>UNFOLLOW</button>
-                        : <button disabled={props.followingInProgress.some(id => id === props.user.id)} onClick={() => {
-                            props.doFollow(props.user.id);
+                        : <button disabled={followingInProgress.some(id => id === props.user.id)} onClick={() => {
+                            dispatch(followThunk(props.user.id))
 
                         }} className={cl.statusFollow}>FOLLOW</button>}
 
@@ -40,13 +48,9 @@ const User: React.FC< OwnPropsType> = (props) => {
     );
 }
 
-export default User;
-
 
 //types
-type OwnPropsType = {
+type PropsType = {
+    key: number
     user: UsersDataType
-    doFollow: (id: number) => void 
-    doUnfollow: (id: number) => void 
-    followingInProgress: Array<number>
 }

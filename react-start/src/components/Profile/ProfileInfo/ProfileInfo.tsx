@@ -1,22 +1,29 @@
-import React, { ChangeEvent } from 'react';
-import cl from './ProfileInfo.module.scss';
-import Preloader from '../../common/Preloader/Preloader';
-import { useState } from 'react';
-import avaDefault from './../../../assets/startPage/av.jpg';
-import ProfileInfoEdit from './ProfileInfoEdit/ProfileInfoEdit';
+import React, { ChangeEvent, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAuthID } from '../../../redux/authMe-selectors';
+import { uploadPhotoThunk } from '../../../redux/profile-reducer';
+import { getProfileObjectData } from '../../../redux/profile-selectors';
+import { AppStateType } from '../../../redux/redux-store';
 import { ProfileType } from '../../../types/types';
-import { MapDispatchToPropsType } from '../ProfileContainer';
+import Preloader from '../../common/Preloader/Preloader';
+import avaDefault from './../../../assets/startPage/av.jpg';
+import cl from './ProfileInfo.module.scss';
+import { ProfileInfoEdit } from './ProfileInfoEdit/ProfileInfoEdit';
 
-type OwnPropsType = {
-    checkedAuth: number
-    profileData: ProfileType
+type PropsType = {
     userId: number
 }
 
-const ProfileInfo: React.FC<OwnPropsType & MapDispatchToPropsType> = ({ checkedAuth, profileData, uploadPhoto, userId, updateProfile }) => {
+const ProfileInfo: React.FC<PropsType> = ({ userId }) => {
+
+    const authID = useSelector(getAuthID)
+    const profileData = useSelector<AppStateType, ProfileType>(getProfileObjectData)
+    const dispatch = useDispatch()
+    
 
     let [editMode, changeEditMode] = useState(false);
-    let [photoFile, changePhotoFile] = useState<File | string>('');
+    //that`s why here is <any>
+    let [photoFile, changePhotoFile] = useState<any>('');
     if (!profileData) {
         return <Preloader />
     }
@@ -30,7 +37,8 @@ const ProfileInfo: React.FC<OwnPropsType & MapDispatchToPropsType> = ({ checkedA
     }
 
     let uploadPhotoPreparation = () => {
-        uploadPhoto(photoFile);
+        //photoFile typeScript is annoying 
+        dispatch(uploadPhotoThunk(photoFile))
         changeEditMode(false);
     }
 
@@ -38,7 +46,7 @@ const ProfileInfo: React.FC<OwnPropsType & MapDispatchToPropsType> = ({ checkedA
         <div className={cl.content}>
             <div className={cl.description}>
 
-                {(editMode && (checkedAuth === userId || !userId))
+                {(editMode && (authID === userId || !userId))
                     ? (<div>
                         <input type="file" accept="image/*" onChange={(e) => choosedPhoto(e)} />
                         <input onClick={uploadPhotoPreparation} type="button" value='Upload' />
@@ -50,10 +58,7 @@ const ProfileInfo: React.FC<OwnPropsType & MapDispatchToPropsType> = ({ checkedA
                         alt="avatar"
                         onDoubleClick={choosePhotoEdition} />
                 }
-                <ProfileInfoEdit
-                    owner={checkedAuth === userId || !userId}
-                    profileData={profileData}
-                    updateProfile={updateProfile} />
+                <ProfileInfoEdit owner={authID === userId || !userId} />
 
             </div>
 
@@ -61,6 +66,6 @@ const ProfileInfo: React.FC<OwnPropsType & MapDispatchToPropsType> = ({ checkedA
     );
 }
 
-const ProfileInfoMemoized = React.memo(ProfileInfo);
+const ProfileInfoMemoized = React.memo(ProfileInfo)
 
 export default ProfileInfoMemoized;

@@ -1,14 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { Field, InjectedFormProps, reduxForm, WrappedFieldProps } from 'redux-form';
 import { InputComp } from '../../../common/InputChecker/InputChecker';
 import cl from './../ProfileInfo.module.scss';
 import checker from './../../../common/InputChecker/InputChecker.module.css';
 import { ProfileType } from '../../../../types/types';
+import { getProfileObjectData } from '../../../../redux/profile-selectors';
+import { AppStateType } from '../../../../redux/redux-store';
 
 
-const ProfileEditForm: React.FC<InjectedFormProps<FormProfileType, OwnPropsType> & FormProfileType> = (props) => {
-    let contactsArray = Object.keys(props.profileData.contacts).map(key => {
+const ProfileEditForm: React.FC<InjectedFormProps<FormProfileType>> = (props) => {
+    
+    const profileData = useSelector<AppStateType, ProfileType>(getProfileObjectData)
+    
+    let contactsArray = Object.keys(profileData.contacts).map(key => {
         return <div key={key}>{fieldCreator('contacts.' + key, InputComp, 'text')}</div>
     })
 
@@ -36,14 +41,9 @@ let fieldCreator = (name: string,
     return (<Field name={name} component={component} type={type} placeholder={name} validate={validate}></Field>)
 }
 
-export default reduxForm<FormProfileType, OwnPropsType>({
+export default reduxForm<FormProfileType>({
     form: 'editProfile',
     enableReinitialize: true
 })(ProfileEditForm);
 
-export type FormProfileType = {
-    profileData: ProfileType
-}
-export type OwnPropsType = {
-    profileData: ProfileType
-}
+export type FormProfileType = ProfileType
