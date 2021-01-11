@@ -23,7 +23,6 @@ export type FollowUnfollowResponseType = {
 
 export const usersAPI = {
     getUsers(currentPage: number, pageSize: number, term: string , friend: null | boolean) {
-        debugger
         return instance.get<UsersAPIResponseType>(`users?page=${currentPage}&count=${pageSize}&term=${term}${friend === null? '' : '&friend=' + friend}` )
             .then(response => response.data);
     },

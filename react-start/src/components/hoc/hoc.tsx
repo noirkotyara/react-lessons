@@ -25,7 +25,6 @@ export function withSuspense<WCP>(Component: React.ComponentType<WCP>) {
 // export let withAuthMe = <P extends object>(Component: React.ComponentType<P>) => {
 //     return class WrappedContainer extends React.Component<P & initialStateType> {
 //         render() {
-//             debugger
 //             let {isAuthMe, ...restProps} = this.props;
 //             if (this.props.isAuthMe) return <Component {...restProps as P} />
 //             else return <Redirect to='/login'></Redirect>

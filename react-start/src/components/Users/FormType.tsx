@@ -1,9 +1,14 @@
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { AppStateType } from '../../redux/redux-store';
 import { FilterType } from '../../redux/users-reducer';
+import { getFilter } from '../../redux/users-selectors';
 
 const SearchForm: React.FC<FormPropsType> = (props) => {
-    
+
+    const filter = useSelector<AppStateType, FilterType>(getFilter)
+
     const onSubmit = (values: FormType, { setSubmitting }: FormikHelpers<FormType>) => {
         const valuesConverted = {
             ...values,
@@ -18,13 +23,18 @@ const SearchForm: React.FC<FormPropsType> = (props) => {
         // todo: async setSubmitting
         setSubmitting(false);
     }
-    //I need to fix this shit todo: initialValues as any
-    const initialValuesForForm = props.filter as any ;
+
     return (<div>
         Search for your friends)
         <div>
             <Formik
-                initialValues={initialValuesForForm}
+                enableReinitialize
+                initialValues={
+                    {
+                        term: filter.term,
+                        friend: String(filter.friend) as FriendFormType
+                    }
+                }
                 onSubmit={onSubmit}
             >
                 {({ isSubmitting }) => (
@@ -47,12 +57,14 @@ const SearchForm: React.FC<FormPropsType> = (props) => {
 
 export default SearchForm
 
+
+
 //types
+type FriendFormType = 'null' | 'true' | 'false'
 type FormType = {
-    term: string;
-    friend: 'null' | 'true' | 'false';
-};
+    term: string
+    friend: FriendFormType
+}
 type FormPropsType = {
-    onFilterChange: (filter: FilterType) => void;
-    filter: FilterType;
-};
+    onFilterChange: (filter: FilterType) => void
+}
