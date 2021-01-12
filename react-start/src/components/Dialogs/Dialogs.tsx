@@ -1,7 +1,8 @@
-import React, { Dispatch } from 'react';
+import React, { Dispatch, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FormAction, reset } from 'redux-form';
-import { actions, DialogsUsersDataType, MessagesDataType } from '../../redux/messages-reducer';
+import { DataType } from '../../api/api';
+import { actions, getDialogsThunk, MessagesDataType, startChatThunk } from '../../redux/messages-reducer';
 import { getDialogs, getMessages } from '../../redux/messages-selectors';
 import { AppStateType } from '../../redux/redux-store';
 import { withAuthMe } from '../hoc/hoc';
@@ -12,7 +13,12 @@ import Message from './Message/Message';
 
 const Dialogs: React.FC<{}> = (props) => {
 
-    const dialogsGenerate = useSelector<AppStateType,Array<DialogsUsersDataType>>(getDialogs)
+    useEffect(() => {
+        dispatchR(getDialogsThunk())
+    },[])
+
+
+    const dialogsGenerate = useSelector<AppStateType,Array<DataType>>(getDialogs)
     const messagesGenerate = useSelector<AppStateType,Array<MessagesDataType>>(getMessages)
     const dispatchR = useDispatch()
             
@@ -21,7 +27,7 @@ const Dialogs: React.FC<{}> = (props) => {
         dispatch(reset('sendMessage'))
     }
 
-    let dialogsGenerateList = dialogsGenerate.map(d => <Dialog key={d.id} name={d.name} id={d.id} ava={d.ava} />);
+    let dialogsGenerateList = dialogsGenerate.map(d => <Dialog key={d.id} user={d} />);
     let messagesGenerateList = messagesGenerate.map(m => <Message key={m.id} message={m.message} />);
 
     return (

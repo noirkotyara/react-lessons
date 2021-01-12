@@ -1,11 +1,16 @@
-.editionVersion input {}
+.editionVersion input {
+    margin: 10px;
+}
 
 .status {
     font-size: 30px;
 }
 
 .readyStatus {
-    color: yellow;
+    color: black;
     font-size: 25px;
     border: 2px solid green;
+    border-radius: 30px;
+    padding: 0 10px 0 10px;
+    margin: 10px;
 }

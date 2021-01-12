@@ -1,15 +1,16 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { DialogsUsersDataType } from '../../../redux/messages-reducer';
+import { DataType } from '../../../api/api';
 import cl from './Dialog.module.css';
 
 
-const Dialog: React.FC<DialogsUsersDataType> = (props) => {
-    let path = '/dialogs/' + props.id;
+const Dialog: React.FC<{user: DataType}> = ({user}) => {
+    let path = '/dialogs/' + user.id
     return (
         <div className={cl.dialog}>
-            <span> <img className={cl.avatar} src={props.ava} alt='ava' /> </span>
-            <NavLink to={path} activeClassName={cl.active}>  {props.name} </NavLink></div>);
+            <span> <img className={cl.avatar} src={user.photos.small || ''} alt='ava' /> </span>
+            <div>  {user.userName} </div>
+            </div>);
 }
 
 export default Dialog;

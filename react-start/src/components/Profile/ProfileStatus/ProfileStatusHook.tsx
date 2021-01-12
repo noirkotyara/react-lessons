@@ -31,17 +31,16 @@ type PropsType = {
             <div className={cl.content}>
                 <span className={cl.status}>Status:</span>
                 { 
-            
                     editMode
-                    ? <div className={cl.editionVersion}>
+                    ? <span className={cl.editionVersion}>
                         <input onBlur={readyStatus} autoFocus={true} type="text" value={statusState} onChange={onChange} ></input>
-                    </div>
-                    : <div >
+                    </span>
+                    : <span>
                         <span className={cl.readyStatus} 
                         onDoubleClick={() => (!props.isUserAuth) 
                         ? editStatus() 
                         : false}>{status || '---------'}</span> 
-                    </div>
+                    </span>
                 }
 
             </div>

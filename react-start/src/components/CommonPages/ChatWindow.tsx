@@ -7,12 +7,13 @@ export const ChatWindow: React.FC<{}> = (props) => {
 
     let [messagesData, setMessagesData] = useState<Array<MessageType>>([])
     const ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
+    
     useEffect(() => {
         
         ws.addEventListener('message', (event) => {
             let newMessagesData = JSON.parse(event.data)
             setMessagesData((messagesData) => [...messagesData, ...newMessagesData] )
-          } )
+          } ) 
     }, [])
 
     const messages: Array<MessageType> = messagesData
