@@ -6,11 +6,7 @@
 }
 .name{
     font-size: 33px;
-    position: absolute;
-    margin-left: 430px;
-    margin-top: 10px;
     font-family: 'Texturina', serif;
-    color: whitesmoke;
 }
 .header {
     grid-area: h;
