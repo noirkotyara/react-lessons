@@ -8,14 +8,10 @@ import { ProfileStatusWithHook } from './ProfileStatus/ProfileStatusHook';
 
 
 const Profile: React.FC<WithRouteProps> = (props) => {
-
     return (
         <div className={cl.content}>
             <ProfileInfoMemoized
                 userId={+props.match.params.userId}
-            />
-            <ProfileStatusWithHook
-                isUserAuth={+props.match.params.userId}
             />
             <MyPosts />
         </div>

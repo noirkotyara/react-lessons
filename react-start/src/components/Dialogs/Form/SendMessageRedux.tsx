@@ -12,7 +12,7 @@ export type SendMessageType = {
 let SendMessage: React.FC<InjectedFormProps<SendMessageType, {}>> = (props) => {
     return <>
         <form onSubmit={props.handleSubmit}>
-            <Field name='newMessageText' type="text" validate={[required, maxLength10]} component={InputComp} />
+            <Field name='newMessageText' type="text" validate={[required]} component={InputComp} />
             <button type="submit" className={cl.sendMessage}>send</button>
         </form>
     </>;

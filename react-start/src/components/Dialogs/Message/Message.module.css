@@ -1,4 +1,12 @@
 .message {
-    border: 2px solid chartreuse;
+    /* border: 2px solid chartreuse; */
     margin: 7px;
+}
+.messageFromUser {
+    text-align: left;
+    /* border: 2px solid chartreuse; */
+}
+.yourMessage {
+    text-align: right;
+    /* border: 2px solid yellow; */
 }

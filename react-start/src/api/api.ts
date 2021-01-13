@@ -5,7 +5,8 @@ const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     withCredentials: true,
     headers: {
-        "API-KEY": "30bffa88-490b-405c-83b6-e6b58d235873"
+        // "API-KEY": "9c2e4d66-4ed0-4976-8ef0-e6d697c58441"//noirkotyara
+        "API-KEY": "30bffa88-490b-405c-83b6-e6b58d235873"//MKdir
     }
 });
 
@@ -99,23 +100,72 @@ export const dialogsAPI = {
     startChat(userId: number){
         return instance.put<getDialogsAPIResponseType<{}>>(`/dialogs/${userId}`)
         .then(response => response.data)
-    }
+    },
+    selectChat(userId: number, pageNumber: number = 1){
+        return instance.get<getSelectedChatMessagesType>(`dialogs/${userId}/messages?count=20&page=${pageNumber}`)
+        .then(response => response.data)
+    },
+    sendMessageToUser(userId: number, message: string){
+        return instance.post<SendedMessageToUserType>(`dialogs/${userId}/messages`, {body: message })
+        .then(response => response.data)
+    },
+    deleteMessage(messageId: string){
+        return instance.delete<DeleteMessageType>(`dialogs/messages/${messageId}`)
+        .then(response => response.data)
+    },
+    
 }
+
+export type DeleteMessageType = {
+    data: {} 
+    fieldsErrors?: []
+    messages?: [] | Array<string>
+    resultCode?: ResultCodeType
+}
+// data: {}
+// fieldsErrors: []
+// messages: []
+// resultCode: 0
 
 
 //++ dialogs/{userId}	
 //++ dialogs
-// dialogs/{userId}/messages
-// dialogs/{userId}/messages
+//++ post dialogs/{userId}/messages
+//++ get dialogs/{userId}/messages
 // dialogs/messages/{messageId}/viewed
 // dialogs/messages/{messageId}/spam
-// dialogs/messages/{messageId}
+//++ dialogs/messages/{messageId}
 // dialogs/messages/{messageId}/restore
 // dialogs/{userId}/messages/new?newerThen={date}
 // dialogs/messages/new/count	
 
-
 //types
+export type getSelectedChatMessagesType = {
+    items: Array<MessagesDataType>
+    totalCount: number
+    error: null | string
+}
+
+export type SendedMessageToUserType = {
+    data:{message: MessagesDataType} 
+    fieldsErrors?: []
+    messages?: [] | Array<string>
+    resultCode?: ResultCodeType
+}
+export type MessagesDataType = {
+    id: string
+    body: string
+    translatedBody: null
+    addedAt: string
+    senderId: number
+    senderName: string
+    recipientId: number
+    viewed: boolean
+    deletedByRecipient?: boolean
+    distributionId?: null | number
+    recipientName?: string
+    isSpam?: boolean
+}
 export type getDialogsAPIResponseType<D> = {
     data: Array<D> 
     fieldsErrors?: []

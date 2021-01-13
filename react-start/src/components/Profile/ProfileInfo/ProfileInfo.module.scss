@@ -1,18 +1,50 @@
 .description {
-   
     margin: 30px 0 30px 0;
+    position: relative;
 }
 .contacts{
     color: white;
 }
-
-.socialIcon{
-width: 70px;
-height: 70px;
+.fullname{
+    font-size: 50px;
 }
 
-.contacts{
-    text-align: right;
+.colWithFullName{
+    float: left;
+    padding-left: 7%;
+
+}
+
+.socialIcon{
+    width: 70px;
+    height: 70px;
+}
+
+.avatarFullNameStatus{
+    margin: 30px;
+    clear: both;
+    white-space: nowrap;
+    
+}
+.aboutMe{
+    font-size: 25px ;
+    div{
+        
+    }
+    .aboutMeContent{
+        
+    }
+}
+
+
+.avatarImage{
+    float: right;
+    width: 150px;
+    cursor: pointer;
+}
+
+.links{
+    text-align: center;
 }
 
 .editData{

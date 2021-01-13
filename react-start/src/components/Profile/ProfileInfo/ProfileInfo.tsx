@@ -1,4 +1,6 @@
-import { Button } from 'antd';
+import { SmileOutlined, SyncOutlined } from '@ant-design/icons';
+import { Button, Col, Image, Popover, Row } from 'antd';
+import Layout from 'antd/lib/layout/layout';
 import React, { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
@@ -9,6 +11,7 @@ import { getProfileObjectData } from '../../../redux/profile-selectors';
 import { AppStateType } from '../../../redux/redux-store';
 import { ProfileType } from '../../../types/types';
 import Preloader from '../../common/Preloader/Preloader';
+import { ProfileStatusWithHook } from '../ProfileStatus/ProfileStatusHook';
 import avaDefault from './../../../assets/startPage/av.jpg';
 import cl from './ProfileInfo.module.scss';
 import { ProfileInfoEdit } from './ProfileInfoEdit/ProfileInfoEdit';
@@ -53,30 +56,64 @@ const ProfileInfo: React.FC<PropsType> = ({ userId }) => {
         dispatch(startChatThunk(userId));
         history.push(location)
     }
+    const content = (
+        <div>Double click to change avatar photo</div>
+    )
 
     return (
-        <div className={cl.content}>
-            <div className={cl.description}>
-                {(editMode && (authID === userId || !userId))
-                    ? (<div>
-                        <input type="file" accept="image/*" onChange={(e) => choosedPhoto(e)} />
-                        <input onClick={uploadPhotoPreparation} type="button" value='Upload' />
-                    </div>)
-                    :
-                    <img
-                        style={{ width: '100px', height: '100px' }}
-                        src={profileData.photos.small ? profileData.photos.small : avaDefault}
-                        alt="avatar"
-                        onDoubleClick={choosePhotoEdition} />
-                }
-                {(userId !== authID) &&
-                    <Button onClick={() => startMessaging(userId)}>Start Messaging</Button>
-                }
-                <ProfileInfoEdit owner={authID === userId || !userId} />
+        <Layout className={cl.content}>
+            <Row>
+                <Col span={24}>
+                    {(editMode && (authID === userId || !userId))
+                        ? (<div>
+                            <input type="file" accept="image/*" onChange={(e) => choosedPhoto(e)} />
+                            <input onClick={uploadPhotoPreparation} type="button" value='Upload' />
+                        </div>)
+                        :
+                        <Row className={cl.avatarFullNameStatus}>
+                            <Col span={6} >
+                                <Popover content={content} title="Tip" placement='bottomLeft'>
+                                    <img
+                                        className={cl.avatarImage}
+                                        src={profileData.photos.small ? profileData.photos.small : avaDefault}
+                                        alt="avatar"
+                                        onDoubleClick={choosePhotoEdition} />
+                                </Popover>
+                            </Col>
+                            <Col span={18} className={cl.colWithFullName}>
+                                <Row>
+                                    <div className={cl.fullname}>{profileData.fullName}</div>
+                                </Row>
+                                <Row>
+                                    <Col span={12}>
+                                        <div className={cl.status}><ProfileStatusWithHook isUserAuth={userId} /></div>
+                                    </Col>
+                                    <Col span={12}>
+                                        <div>Looking for a job? {profileData.lookingForAJob ? <SyncOutlined spin /> : <SmileOutlined rotate={180} />} </div>
+                                        <div> {profileData.lookingForAJobDescription}</div>
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
+                    }
+                </Col>
 
-            </div>
+            </Row>
+            <Row >
+                <Col span={24} >
+                    <div className={cl.description}>
 
-        </div>
+                        {(userId) ?
+                            <Button onClick={() => startMessaging(userId)}>Start Messaging</Button>
+                            : null
+                        }
+                        <ProfileInfoEdit owner={authID === userId || !userId} />
+
+                    </div>
+                </Col>
+            </Row>
+
+        </Layout>
     );
 }
 

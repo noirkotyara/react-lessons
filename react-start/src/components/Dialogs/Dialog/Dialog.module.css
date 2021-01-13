@@ -1,6 +1,7 @@
 .dialog {
     border-bottom: 2px solid cyan;
     padding: 20px 0 20px 0;
+    cursor: pointer;
 }
 
 .dialog a {

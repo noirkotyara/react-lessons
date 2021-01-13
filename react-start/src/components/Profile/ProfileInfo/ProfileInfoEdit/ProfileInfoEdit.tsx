@@ -10,6 +10,7 @@ import { getProfileObjectData } from '../../../../redux/profile-selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../../../redux/redux-store';
 import { updateProfileThunk } from '../../../../redux/profile-reducer';
+import { Button, Col, Row } from 'antd';
 
 type PropsType = {
     owner: boolean
@@ -19,6 +20,7 @@ export const ProfileInfoEdit: React.FC<PropsType> = ({ owner }) => {
     let [editMode, changeEditMode] = useState(false);
 
     const profileData = useSelector<AppStateType, ProfileType>(getProfileObjectData)
+
     const dispatchR = useDispatch()
 
     let onSubmit = (dataFlow: FormProfileType, dispatch: Dispatch<FormAction>) => {
@@ -38,20 +40,39 @@ export const ProfileInfoEdit: React.FC<PropsType> = ({ owner }) => {
                         onSubmit={onSubmit} />
                     : owner &&
                     <div>
-                        <button className={cl.editButton} onClick={() => changeEditMode(true)}>Edit Profile</button>
-                        <div className={cl.fullname}>{profileData.fullName}</div>
-                        <div className={cl.aboutMe}>{profileData.aboutMe}</div>
-                        <div className={cl.contacts}>
-                            {Object
-                            .keys(profileData.contacts)
-                            .map((key) => {
-                                return <Contact key={key} property={key} value={profileData.contacts[key as keyof ContactsType]  } />
-                            })
-                            }
-                        </div>
-                        <div>lookingForAJob:  <img src={profileData.lookingForAJob ? happy : sad} style={{ width: '50px', height: '50px' }} alt=""></img> </div>
-                        <div>Description: {profileData.lookingForAJobDescription}</div>
+                        <Row className={cl.aboutMe} >
+                            <Col span={6} offset={6}>
+                                <div>About me:</div>
+                            </Col>
+                            <Col span={12}>
+                                <div className={cl.aboutMeContent} >{profileData.aboutMe}</div>
+                            </Col>
+                        </Row>
+                        <Row>
+                           <Col span={24}>
+                               <div> Where to find me: </div>
+                           </Col>  
+                        </Row>
 
+                        <Row className={cl.links}>
+                            <Col span={24}>
+                                <div className={cl.contacts}>
+                                    {Object
+                                        .keys(profileData.contacts)
+                                        .map((key) => {
+                                            return <Contact key={key} property={key} value={profileData.contacts[key as keyof ContactsType]} />
+                                        })
+                                    }
+                                </div>
+                            </Col>
+                        </Row>
+
+                        <Row>
+                            <Col span={24}>
+                                <Button className={cl.editButton} onClick={() => changeEditMode(true)}>Edit Profile</Button>
+                            </Col>
+                        </Row>
+                        
                     </div>
             }
         </div>
