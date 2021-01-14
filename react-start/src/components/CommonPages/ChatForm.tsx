@@ -1,22 +1,36 @@
+import { Button } from 'antd';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 type FormType = {
     message: string
 }
 
-export const ChatForm: React.FC<{}> = (props) => {
+export const ChatForm: React.FC<{ws: WebSocket | null}> = ({ws}) => {
 
-    const ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
+    let [isOpen, setIsOpen] = useState<'pending' | 'ready'>('pending')
    
     const onSubmit = (values: FormType , { setSubmitting, resetForm }: FormikHelpers<FormType>) => {
         // todo: async setSubmitting
         console.log(values)
         if(!values.message) return;
-        ws.send(values.message)
+        if(ws !== null){
+            ws.send(values.message)
+        }
+        
         resetForm()
         setSubmitting(false);
     }
+    const connectionIsStable = () => {
+        setIsOpen('ready');
+    };
+    useEffect(() => {
+        if(ws !== null) {
+            ws.addEventListener('open', connectionIsStable)
+        }
+        return () => {
+            ws !== null && ws.removeEventListener('open', connectionIsStable) }
+    }, [ws])
 
     return (<div> 
         <div>
@@ -24,7 +38,7 @@ export const ChatForm: React.FC<{}> = (props) => {
                 {({ isSubmitting }) => (
                     <Form>
                         <Field type="text" name="message" />
-                        <button type="submit" disabled={isSubmitting}>Send</button>
+                        <button type="submit" disabled={isSubmitting || (isOpen !== 'ready')}>Send</button>
                     </Form>
                 )}
             </Formik>
@@ -33,7 +47,3 @@ export const ChatForm: React.FC<{}> = (props) => {
 };
 
 
-
-
-
-//types
