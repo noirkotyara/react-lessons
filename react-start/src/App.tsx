@@ -9,7 +9,6 @@ import { LoginPage } from './components/Login/Login';
 import Music from './components/Music/Music';
 import { Navbar } from './components/Navbar/Navbar';
 import News from './components/News/News';
-import Settings from './components/Settings/Settings';
 import { UsersPage } from './components/Users/UsersPage';
 import { setInitializeThunk } from './redux/app-reducer';
 import { AppStateType } from './redux/redux-store';
@@ -24,6 +23,8 @@ import { Layout, Breadcrumb } from 'antd';
 
 const ProfilePage = React.lazy(() => import('./components/Profile/ProfilePage') as Promise<any>);
 const PublicChatPage = React.lazy(() => import('./components/CommonPages/ChatPage'));
+const SettingsPage = React.lazy(() => import('./components/Settings/Settings'));
+
 
 const AppF: React.FC<RouteComponentProps> = (props) => {
 
@@ -65,7 +66,8 @@ const AppF: React.FC<RouteComponentProps> = (props) => {
                             <Route path='/news' render={News} />
                             <Route path='/music' render={Music} />
                             <Route path='/publicchat' render={() => <Suspense fallback={<h1>Still Loading…</h1>}><PublicChatPage/></Suspense> } />
-                            <Route path='/settings' render={Settings} />
+                            <Route path='/settings' render={() => <Suspense fallback={<h1>Still Loading…</h1>}><SettingsPage/></Suspense> } />
+                            {/* <Route path='/settings' render={Settings} /> */}
                             <Route path='/users' render={() =>  <UsersPage />} />
                             <Route path='/login' render={() => <LoginPage />} />
                             <Route path='*' render={() => <NoMatch />} />

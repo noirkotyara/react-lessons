@@ -6,7 +6,7 @@ const Settings = () => {
     return (
         <div>
             Settings
-            {/* <ChangePhoto/> */}
+            <ChangePhoto/>
         </div>
     );
 }

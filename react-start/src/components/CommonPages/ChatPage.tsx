@@ -6,10 +6,8 @@ import { ChatForm } from "./ChatForm";
 const ChatPage = () => {
     let [createdChannel, setNewChannel] = useState<WebSocket | null>(null) 
        
-debugger
 
     useEffect(() => {
-        debugger
     let ws: WebSocket
        const reconnectWS = () => {
             console.log('CLOSE WS');
@@ -29,7 +27,6 @@ debugger
         
         
         return () => {
-            debugger
             ws.removeEventListener('close', reconnectWS)
             ws.close()
         }
