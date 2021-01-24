@@ -1,7 +1,7 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { ComponentType, Suspense, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, RouteComponentProps, Switch, useLocation, withRouter } from 'react-router-dom';
-import './App.css';
+import './App.scss';
 import Preloader from './components/common/Preloader/Preloader';
 import DialogsPage from './components/Dialogs/Dialogs';
 import { Header } from './components/Header/Header';
@@ -46,7 +46,9 @@ const AppF: React.FC<RouteComponentProps> = (props) => {
     }, [])
 
     const { Content, Footer } = Layout;
-    
+    const suspenseWrapper = (Component: ComponentType) => {
+        return <Suspense fallback={<h1>Still Loading…</h1>}><Component/></Suspense>
+    }
 
     if (!initialized) { return <Preloader /> }
     return (
@@ -62,12 +64,11 @@ const AppF: React.FC<RouteComponentProps> = (props) => {
                     <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
                         <Switch>
                             <Route path='/dialogs' render={() => <DialogsPage />} />
-                            <Route path='/profile/:userId?' render={() => <Suspense fallback={<h1>Still Loading…</h1>}> <ProfilePage /> </Suspense>} />
+                            <Route path='/profile/:userId?' render={() => suspenseWrapper(ProfilePage)} />
                             <Route path='/news' render={News} />
                             <Route path='/music' render={Music} />
-                            <Route path='/publicchat' render={() => <Suspense fallback={<h1>Still Loading…</h1>}><PublicChatPage/></Suspense> } />
-                            <Route path='/settings' render={() => <Suspense fallback={<h1>Still Loading…</h1>}><SettingsPage/></Suspense> } />
-                            {/* <Route path='/settings' render={Settings} /> */}
+                            <Route path='/publicchat' render={() => suspenseWrapper(PublicChatPage) } />
+                            <Route path='/settings' render={() => suspenseWrapper(SettingsPage) } />
                             <Route path='/users' render={() =>  <UsersPage />} />
                             <Route path='/login' render={() => <LoginPage />} />
                             <Route path='*' render={() => <NoMatch />} />

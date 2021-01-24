@@ -3,7 +3,7 @@ import { Button, Col, Image, Popover, Row } from 'antd';
 import Layout from 'antd/lib/layout/layout';
 import React, { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { getAuthID } from '../../../redux/authMe-selectors';
 import { startChatThunk } from '../../../redux/messages-reducer';
 import { uploadPhotoThunk } from '../../../redux/profile-reducer';
@@ -11,17 +11,17 @@ import { getProfileObjectData } from '../../../redux/profile-selectors';
 import { AppStateType } from '../../../redux/redux-store';
 import { ProfileType } from '../../../types/types';
 import Preloader from '../../common/Preloader/Preloader';
+import { PathParamsType } from '../ProfilePage';
 import { ProfileStatusWithHook } from '../ProfileStatus/ProfileStatusHook';
 import avaDefault from './../../../assets/startPage/av.jpg';
 import cl from './ProfileInfo.module.scss';
 import { ProfileInfoEdit } from './ProfileInfoEdit/ProfileInfoEdit';
 
-type PropsType = {
-    userId: number
-}
 
-const ProfileInfo: React.FC<PropsType> = ({ userId }) => {
 
+const ProfileInfo: React.FC<{}> = () => {
+    const params = useParams<PathParamsType>()
+    let userId = Number(params.userId);
     const authID = useSelector(getAuthID)
     const profileData = useSelector<AppStateType, ProfileType>(getProfileObjectData)
     const dispatch = useDispatch()

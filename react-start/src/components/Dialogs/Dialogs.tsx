@@ -45,7 +45,6 @@ const Dialogs: React.FC<{}> = (props) => {
     let messagesGenerateList = messagesGenerate.map(m => <Message key={m.id} message={m} />);
 
     if (isFetching) {
-        // debugger
         return <Preloader/>
     }
     else return (

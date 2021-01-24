@@ -26,6 +26,7 @@ export const ChatAPI = {
         //але тут здається треба буде в bll сетать але це не точно
         if (ws !== null) {
             ws.removeEventListener('close', reconnectWS)
+            ws.removeEventListener('message', messageHandler)
             ws.close()
         }
         ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')

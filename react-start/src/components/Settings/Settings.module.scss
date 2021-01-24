@@ -1,0 +1,24 @@
+@import './../../variables.scss';
+
+.title{
+    font-family: $basic-font;
+    font-size: 2rem;
+    text-align: center;
+}
+.explanation{
+        font-family: $basic-font;
+        font-size: 2rem;
+    }
+.avatar_container{
+    margin: 3% 0 3% 0;
+    text-align: center;
+    
+    .avatarImage{
+        float:left;
+    }
+}
+
+.profile_container{
+    margin: 3% 0 3% 0;
+    text-align: center;
+}

@@ -1,33 +1,27 @@
 import { Col, Popover, Row } from "antd";
 import Layout from "antd/lib/layout/layout";
-import { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { RouteComponentProps, useRouteMatch } from "react-router-dom";
+import { authMeSuccessThunk } from "../../redux/authMe";
 import { getAuthID } from "../../redux/authMe-selectors";
 import { setProfileThunk, uploadPhotoThunk } from "../../redux/profile-reducer";
-import cl from './../Profile/ProfileInfo/ProfileInfo.module.scss';
-import React from 'react'
 import { getProfileObjectData } from "../../redux/profile-selectors";
-import { ProfileType } from "../../types/types";
 import { AppStateType } from "../../redux/redux-store";
-import avaDefault from './../../assets/startPage/av.jpg';
-import { authMeSuccessThunk } from "../../redux/authMe";
+import { ProfileType } from "../../types/types";
 import Preloader from "../common/Preloader/Preloader";
+import avaDefault from './../../assets/startPage/av.jpg';
+import styles from './Settings.module.scss';
 
-type PathParamsType = {
-    userId: string
-}
+
 
 export const ChangePhoto: React.FC<{}> = () => {
-
+const DemoBox = (props: any) => <p className={`height-${props.value} ${styles.explanation}` }>{props.children}</p>;
     useEffect(() => {
-        debugger
         dispatch(authMeSuccessThunk)
         dispatch(setProfileThunk(userId))
     }, [])
 
     let [editMode, changeEditMode] = useState(false);
-    let match = useRouteMatch<PathParamsType>()
     const dispatch = useDispatch()
     const profileData = useSelector<AppStateType, ProfileType>(getProfileObjectData)
     let userId = useSelector<AppStateType, number>(getAuthID)
@@ -53,19 +47,22 @@ export const ChangePhoto: React.FC<{}> = () => {
     const content = (
         <div>Double click to change avatar photo</div>
     )
-    if(profileData === null) return <Preloader/>
-    else return (<Layout>
+    return (<Layout>
+        
         {(editMode && (authID === userId || !userId))
             ? (<div>
                 <input type="file" accept="image/*" onChange={(e) => choosedPhoto(e)} />
                 <input onClick={uploadPhotoPreparation} type="button" value='Upload' />
             </div>)
             :
-            <Row className={cl.avatarFullNameStatus}>
-                <Col span={6} >
+            <Row className={styles.avatar_container} align="middle">
+                <Col span={12}>
+                <DemoBox value={150}>Your Avatar:</DemoBox>
+                </Col>
+                <Col span={12} >
                     <Popover content={content} title="Tip" placement='bottomLeft'>
                         <img
-                            className={cl.avatarImage}
+                            className={styles.avatarImage}
                             src={profileData.photos.small ? profileData.photos.small : avaDefault}
                             alt="avatar"
                             onDoubleClick={choosePhotoEdition} />

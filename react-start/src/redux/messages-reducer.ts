@@ -108,7 +108,6 @@ export const sendMessageThunk = (userId: number, message: string): ThunkType => 
 export const loadMoreMessagesThunk = (userId: number, pageNumber: number): ThunkType => async (dispatch) => {
     dispatch(actions.setFetching())
     let response = await dialogsAPI.selectChat(userId, pageNumber);
-    debugger
    
     if(response.error === null) {
         dispatch(actions.setMoreMessages(response.items))
@@ -120,7 +119,6 @@ export const loadMoreMessagesThunk = (userId: number, pageNumber: number): Thunk
 export const deleteMessageThunk = (messageId: string): ThunkType => async (dispatch) => {
     dispatch(actions.setFetching())
     let response = await dialogsAPI.deleteMessage(messageId);
-    debugger
     if(response.resultCode === ResultCodeType.Success) {
         dispatch(actions.deleteMessage(messageId))
         dispatch(actions.setFetching())

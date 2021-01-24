@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { RouteComponentProps, useHistory, useParams, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { getAuthID } from '../../redux/authMe-selectors';
 import { getStatusThunk, setProfileThunk } from '../../redux/profile-reducer';
@@ -8,19 +8,21 @@ import Preloader from '../common/Preloader/Preloader';
 import { withAuthMe } from '../hoc/hoc';
 import Profile from './Profile';
 
-type PathParamsType = {
-    userId: string
+export type PathParamsType = {
+    userId: string | undefined
  }
-export type WithRouteProps = RouteComponentProps<PathParamsType>
 
-const ProfilePage: React.FC<WithRouteProps> = (props) => {
+
+const ProfilePage: React.FC<{}> = (props) => {
     const authorizedUser = useSelector(getAuthID)
     const dispatch = useDispatch()
-    
+    const params = useParams<PathParamsType>()
 
     const refreshProfile = () => {
+        console.log(params.userId);
         // : number | null
-            let userID = +props.match.params.userId;
+            // let userID = +props.match.params.userId;
+            let userID = Number(params.userId);
             if(!userID){
                 userID = authorizedUser;
                 if(!userID) return<Preloader/>
@@ -34,14 +36,14 @@ const ProfilePage: React.FC<WithRouteProps> = (props) => {
     }, [])
     useEffect(() => {
         refreshProfile()
-    }, [props.match.params.userId])
+    }, [params.userId])
 
-    return <Profile {...props} />
+    return <Profile />
 }
 
 
 export default  compose(
-    withRouter,  
+    // withRouter,  
     withAuthMe
 )(ProfilePage)
 
