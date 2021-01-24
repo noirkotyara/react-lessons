@@ -88,14 +88,14 @@ test ( 'unFollowThunk --> dispatch called for the right userId ' , async () => {
 } )
 
 test ( 'setUsersThunk --> is called 4 times when Promise.resolved successfully ' , async () => {
-    const thunk = setUsersThunk(2,5)
+    const thunk = setUsersThunk( 2, 5, {term: '', friend: null})
     
     await thunk(dispatch, getState, {})
     expect(dispatch).toBeCalledTimes(4)
 } )
 
 test ( 'setUsersThunk --> dispatch called for the right userId ' , async () => {
-    const thunk = setUsersThunk(2,5)
+    const thunk = setUsersThunk(2,5, {term: '', friend: null})
     
     await thunk(dispatch, getState, {})
     expect(dispatch).toHaveBeenNthCalledWith(1, actions.toggleFetching(true))

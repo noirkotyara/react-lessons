@@ -2,42 +2,24 @@ import React, { useEffect, useState } from "react"
 import Layout from "antd/lib/layout/layout";
 import { ChatWindow } from "./ChatWindow";
 import { ChatForm } from "./ChatForm";
+import { useDispatch } from "react-redux";
+import { startMessagesListening, stopMessagesListening } from "../../redux/chat-reducer";
 
 const ChatPage = () => {
-    let [createdChannel, setNewChannel] = useState<WebSocket | null>(null) 
-       
-
+    const dispatch = useDispatch();
+   
     useEffect(() => {
-    let ws: WebSocket
-       const reconnectWS = () => {
-            console.log('CLOSE WS');
-            setTimeout(createChannel, 3000);
-        }
-        
-        const createChannel = () => {
-            if(createdChannel !== null){
-                createdChannel.removeEventListener('close', reconnectWS)
-                createdChannel.close()
-            }
-                ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
-                ws.addEventListener('close', reconnectWS)
-                 setNewChannel(ws)
-        }
-        createChannel()
-        
-        
+        dispatch(startMessagesListening())
         return () => {
-            ws.removeEventListener('close', reconnectWS)
-            ws.close()
+            dispatch(stopMessagesListening())
         }
-        
-    } ,[])
+    }, [])
 
 
     return (<>
         <Layout>
-            <ChatWindow ws={createdChannel} />
-            <ChatForm ws={createdChannel} />
+            <ChatWindow  />
+            <ChatForm />
         </Layout>
     </>)
 }

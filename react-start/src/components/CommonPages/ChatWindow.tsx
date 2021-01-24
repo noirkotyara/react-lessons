@@ -1,37 +1,20 @@
 import React, { useEffect, useState } from "react";
 import Layout from "antd/lib/layout/layout";
-import { MessageType } from "./Message";
 import { Message } from "./Message";
+import { MessageType } from "../../api/chat-api";
+import { AppStateType } from "../../redux/redux-store";
+import { useSelector } from "react-redux";
 
-export const ChatWindow: React.FC<{ws: WebSocket | null}> = ({ws}) => {
+export const ChatWindow: React.FC<{}> = () => {
 
-    let [messagesData, setMessagesData] = useState<Array<MessageType>>([])
+
+    const messagesData = useSelector<AppStateType, Array<MessageType>>((state) => state.chatPage.messages);
     
-    
-    const showMessages = (event: MessageEvent<any>): void => {
-        let newMessagesData = JSON.parse(event.data);
-        setMessagesData((messagesData) => [...messagesData, ...newMessagesData]);
-    };
-
-    useEffect(() => {
-        if(ws !== null){
-            ws.addEventListener('message', showMessages ) 
-            
-        }
-        return () => {
-            if(ws !== null){
-                ws.removeEventListener('message', showMessages)
-                ws.close()
-            }
-            }
-    }, [ws])
-
-    const messages: Array<MessageType> = messagesData
     return (
         <Layout style={{
             overflow: 'auto', height: '50vh',
         }}>
-            {messages.map((message, index) => <Message key={index} user={message} />)}
+            {messagesData.map((message, index) => <Message key={index} user={message} />)}
         </Layout>
     );
 };

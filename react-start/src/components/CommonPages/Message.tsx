@@ -1,4 +1,5 @@
 import React from "react";
+import { MessageType } from "../../api/chat-api";
 
 
 
@@ -10,10 +11,4 @@ export const Message: React.FC<{ user: MessageType }> = ({ user }) => {
     </div>);
 };
 
-//types
-export type MessageType = {
-    message: string
-    photo: string
-    userId: number
-    userName: string
-  }
+

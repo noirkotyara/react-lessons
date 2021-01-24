@@ -8,6 +8,7 @@ import { reducer as formReducer } from 'redux-form';
 import appInitialization from "./app-reducer";
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { Action } from "redux";
+import chatReducer from "./chat-reducer";
 
 
 const { createStore, combineReducers, applyMiddleware } = require("redux");
@@ -19,6 +20,7 @@ let rootReducers = combineReducers({
     usersPage: usersReducer,
     authMe: authMe,
     appInit: appInitialization,
+    chatPage: chatReducer,
     form: formReducer
 });
 
