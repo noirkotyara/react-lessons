@@ -1,7 +1,8 @@
 import { Field, Form, Formik, FormikHelpers } from 'formik';
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { sendMessageThunk } from '../../redux/chat-reducer';
+import { AppStateType } from '../../redux/redux-store';
 
 type FormType = {
     message: string
@@ -9,6 +10,7 @@ type FormType = {
 
 export const ChatForm: React.FC<{}> = () => {
     const dispatch = useDispatch()
+    const channelStatus = useSelector((state: AppStateType) => state.chatPage.channelStatus)
     const onSubmit = (values: FormType , { setSubmitting, resetForm }: FormikHelpers<FormType>) => {
         // todo: async setSubmitting
         console.log(values)
@@ -25,7 +27,7 @@ export const ChatForm: React.FC<{}> = () => {
                 {({ isSubmitting }) => (
                     <Form>
                         <Field type="text" name="message" />
-                        <button type="submit" disabled={isSubmitting}>Send</button>
+                        <button type="submit" disabled={channelStatus !== 'ready'}>Send</button>
                     </Form>
                 )}
             </Formik>
