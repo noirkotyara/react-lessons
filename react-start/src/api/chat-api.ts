@@ -1,9 +1,9 @@
 
 /////types
-export type SubMessageType = (messages: Array<MessageType>) => void;
+export type SubMessageType = (messages: Array<MessageAPIType>) => void;
 export type SubStatusType = (status: StatusType) => void;
 
-export type MessageType = {
+export type MessageAPIType = {
     message: string
     photo: string
     userId: number

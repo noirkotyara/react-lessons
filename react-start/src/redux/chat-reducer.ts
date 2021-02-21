@@ -1,10 +1,11 @@
 import { Dispatch } from 'react';
-import { ChatAPI, MessageType, StatusType, SubMessageType, SubStatusType } from './../api/chat-api';
+import { ChatAPI, MessageAPIType, StatusType, SubMessageType, SubStatusType } from './../api/chat-api';
 import { BasicThunkType, InferActionsType } from "./redux-store";
-
+import {v1} from 'uuid'
 const SET_MESSAGES = 'SN/APP/SET-MESSAGES';
 const SET_CHSTATUS = 'SN/APP/SET-CHANNEL-STATUS';
 
+export type MessageType = MessageAPIType & {id: string}
 let initialState = {
     messages: [] as Array<MessageType>,
     channelStatus: 'pending' as StatusType
@@ -15,7 +16,7 @@ let chatReducer = (state = initialState, action: ActionsType): InitialStateType 
         case SET_MESSAGES:
             return {
                 ...state,
-                messages: [...state.messages, ...action.messages]
+                messages: [...state.messages, ...action.messages.map(m => ({...m, id: v1()})).filter((m, index, array) => index >= array.length-100)]
             }
         case SET_CHSTATUS:
             return {
@@ -30,7 +31,7 @@ let chatReducer = (state = initialState, action: ActionsType): InitialStateType 
 }
 
 export const actions = {
-    setMessage: (messages: Array<MessageType>) => ({ type: SET_MESSAGES, messages } as const),
+    setMessage: (messages: Array<MessageAPIType>) => ({ type: SET_MESSAGES, messages } as const),
     setChannelStatus: (status: StatusType) => ({ type: SET_CHSTATUS, status } as const)
 }
 
@@ -39,7 +40,7 @@ let _newStatusHandler: SubStatusType | null = null;
 
 let newMessagesHandlerCreator = (dispatch: Dispatch<ActionsType>) => {
     if (_newMessagesHandler === null) {
-        _newMessagesHandler = (messages: Array<MessageType>) => {
+        _newMessagesHandler = (messages: Array<MessageAPIType>) => {
             dispatch(actions.setMessage(messages))
         }
     }
