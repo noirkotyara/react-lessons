@@ -66,7 +66,7 @@ const AppF: React.FC<RouteComponentProps> = (props) => {
                             <Route path='/dialogs' render={() => <DialogsPage />} />
                             <Route path='/profile/:userId?' render={() => suspenseWrapper(ProfilePage)} />
                             <Route path='/news' render={News} />
-                            <Route path='/music' render={Music} />
+                            <Route path='/music' render={() => <Music/>} />
                             <Route path='/publicchat' render={() => suspenseWrapper(PublicChatPage) } />
                             <Route path='/settings' render={() => suspenseWrapper(SettingsPage) } />
                             <Route path='/users' render={() =>  <UsersPage />} />
