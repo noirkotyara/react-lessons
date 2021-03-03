@@ -2,14 +2,16 @@ import { usersAPI } from "../api/api";
 import { UsersDataType } from './../types/types';
 import { BasicThunkType, InferActionsType } from './redux-store';
 
-const FOLLOW = 'SN/USERS/FOLLOW';
-const UNFOLLOW = 'SN/USERS/UNFOLLOW';
-const DATA = 'SN/USERS/SETUSERS';
-const CURPAGE = 'SN/USERS/CURPAGE';
-const TOTALCOUNT = 'SN/USERS/TOTALCOUNT';
-const TOGGLE_IS_FETCHING = 'SN/USERS/TOGGLEIF';
-const FOL_IS_FETCHING = 'SN/USERS/FOLISFETCH';
-const SET_FILTER = 'SN/USERS/SET-FILTER-FOR-USERS';
+export const FOLLOW = 'SN/USERS/FOLLOW';
+export const UNFOLLOW = 'SN/USERS/UNFOLLOW';
+export const DATA = 'SN/USERS/SETUSERS';
+export const CURPAGE = 'SN/USERS/CURPAGE';
+export const TOTALCOUNT = 'SN/USERS/TOTALCOUNT';
+export const TOGGLE_IS_FETCHING = 'SN/USERS/TOGGLE-IS-FETCHING';
+export const FOL_IS_FETCHING = 'SN/USERS/FOLLOWING-IS-FETCHING';
+export const SET_FILTER = 'SN/USERS/SET-FILTER-FOR-USERS';
+export const SET_USERS_SAGA = 'SN/USERS/SET-USERS-SAGA';
+export const CHANGE_CUR_PAGE_SAGA = 'SN/USERS/CHANGE-CUR-PAGE-SAGA';
 
 
 let initialState = {
@@ -63,6 +65,7 @@ const usersReducer = (state = initialState, action: ActionsType): InitialStateTy
                 totalCount: action.totalCount
             };
         case SET_FILTER:
+            
             return {
                 ...state,
                 filter: action.filter
@@ -93,29 +96,14 @@ const usersReducer = (state = initialState, action: ActionsType): InitialStateTy
 export const actions = {
     doUnfollow: (id: number) => ({ type: UNFOLLOW, id } as const),
     doFollow: (id: number) => ({ type: FOLLOW, id } as const),
-    setUsers: (usersData: Array< UsersDataType >) => ({ type: DATA, usersData } as const),
+    setUsers: (usersData: Array<UsersDataType>) => ({ type: DATA, usersData } as const),
     setCurPage: (currentPage: number) => ({ type: CURPAGE, currentPage } as const),
     setTotalCount: (totalCount: number) => ({ type: TOTALCOUNT, totalCount } as const),
     setFilter: (filter: FilterType) => ({ type: SET_FILTER, filter } as const),
     toggleFetching: (isFetching: boolean) => ({ type: TOGGLE_IS_FETCHING, isFetching } as const),
-    toggleFollowing: (followingTF: boolean, userId: number) => ({ type: FOL_IS_FETCHING, followingTF, userId } as const)
-}
-
-
-export const setUsersThunk = (currentPage: number, pageSize: number, filter: FilterType): ThunkType => async (dispatch) => {
-    dispatch(actions.toggleFetching(true));
-    dispatch(actions.setFilter(filter))
-    let data = await usersAPI.getUsers(currentPage, pageSize, filter.term, filter.friend)
-    dispatch(actions.toggleFetching(false));
-    dispatch(actions.setUsers(data.items));
-    dispatch(actions.setTotalCount(data.totalCount));
-}
-export const changeCurPageThunk = (page: number, pageSize: number): ThunkType => async (dispatch) => {
-    dispatch(actions.setCurPage(page));
-    dispatch(actions.toggleFetching(true));
-    let data = await usersAPI.changeCurPage(page, pageSize)
-    dispatch(actions.toggleFetching(false));
-    dispatch(actions.setUsers(data.items));
+    toggleFollowing: (followingTF: boolean, userId: number) => ({ type: FOL_IS_FETCHING, followingTF, userId } as const),
+    setUsersSaga: (currentPage: number, pageSize: number, filter: FilterType) => ({ type: SET_USERS_SAGA, currentPage, pageSize, filter } as const),
+    changeCurPageSaga: (page: number, pageSize: number) => ({ type: CHANGE_CUR_PAGE_SAGA, page, pageSize } as const),
 }
 
 export const unFollowThunk = (userId: number): ThunkType => async (dispatch) => {

@@ -13,12 +13,7 @@ import { UsersPage } from './components/Users/UsersPage';
 import { setInitializeThunk } from './redux/app-reducer';
 import { AppStateType } from './redux/redux-store';
 import 'antd/dist/antd.css';
-import { Layout, Breadcrumb } from 'antd';
-
-
-
-
-
+import { Layout } from 'antd';
 
 
 const ProfilePage = React.lazy(() => import('./components/Profile/ProfilePage') as Promise<any>);
@@ -57,10 +52,6 @@ const AppF: React.FC<RouteComponentProps> = (props) => {
             <Layout className="site-layout">
                 <Navbar/>
                 <Content style={{ margin: '0 16px' }}>
-                    {/* <Breadcrumb style={{ margin: '16px 0' }}>
-                        <Breadcrumb.Item>SocialNetwork</Breadcrumb.Item>
-                        <Breadcrumb.Item>by Rembo</Breadcrumb.Item>
-                    </Breadcrumb> */}
                     <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
                         <Switch>
                             <Route path='/dialogs' render={() => <DialogsPage />} />

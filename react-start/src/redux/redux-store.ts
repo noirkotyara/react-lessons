@@ -9,7 +9,11 @@ import appInitialization from "./app-reducer";
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { Action } from "redux";
 import chatReducer from "./chat-reducer";
+import createSagaMiddleware from 'redux-saga'
+import rootSaga from "./sagas/root-saga";
 
+
+const sagaMiddleware = createSagaMiddleware()
 
 const { createStore, combineReducers, applyMiddleware } = require("redux");
 
@@ -24,10 +28,14 @@ let rootReducers = combineReducers({
     form: formReducer
 });
 
-let store = createStore(rootReducers, composeWithDevTools(applyMiddleware(thunkMiddleware)));
+let store = createStore(rootReducers, 
+    composeWithDevTools(applyMiddleware(thunkMiddleware, sagaMiddleware))
+    );
 //@ts-ignore
 window.store = store;
 export default store;
+
+sagaMiddleware.run(rootSaga)
 
 type InferValueType<T> = T extends {[key:string]: infer U}? U : never
 export type InferActionsType<T extends {[key:string]: (...args: any) => any}> = ReturnType<InferValueType<T>>

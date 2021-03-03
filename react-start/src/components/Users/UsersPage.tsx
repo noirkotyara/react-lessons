@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeCurPageThunk, FilterType, setUsersThunk } from '../../redux/users-reducer';
+import { actions, FilterType } from '../../redux/users-reducer';
 import { getCurrentPage, getFilter, getIsFetching, getPageSize } from '../../redux/users-selectors';
 import Pagination from '../common/Pagination/Pagination';
 import Preloader from '../common/Preloader/Preloader';
@@ -24,10 +24,12 @@ export const UsersPage: React.FC<{}> = (props) => {
     const history = useHistory()
 
     const changeCurPage = (page: number) => {
-        dispatch(changeCurPageThunk(page, pageSize))
+        dispatch(actions.changeCurPageSaga(page, pageSize))
     }
     const onFilterChange = (filter: FilterType) => {
-        dispatch(setUsersThunk(currentPage, pageSize, filter))
+        // dispatch(setUsersThunk(currentPage, pageSize, filter))
+        dispatch(actions.setUsersSaga(currentPage, pageSize, filter))
+
     }
     
     useEffect(() => {
@@ -52,7 +54,12 @@ export const UsersPage: React.FC<{}> = (props) => {
             default:
                 break;
         }
-        dispatch(setUsersThunk(
+        // dispatch(setUsersThunk(
+        //     filterPage,
+        //     pageSize, 
+        //     filterURL
+        // ))
+        dispatch(actions.setUsersSaga(
             filterPage,
             pageSize, 
             filterURL
